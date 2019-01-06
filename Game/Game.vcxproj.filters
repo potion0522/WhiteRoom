@@ -2,5 +2,26 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="SceneTitle.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{9c5fed17-bba3-48f8-80c7-6c11008701af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Title">
+      <UniqueIdentifier>{c9f16a2a-7e67-420f-9b42-8cab2d702c84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{0f0e56a9-7ac4-4fb8-9fbb-3ced98547bb0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Scene.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h" />
+    <ClInclude Include="SceneTitle.h" />
+    <ClInclude Include="define.h" />
   </ItemGroup>
 </Project>
