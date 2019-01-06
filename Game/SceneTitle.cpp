@@ -53,7 +53,7 @@ void SceneTitle::updateButton( ) {
 	_click_to_start_font->update( );
 
 	// クリックされたらシーンを変える
-	if ( !_click_to_start_font->isClicked( ) ) {
+	if ( _click_to_start_font->isClicked( ) ) {
 		Controller::getTask( )->setNextScene( Controller::SCENE_GAME );
 	}
 }

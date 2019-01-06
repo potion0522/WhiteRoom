@@ -3,7 +3,15 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Controller.cpp" />
-    <ClCompile Include="SceneTitle.cpp" />
+    <ClCompile Include="SceneTitle.cpp">
+      <Filter>Title</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGame.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Game\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">
@@ -15,13 +23,24 @@
     <Filter Include="Game">
       <UniqueIdentifier>{0f0e56a9-7ac4-4fb8-9fbb-3ced98547bb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Model">
+      <UniqueIdentifier>{da8359a8-09cb-4089-a1f1-c771a133544f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="Controller.h" />
-    <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="define.h" />
+    <ClInclude Include="SceneTitle.h">
+      <Filter>Title</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGame.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Game\Model</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

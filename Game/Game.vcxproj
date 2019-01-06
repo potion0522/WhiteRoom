@@ -157,6 +157,8 @@
   <ItemGroup>
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Room.cpp" />
+    <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,7 +169,9 @@
   <ItemGroup>
     <ClInclude Include="Controller.h" />
     <ClInclude Include="define.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneTitle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

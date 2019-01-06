@@ -2,6 +2,7 @@
 #include "Manager.h"
 
 #include "SceneTitle.h"
+#include "SceneGame.h"
 
 ControllerPtr Controller::getTask( ) {
 	return std::dynamic_pointer_cast< Controller >( Manager::getInstance( )->getTask( getTag( ) ) );
@@ -21,6 +22,10 @@ void Controller::initialize( ) {
 void Controller::update( ) {
 	_scene->update( );
 	_scene->draw( );
+
+	if ( _next_scene != SCENE_CONTINUE ) {
+		loadScene( );
+	}
 }
 
 void Controller::loadScene( ) {
@@ -30,9 +35,13 @@ void Controller::loadScene( ) {
 		break;
 
 	case SCENE_GAME:
+		_scene = SceneGamePtr( new SceneGame );
 		break;
 	}
+
+	_next_scene = SCENE_CONTINUE;
 }
 
 void Controller::setNextScene( SCENE next ) {
+	_next_scene = next;
 }
