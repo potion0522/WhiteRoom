@@ -4,7 +4,7 @@
 #include "Scene.h"
 
 PTR( SceneGame );
-PTR( Room );
+PTR( Floor );
 
 class SceneGame : public Scene {
 public:
@@ -16,6 +16,6 @@ public:
 	void draw( ) const;
 
 private:
-	RoomPtr _room_1;
+	FloorPtr _floor_1;
 };
 

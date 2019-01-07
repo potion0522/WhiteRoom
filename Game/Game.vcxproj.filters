@@ -9,7 +9,7 @@
     <ClCompile Include="SceneGame.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Room.cpp">
+    <ClCompile Include="Floor.cpp">
       <Filter>Game\Model</Filter>
     </ClCompile>
   </ItemGroup>
@@ -39,7 +39,7 @@
     <ClInclude Include="SceneGame.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Room.h">
+    <ClInclude Include="Floor.h">
       <Filter>Game\Model</Filter>
     </ClInclude>
   </ItemGroup>
