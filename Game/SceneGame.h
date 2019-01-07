@@ -5,6 +5,7 @@
 
 PTR( SceneGame );
 PTR( Floor );
+PTR( Elevator );
 
 class SceneGame : public Scene {
 public:
@@ -17,5 +18,6 @@ public:
 
 private:
 	FloorPtr _floor_1;
+	ElevatorPtr _elevator;
 };
 
