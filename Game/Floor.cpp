@@ -34,8 +34,6 @@ void Floor::generateRoom( ) {
 
 	_floor->setTexture( Drawer::getTask( )->getImage( ROOM_TEXTURE ) );
 
-
-	int vertex_idx = 0;
 	{ // 壁3枚
 		Vector vertex_pos[ 4 ] = {
 			Vector( -FLOOR_WIDTH, _y + FLOOR_HEIGHT, FLOOR_WIDTH ), // 左上
@@ -55,7 +53,7 @@ void Floor::generateRoom( ) {
 				Model::Vertex( rot.multiply( vertex_pos[ 3 ] ), 1, 1, Vector( 0, 1, 0 ) ), // 右下
 			};
 
-
+			int vertex_idx = i * 6;
 			_floor->setVertex( vertex_idx + 0, vertex[ 0 ] );
 			_floor->setVertex( vertex_idx + 1, vertex[ 1 ] );
 			_floor->setVertex( vertex_idx + 2, vertex[ 2 ] );
@@ -63,8 +61,6 @@ void Floor::generateRoom( ) {
 			_floor->setVertex( vertex_idx + 3, vertex[ 1 ] );
 			_floor->setVertex( vertex_idx + 4, vertex[ 3 ] );
 			_floor->setVertex( vertex_idx + 5, vertex[ 2 ] );
-
-			vertex_idx += 6;
 		}
 	}
 
@@ -89,6 +85,8 @@ void Floor::generateRoom( ) {
 			Model::Vertex( rot.multiply( left_side_vertex_pos[ 2 ] ), 0, 1, Vector( 0, 1, 0 ) ), // 左下
 			Model::Vertex( rot.multiply( left_side_vertex_pos[ 3 ] ), 1, 1, Vector( 0, 1, 0 ) ), // 右下
 		};
+
+		int vertex_idx = NORMAL_WALL * 6;
 		_floor->setVertex( vertex_idx + 0, left_side_vertex[ 0 ] );
 		_floor->setVertex( vertex_idx + 1, left_side_vertex[ 1 ] );
 		_floor->setVertex( vertex_idx + 2, left_side_vertex[ 2 ] );
@@ -97,7 +95,6 @@ void Floor::generateRoom( ) {
 		_floor->setVertex( vertex_idx + 4, left_side_vertex[ 3 ] );
 		_floor->setVertex( vertex_idx + 5, left_side_vertex[ 2 ] );
 
-		vertex_idx += 6;
 
 		// 右側
 		Vector right_side_vertex_pos[ 4 ] = {
@@ -112,6 +109,8 @@ void Floor::generateRoom( ) {
 			Model::Vertex( rot.multiply( right_side_vertex_pos[ 2 ] ), 0, 1, Vector( 0, 1, 0 ) ), // 左下
 			Model::Vertex( rot.multiply( right_side_vertex_pos[ 3 ] ), 1, 1, Vector( 0, 1, 0 ) ), // 右下
 		};
+
+		vertex_idx = ( NORMAL_WALL + 1 ) * 6;
 		_floor->setVertex( vertex_idx + 0, right_side_vertex[ 0 ] );
 		_floor->setVertex( vertex_idx + 1, right_side_vertex[ 1 ] );
 		_floor->setVertex( vertex_idx + 2, right_side_vertex[ 2 ] );
@@ -119,8 +118,6 @@ void Floor::generateRoom( ) {
 		_floor->setVertex( vertex_idx + 3, right_side_vertex[ 1 ] );
 		_floor->setVertex( vertex_idx + 4, right_side_vertex[ 3 ] );
 		_floor->setVertex( vertex_idx + 5, right_side_vertex[ 2 ] );
-
-		vertex_idx += 6;
 	}
 
 
@@ -134,6 +131,8 @@ void Floor::generateRoom( ) {
 			Model::Vertex( Vector(  FLOOR_WIDTH, _y, -FLOOR_WIDTH ), 1, 1, Vector( 0, 1, 0 ) ), // 右下
 		};
 
+
+		int vertex_idx = ( NORMAL_WALL + ELEVATOR_WALL ) * 6;
 		_floor->setVertex( vertex_idx + 0, vertex[ 0 ] );
 		_floor->setVertex( vertex_idx + 1, vertex[ 1 ] );
 		_floor->setVertex( vertex_idx + 2, vertex[ 2 ] );
@@ -141,7 +140,5 @@ void Floor::generateRoom( ) {
 		_floor->setVertex( vertex_idx + 3, vertex[ 1 ] );
 		_floor->setVertex( vertex_idx + 4, vertex[ 3 ] );
 		_floor->setVertex( vertex_idx + 5, vertex[ 2 ] );
-
-		vertex_idx += 6;
 	}
 }
