@@ -12,7 +12,6 @@ int main( ) {
 	KeyboardPtr keyboard( new Keyboard );
 	MousePtr mouse( new Mouse );
 	CameraPtr camera( new Camera );
-
 	// WhiteRoom
 	ControllerPtr controller( new Controller );
 
