@@ -20,6 +20,7 @@ SceneGame::~SceneGame( ) {
 }
 
 void SceneGame::update( ) {
+	_elevator->update( );
 	{ // debug
 		KeyboardPtr keyboard = Keyboard::getTask( );
 		static int idx = 0;
@@ -48,6 +49,14 @@ void SceneGame::update( ) {
 		camera->setCamera( Vector( 0, y, 0 ), target[ idx ] );
 		DrawerPtr drawer = Drawer::getTask( );
 		drawer->drawFormatString( 0, 20, 0xff0000, "%.2lf : %.2lf", target[ idx ].y, y );
+
+		std::string str = keyboard->getString( );
+		if ( !str.empty( ) ) {	
+			int floor = std::atoi( str.c_str( ) );
+			if ( FLOOR_GF <= floor && floor <= FLOOR_HF ) {
+				_elevator->setMoveOrder( floor );
+			}
+		}
 	} // !debug
 }
 

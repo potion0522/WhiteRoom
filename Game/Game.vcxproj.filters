@@ -12,7 +12,9 @@
     <ClCompile Include="Floor.cpp">
       <Filter>Game\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Elevator.cpp" />
+    <ClCompile Include="Elevator.cpp">
+      <Filter>Game\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">
@@ -43,6 +45,8 @@
     <ClInclude Include="Floor.h">
       <Filter>Game\Model</Filter>
     </ClInclude>
-    <ClInclude Include="Elevator.h" />
+    <ClInclude Include="Elevator.h">
+      <Filter>Game\Model</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
