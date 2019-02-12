@@ -10,7 +10,7 @@ const char* ROOM_TEXTURE = "Game/Texture/FloorTexture.png";
 Floor::Floor( double y ) :
 _y( y ) {
 	// 部屋(壁・床)の生成
-	generateRoom( );
+	generateFloor( );
 }
 
 Floor::~Floor( ) {
@@ -24,7 +24,7 @@ double Floor::getY( ) const {
 	return _y;
 }
 
-void Floor::generateRoom( ) {
+void Floor::generateFloor( ) {
 	_floor = ModelPtr( new Model );
 
 	const int NORMAL_WALL   = 3;
@@ -44,7 +44,7 @@ void Floor::generateRoom( ) {
 
 		for ( int i = 0; i < NORMAL_WALL; i++ ) {
 			// 90度の回転行列
-			Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI * 0.25 * i );
+			Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI * 0.5 * i );
 
 			Model::Vertex vertex[ 4 ] = {
 				Model::Vertex( rot.multiply( vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
@@ -70,7 +70,7 @@ void Floor::generateRoom( ) {
 		const double WALL_WIDTH = ( FLOOR_WIDTH - ELEVATOR_WIDTH );
 
 		// 270度の回転行列(壁が4枚なので)
-		Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI * 0.25 * NORMAL_WALL );
+		Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI * 0.5 * NORMAL_WALL );
 
 		// 左側
 		Vector left_side_vertex_pos[ 4 ] = {

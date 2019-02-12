@@ -22,7 +22,7 @@ public:
 	void draw( ) const;
 
 private:
-	void generateRoom( );
+	void generateFloor( );
 
 private:
 	double _y;

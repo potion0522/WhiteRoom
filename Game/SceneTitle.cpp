@@ -7,7 +7,7 @@
 #include "Button.h"
 #include "Mathematics.h"
 
-const char* BG_FILEPATH         = "Title/TitleBG.png";
+const char* TITLE_BG_FILEPATH   = "Title/TitleBG.png";
 const char* START_FONT_FILEPATH = "Title/ClickToStart.png";
 
 SceneTitle::SceneTitle( ) :
@@ -15,7 +15,7 @@ FONT_FLASHING_RATIO( 720.0 ),
 FONT_FLASHING_ALPHA( 120 ),
 _count( 0 ) {
 	DrawerPtr drawer = Drawer::getTask( );
-	_bg = drawer->getImage( BG_FILEPATH );
+	_bg = drawer->getImage( TITLE_BG_FILEPATH );
 
 	Manager* manager = Manager::getInstance( );
 	int scr_w = manager->getScreenWidth( );

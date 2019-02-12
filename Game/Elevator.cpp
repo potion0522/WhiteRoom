@@ -85,7 +85,7 @@ void Elevator::generateElevator( ) {
 
 		for ( int i = 0; i < NORMAL_WALL; i++ ) {
 			// 90度の回転行列
-			Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), -PI * 0.25 * i );
+			Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), -PI * 0.5 * i );
 
 			Model::Vertex vertex[ 4 ] = {
 				Model::Vertex( rot.multiply( vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
@@ -107,7 +107,7 @@ void Elevator::generateElevator( ) {
 
 	{ // 開閉するドア
 		const double DOOR_WIDTH = ELEVATOR_WIDTH / 2;
-		Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), -PI * 0.25 * NORMAL_WALL );
+		Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), -PI * 0.5 * NORMAL_WALL );
 
 		// 左側
 		Vector left_door_vertex_pos[ 4 ] = {

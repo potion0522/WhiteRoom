@@ -155,10 +155,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Console.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Elevator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Floor.cpp" />
+    <ClCompile Include="Page.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
   </ItemGroup>
@@ -168,10 +170,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Console.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="Elevator.h" />
     <ClInclude Include="Floor.h" />
+    <ClInclude Include="Page.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneTitle.h" />

@@ -19,3 +19,7 @@ const int ELEVATOR_WIDTH  = 1500; // エレベーターの幅( 中心から )
 
 const int    METER_TO_MIRI_UNIT = 1000;
 const double MIRI_TO_METER_UNIT = 0.001;
+
+
+const int CONSOLE_WIDTH = 1920;
+const int CONSOLE_HEIGHT = 1080;

@@ -15,6 +15,12 @@
     <ClCompile Include="Elevator.cpp">
       <Filter>Game\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Page.cpp">
+      <Filter>Game\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>Game\Console</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">
@@ -28,6 +34,9 @@
     </Filter>
     <Filter Include="Game\Model">
       <UniqueIdentifier>{da8359a8-09cb-4089-a1f1-c771a133544f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Console">
+      <UniqueIdentifier>{ba72a5a1-4431-4eb2-ab59-82dcc480a4c7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -47,6 +56,12 @@
     </ClInclude>
     <ClInclude Include="Elevator.h">
       <Filter>Game\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Page.h">
+      <Filter>Game\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>Game\Console</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

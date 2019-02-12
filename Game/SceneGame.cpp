@@ -2,6 +2,7 @@
 #include "define.h"
 #include "Floor.h"
 #include "Elevator.h"
+#include "Console.h"
 
 #include "Drawer.h"
 #include "Camera.h"
@@ -10,6 +11,7 @@
 SceneGame::SceneGame( ) {
 	_floor_1 = FloorPtr( new Floor( 0 ) );
 	_elevator = ElevatorPtr( new Elevator( Vector( FLOOR_WIDTH + ELEVATOR_WIDTH, 0, 0 ) ) );
+	_console = ConsolePtr( new Console( _elevator ) );
 
 	CameraPtr camera = Camera::getTask( );
 	camera->setCameraUp( Vector( 0, 1, 0 ) );
@@ -21,6 +23,23 @@ SceneGame::~SceneGame( ) {
 
 void SceneGame::update( ) {
 	_elevator->update( );
+	_console->update( );
+
+	// debug
+	DEBUG( );
+}
+
+void SceneGame::draw( ) const {
+	_floor_1->draw( );
+	_elevator->draw( );
+	_console->draw( );
+
+	DrawerPtr drawer = Drawer::getTask( );
+	drawer->drawSphere( Vector( ), 10, 50, 0xff0000, false );
+	drawer->flip( );
+}
+
+void SceneGame::DEBUG( ) {
 	{ // debug
 		KeyboardPtr keyboard = Keyboard::getTask( );
 		static int idx = 0;
@@ -58,13 +77,4 @@ void SceneGame::update( ) {
 			}
 		}
 	} // !debug
-}
-
-void SceneGame::draw( ) const {
-	_floor_1->draw( );
-	_elevator->draw( );
-
-	DrawerPtr drawer = Drawer::getTask( );
-	drawer->drawSphere( Vector( ), 10, 50, 0xff0000, false );
-	drawer->flip( );
 }
