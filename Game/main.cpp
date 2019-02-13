@@ -5,18 +5,24 @@
 #include "Camera.h"
 
 #include "Controller.h"
+#include "define.h"
 
 int main( ) {
+	// Setting
+	Manager* manager = Manager::getInstance( );
+	manager->setScreenSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+	manager->setWindowSize( 1280, 720 );
+
 	// Framework
 	DrawerPtr drawer( new Drawer( "Resources/Image" ) );
 	KeyboardPtr keyboard( new Keyboard );
 	MousePtr mouse( new Mouse );
 	CameraPtr camera( new Camera );
+
 	// WhiteRoom
 	ControllerPtr controller( new Controller );
 
 	// AddTask
-	Manager* manager = Manager::getInstance( );
 	manager->add( Controller::getTag( ), controller );
 	manager->add( Drawer    ::getTag( ), drawer     );
 	manager->add( Keyboard  ::getTag( ), keyboard   );

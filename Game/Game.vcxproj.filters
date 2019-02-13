@@ -21,6 +21,15 @@
     <ClCompile Include="Console.cpp">
       <Filter>Game\Console</Filter>
     </ClCompile>
+    <ClCompile Include="PageContent.cpp">
+      <Filter>Game\Console\PageContent</Filter>
+    </ClCompile>
+    <ClCompile Include="Question1.cpp">
+      <Filter>Game\Console\PageContent\Question</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleButton.cpp">
+      <Filter>Game\Console\PageContent\Button</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">
@@ -37,6 +46,15 @@
     </Filter>
     <Filter Include="Game\Console">
       <UniqueIdentifier>{ba72a5a1-4431-4eb2-ab59-82dcc480a4c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Console\PageContent">
+      <UniqueIdentifier>{923c3043-dec4-4318-b543-ced74e14c580}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Console\PageContent\Question">
+      <UniqueIdentifier>{6d7b09a4-4b29-4588-9c54-3e0e49e70bef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Console\PageContent\Button">
+      <UniqueIdentifier>{115424a5-0953-4ef3-a163-d262a72802af}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +80,15 @@
     </ClInclude>
     <ClInclude Include="Console.h">
       <Filter>Game\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="PageContent.h">
+      <Filter>Game\Console\PageContent</Filter>
+    </ClInclude>
+    <ClInclude Include="Question1.h">
+      <Filter>Game\Console\PageContent\Question</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleButton.h">
+      <Filter>Game\Console\PageContent\Button</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

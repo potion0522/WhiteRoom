@@ -69,12 +69,5 @@ void SceneGame::DEBUG( ) {
 		DrawerPtr drawer = Drawer::getTask( );
 		drawer->drawFormatString( 0, 20, 0xff0000, "%.2lf : %.2lf", target[ idx ].y, y );
 
-		std::string str = keyboard->getString( );
-		if ( !str.empty( ) ) {	
-			int floor = std::atoi( str.c_str( ) );
-			if ( FLOOR_GF <= floor && floor <= FLOOR_HF ) {
-				_elevator->setMoveOrder( floor );
-			}
-		}
 	} // !debug
 }

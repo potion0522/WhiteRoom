@@ -50,6 +50,7 @@ private:
 	void actOnSlideDown( );
 	void actOnSlideLeft( );
 	void actOnSlideRight( );
+	void orderFloorChangeToElevator( int floor );
 
 private:
 	CONSOLE_STATE _state;

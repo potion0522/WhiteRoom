@@ -21,7 +21,7 @@ _slide_end_pos( ) {
 	_bg = drawer->getImage( CONSOLE_BG_FILEPATH );
 
 	for ( int i = 0; i < MAX_PAGE_NUM; i++ ) {
-		_pages[ i ] = PagePtr( new Page( ( PAGE_NUM )i ) );
+		_pages[ i ] = PagePtr( new Page( ( PAGE_NUM )i, [ & ]( const int floor ) { orderFloorChangeToElevator( floor ); } ) );
 	}
 }
 
@@ -172,4 +172,8 @@ void Console::actOnSlideRight( ) {
 	slidePage( CONSOLE_WIDTH, 0 );
 	changeState( CONSOLE_STATE_IDLE );
 	_page_num = PAGE_NUM_4;
+}
+
+void Console::orderFloorChangeToElevator( int floor ) {
+	_elevator->setMoveOrder( floor );
 }

@@ -11,6 +11,9 @@ enum FLOOR {
 	MAX_FLOOR,
 };
 
+const int SCREEN_WIDTH  = 1920;
+const int SCREEN_HEIGHT = 1080;
+
 const int FLOOR_HEIGHT = 3000; // •”‰®‚Ì‚‚³( °‚©‚ç )
 const int FLOOR_WIDTH  = 5000; // •”‰®‚Ì•( ’†S‚©‚ç )
 

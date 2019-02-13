@@ -33,12 +33,12 @@ void Elevator::move( ) {
 
 	int now_count = Manager::getInstance( )->getNowCount( );
 	int moving_count = now_count - _starting_time;
-	int move = distance / MOVE_TIME * moving_count;
+	double move = distance / ( double )MOVE_TIME * moving_count;
 
 	// ”š‚ª’á‚¢‚Ù‚¤‚ªy‚ªã‚È‚Ì‚Å•„†‚ğ”½“]
 	_pos.y = ( _past_floor * FLOOR_HEIGHT + move ) * -1;
 
-	if ( MOVE_TIME < now_count - _starting_time ) {
+	if ( MOVE_TIME < moving_count ) {
 		_pos.y = _floor * FLOOR_HEIGHT * -1;
 		_moving = false;
 	}
