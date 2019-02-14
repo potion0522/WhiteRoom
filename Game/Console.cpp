@@ -9,7 +9,7 @@
 #include "Mouse.h"
 
 const char* CONSOLE_BG_FILEPATH = "Game/Console/ConsoleBG.png";
-const double SLIDE_DETECT_LENGTH = 100.0;
+const double SLIDE_DETECT_LENGTH = SCREEN_HEIGHT * 0.30; // âÊñ çÇÇ≥ÇÃ30%à»è„Ç≈ÉXÉâÉCÉh
 
 Console::Console( ElevatorPtr elevator ) :
 _elevator( elevator ), 
@@ -66,9 +66,6 @@ void Console::draw( ) const {
 	for ( int i = 0; i < MAX_PAGE_NUM; i++ ) {
 		_pages[ i ]->draw( );
 	}
-
-	DrawerPtr drawer = Drawer::getTask( );
-	drawer->drawFormatString( 20, 20, 0x0000ff, "%d", _page_num );
 }
 
 bool Console::isChangeActivate( ) const {

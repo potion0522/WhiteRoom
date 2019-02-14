@@ -6,6 +6,14 @@ PTR( Elevator );
 PTR( Model );
 
 class Elevator {
+private:
+	enum ELEVATOR_STATE {
+		ELEVATOR_STATE_IDLE,
+		ELEVATOR_STATE_MOVING,
+		ELEVATOR_STATE_OPENING,
+		ELEVATOR_STATE_CLOSING,
+	};
+
 public:
 	Elevator( const Vector& init_pos );
 	virtual ~Elevator( );
@@ -16,19 +24,24 @@ public:
 	void draw( ) const;
 
 private:
+	bool isItPossibleToOrderElevator( ) const;
+	int getNowCount( ) const;
+	void actOnIdle( );
+	void actOnMoving( );
+	void actOnOpening( );
+	void actOnClosing( );
 	void generateElevator( );
-	void move( );
-
-public:
-	bool isMoving( ) const;
 
 private:
-	Vector _pos;
+	Vector _elevator_pos;
+	double _door_open_length;
 	unsigned char _past_floor;
 	unsigned char _floor;
 	unsigned int _starting_time;
-	bool _moving;
+	ELEVATOR_STATE _state;
 
-	ModelPtr _model;
+	ModelPtr _elevator_room;
+	ModelPtr _elevator_door_left;
+	ModelPtr _elevator_door_right;
 };
 
