@@ -30,8 +30,8 @@ void SceneGame::update( ) {
 }
 
 void SceneGame::draw( ) const {
-	_floor_1->draw( );
 	_elevator->draw( );
+	_floor_1->draw( );
 	_console->draw( );
 
 	DrawerPtr drawer = Drawer::getTask( );
@@ -42,32 +42,35 @@ void SceneGame::draw( ) const {
 void SceneGame::DEBUG( ) {
 	{ // debug
 		KeyboardPtr keyboard = Keyboard::getTask( );
-		static int idx = 0;
-		static double y = 0;
-		Vector target[ 8 ] = {
-			Vector(  0, y, 1 ),
-			Vector(  1, y, 1 ),
-			Vector(  1, y, 0 ),
-			Vector(  1, y, -1 ),
-			Vector(  0, y, -1 ),
-			Vector( -1, y, -1 ),
-			Vector( -1, y, 0 ),
-			Vector( -1, y, 1 ),
-		};
+		static Vector camera;
+		static Vector camera_dir = Vector( 0, 0, 1 );
 
-		if ( keyboard->getKeyDown( "ENTER" ) ) {
-			idx = ( idx + 1 ) % 8;
+		if ( keyboard->getKeyState( "RIGHT" ) ) {
+			camera_dir = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), -0.05 ).multiply( camera_dir );
+		}
+		if ( keyboard->getKeyState( "LEFT" ) ) {
+			camera_dir = Matrix::makeTransformRotation( Vector( 0, 1, 0 ),  0.05 ).multiply( camera_dir );
+		}
+
+		
+		if ( keyboard->getKeyState( "W" ) ) {
+			camera += camera_dir *  100;
+		}
+		if ( keyboard->getKeyState( "S" ) ) {
+			camera += camera_dir * -100;
+		}
+		if ( keyboard->getKeyState( "A" ) ) {
+			camera += camera_dir.cross( Vector( camera_dir.x, camera_dir.y + 100, camera_dir.z ) ).normalize( ) *  100;
+		}
+		if ( keyboard->getKeyState( "D" ) ) {
+			camera += camera_dir.cross( Vector( camera_dir.x, camera_dir.y + 100, camera_dir.z ) ).normalize( ) * -100;
 		}
 		if ( keyboard->getKeyState( "UP" ) ) {
-			y += 0.2;
+			camera += Vector( 0,  1, 0 ) * 100;
 		}
 		if ( keyboard->getKeyState( "DOWN" ) ) {
-			y -= 0.2;
+			camera += Vector( 0, -1, 0 ) * 100;
 		}
-		CameraPtr camera = Camera::getTask( );
-		camera->setCamera( Vector( 0, y, 0 ), target[ idx ] );
-		DrawerPtr drawer = Drawer::getTask( );
-		drawer->drawFormatString( 0, 20, 0xff0000, "%.2lf : %.2lf", target[ idx ].y, y );
-
+		Camera::getTask( )->setCamera( camera * 0.001, ( camera + camera_dir ) * 0.001 );
 	} // !debug
 }

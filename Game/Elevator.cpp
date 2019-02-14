@@ -56,12 +56,15 @@ void Elevator::draw( ) const {
 	// エレベータールームの描画
 	_elevator_room->draw( _elevator_pos * MIRI_TO_METER_UNIT );
 
-	// ドアの開閉距離
+	// ドアの開閉距離(ドアの開閉はz軸)
 	Vector door_open = Vector( 0, 0, _door_open_length );
 
 	// ドアの描画
-	_elevator_door_left->draw ( ( _elevator_pos - door_open ) * MIRI_TO_METER_UNIT );
-	_elevator_door_right->draw( ( _elevator_pos + door_open ) * MIRI_TO_METER_UNIT );
+	Manager* manager = Manager::getInstance( );
+	manager->setUseBackCulling( false );
+	_elevator_door_left->draw ( ( _elevator_pos + door_open ) * MIRI_TO_METER_UNIT );
+	_elevator_door_right->draw( ( _elevator_pos - door_open ) * MIRI_TO_METER_UNIT );
+	manager->setUseBackCulling( true );
 }
 
 
@@ -72,6 +75,7 @@ bool Elevator::isItPossibleToOrderElevator( ) const {
 int Elevator::getNowCount( ) const {
 	return Manager::getInstance( )->getNowCount( );
 }
+
 
 void Elevator::actOnIdle( ) {
 }
@@ -233,34 +237,11 @@ void Elevator::generateElevator( ) {
 		Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), -PI * 0.5 * NORMAL_WALL );
 
 		// 右側
-		Vector left_door_vertex_pos[ 4 ] = {
+		Vector right_door_vertex_pos[ 4 ] = {
 			Vector( -DOOR_WIDTH, ELEVATOR_HEIGHT, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左上
 			Vector(           0, ELEVATOR_HEIGHT, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右上
 			Vector( -DOOR_WIDTH,               0, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左下
 			Vector(           0,               0, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右下
-		};
-		Model::Vertex left_door_vertex[ 4 ] = {
-			Model::Vertex( rot.multiply( left_door_vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
-			Model::Vertex( rot.multiply( left_door_vertex_pos[ 1 ] ), 1, 0, Vector( 0, 1, 0 ) ), // 右上
-			Model::Vertex( rot.multiply( left_door_vertex_pos[ 2 ] ), 0, 1, Vector( 0, 1, 0 ) ), // 左下
-			Model::Vertex( rot.multiply( left_door_vertex_pos[ 3 ] ), 1, 1, Vector( 0, 1, 0 ) ), // 右下
-		};
-		int vertex_idx = 0;
-		_elevator_door_right->setVertex( 0, left_door_vertex[ 0 ] );
-		_elevator_door_right->setVertex( 1, left_door_vertex[ 1 ] );
-		_elevator_door_right->setVertex( 2, left_door_vertex[ 2 ] );
-
-		_elevator_door_right->setVertex( 3, left_door_vertex[ 1 ] );
-		_elevator_door_right->setVertex( 4, left_door_vertex[ 3 ] );
-		_elevator_door_right->setVertex( 5, left_door_vertex[ 2 ] );
-
-
-		// 左側
-		Vector right_door_vertex_pos[ 4 ] = {
-			Vector(          0, ELEVATOR_HEIGHT, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左上
-			Vector( DOOR_WIDTH, ELEVATOR_HEIGHT, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右上
-			Vector(          0,               0, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左下
-			Vector( DOOR_WIDTH,               0, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右下
 		};
 		Model::Vertex right_door_vertex[ 4 ] = {
 			Model::Vertex( rot.multiply( right_door_vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
@@ -268,12 +249,35 @@ void Elevator::generateElevator( ) {
 			Model::Vertex( rot.multiply( right_door_vertex_pos[ 2 ] ), 0, 1, Vector( 0, 1, 0 ) ), // 左下
 			Model::Vertex( rot.multiply( right_door_vertex_pos[ 3 ] ), 1, 1, Vector( 0, 1, 0 ) ), // 右下
 		};
-		_elevator_door_left->setVertex( 0, right_door_vertex[ 0 ] );
-		_elevator_door_left->setVertex( 1, right_door_vertex[ 1 ] );
-		_elevator_door_left->setVertex( 2, right_door_vertex[ 2 ] );
+		int vertex_idx = 0;
+		_elevator_door_right->setVertex( 0, right_door_vertex[ 0 ] );
+		_elevator_door_right->setVertex( 1, right_door_vertex[ 1 ] );
+		_elevator_door_right->setVertex( 2, right_door_vertex[ 2 ] );
+
+		_elevator_door_right->setVertex( 3, right_door_vertex[ 1 ] );
+		_elevator_door_right->setVertex( 4, right_door_vertex[ 3 ] );
+		_elevator_door_right->setVertex( 5, right_door_vertex[ 2 ] );
+
+
+		// 左側
+		Vector left_door_vertex_pos[ 4 ] = {
+			Vector(          0, ELEVATOR_HEIGHT, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左上
+			Vector( DOOR_WIDTH, ELEVATOR_HEIGHT, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右上
+			Vector(          0,               0, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左下
+			Vector( DOOR_WIDTH,               0, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右下
+		};
+		Model::Vertex left_door_vertex[ 4 ] = {
+			Model::Vertex( rot.multiply( left_door_vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
+			Model::Vertex( rot.multiply( left_door_vertex_pos[ 1 ] ), 1, 0, Vector( 0, 1, 0 ) ), // 右上
+			Model::Vertex( rot.multiply( left_door_vertex_pos[ 2 ] ), 0, 1, Vector( 0, 1, 0 ) ), // 左下
+			Model::Vertex( rot.multiply( left_door_vertex_pos[ 3 ] ), 1, 1, Vector( 0, 1, 0 ) ), // 右下
+		};
+		_elevator_door_left->setVertex( 0, left_door_vertex[ 0 ] );
+		_elevator_door_left->setVertex( 1, left_door_vertex[ 1 ] );
+		_elevator_door_left->setVertex( 2, left_door_vertex[ 2 ] );
 										 
-		_elevator_door_left->setVertex( 3, right_door_vertex[ 1 ] );
-		_elevator_door_left->setVertex( 4, right_door_vertex[ 3 ] );
-		_elevator_door_left->setVertex( 5, right_door_vertex[ 2 ] );
+		_elevator_door_left->setVertex( 3, left_door_vertex[ 1 ] );
+		_elevator_door_left->setVertex( 4, left_door_vertex[ 3 ] );
+		_elevator_door_left->setVertex( 5, left_door_vertex[ 2 ] );
 	}
 }
