@@ -2,10 +2,12 @@
 #include "smart_ptr.h"
 #include "Mathematics.h"
 
+#include "SphereCollider.h"
+
 PTR( Elevator );
 PTR( Model );
 
-class Elevator {
+class Elevator : public SphereCollider {
 private:
 	enum ELEVATOR_STATE {
 		ELEVATOR_STATE_IDLE,
@@ -22,6 +24,7 @@ public:
 	void update( );
 	void setMoveOrder( int order_floor );
 	void draw( ) const;
+	OBJECT_TAG getTag( ) const;
 
 private:
 	bool isItPossibleToOrderElevator( ) const;

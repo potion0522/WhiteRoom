@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CollideManager.cpp" />
     <ClCompile Include="ConsoleButton.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Controller.cpp" />
@@ -166,6 +167,9 @@
     <ClCompile Include="Question1.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
+    <ClCompile Include="SphereCollider.cpp" />
+    <ClCompile Include="SquareCollider.cpp" />
+    <ClCompile Include="TestObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Framework\Framework.vcxproj">
@@ -173,6 +177,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CollideManager.h" />
+    <ClInclude Include="CollideNotifier.h" />
     <ClInclude Include="ConsoleButton.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="Controller.h" />
@@ -185,6 +191,9 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneTitle.h" />
+    <ClInclude Include="SphereCollider.h" />
+    <ClInclude Include="SquareCollider.h" />
+    <ClInclude Include="TestObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

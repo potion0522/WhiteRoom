@@ -11,11 +11,15 @@ const int DOOR_ANIM_TIME = 1000; // ミリ秒
 const int MAX_DOOR_MOVE_LENGTH = ELEVATOR_WIDTH;
 
 Elevator::Elevator( const Vector& init_pos ) :
+SphereCollider( _elevator_pos, 1000 ),
 _elevator_pos( init_pos ),
 _door_open_length( MAX_DOOR_MOVE_LENGTH ),
 _floor( FLOOR_GF ),
 _state( ELEVATOR_STATE_IDLE ),
 _starting_time( 0 ) {
+	// タグ
+	_tag = OBJECT_TAG_WALL;
+
 	// モデルの作成
 	generateElevator( );
 }
@@ -65,6 +69,10 @@ void Elevator::draw( ) const {
 	_elevator_door_left->draw ( ( _elevator_pos + door_open ) * MIRI_TO_METER_UNIT );
 	_elevator_door_right->draw( ( _elevator_pos - door_open ) * MIRI_TO_METER_UNIT );
 	manager->setUseBackCulling( true );
+}
+
+OBJECT_TAG Elevator::getTag( ) const {
+	return _tag;
 }
 
 

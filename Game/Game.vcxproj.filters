@@ -30,11 +30,18 @@
     <ClCompile Include="ConsoleButton.cpp">
       <Filter>Game\Console\PageContent\Button</Filter>
     </ClCompile>
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>Game\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="CollideManager.cpp">
+      <Filter>Game\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="TestObject.cpp" />
+    <ClCompile Include="SquareCollider.cpp">
+      <Filter>Game\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Interface">
-      <UniqueIdentifier>{9c5fed17-bba3-48f8-80c7-6c11008701af}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Title">
       <UniqueIdentifier>{c9f16a2a-7e67-420f-9b42-8cab2d702c84}</UniqueIdentifier>
     </Filter>
@@ -56,10 +63,16 @@
     <Filter Include="Game\Console\PageContent\Button">
       <UniqueIdentifier>{115424a5-0953-4ef3-a163-d262a72802af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Collider">
+      <UniqueIdentifier>{f2b11608-e6ff-48d1-945b-3920e324baac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneInterface">
+      <UniqueIdentifier>{9c5fed17-bba3-48f8-80c7-6c11008701af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
-      <Filter>Interface</Filter>
+      <Filter>SceneInterface</Filter>
     </ClInclude>
     <ClInclude Include="Controller.h" />
     <ClInclude Include="define.h" />
@@ -89,6 +102,19 @@
     </ClInclude>
     <ClInclude Include="ConsoleButton.h">
       <Filter>Game\Console\PageContent\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="CollideNotifier.h">
+      <Filter>Game\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereCollider.h">
+      <Filter>Game\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="CollideManager.h">
+      <Filter>Game\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="TestObject.h" />
+    <ClInclude Include="SquareCollider.h">
+      <Filter>Game\Collider</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

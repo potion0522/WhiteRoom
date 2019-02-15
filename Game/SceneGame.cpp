@@ -3,15 +3,26 @@
 #include "Floor.h"
 #include "Elevator.h"
 #include "Console.h"
+#include "CollideManager.h"
 
 #include "Drawer.h"
 #include "Camera.h"
 #include "Keyboard.h"
 
+// debug
+#include "TestObject.h"
+
 SceneGame::SceneGame( ) {
+	_collide_manager = CollideManagerPtr( new CollideManager );
 	_floor_1 = FloorPtr( new Floor( 0 ) );
 	_elevator = ElevatorPtr( new Elevator( Vector( FLOOR_WIDTH + ELEVATOR_WIDTH, 0, 0 ) ) );
 	_console = ConsolePtr( new Console( _elevator ) );
+
+	// debug
+	_test = TestObjectPtr( new TestObject );
+
+	_collide_manager->addStaticCollider( _elevator );
+	_collide_manager->addDynamicCollider( _test );
 
 	CameraPtr camera = Camera::getTask( );
 	camera->setCameraUp( Vector( 0, 1, 0 ) );
@@ -24,6 +35,10 @@ SceneGame::~SceneGame( ) {
 void SceneGame::update( ) {
 	_elevator->update( );
 	_console->update( );
+	_test->update( );
+
+	// collider
+	_collide_manager->update( );
 
 	// debug
 	DEBUG( );
@@ -33,9 +48,9 @@ void SceneGame::draw( ) const {
 	_elevator->draw( );
 	_floor_1->draw( );
 	_console->draw( );
+	_test->draw( );
 
 	DrawerPtr drawer = Drawer::getTask( );
-	drawer->drawSphere( Vector( ), 10, 50, 0xff0000, false );
 	drawer->flip( );
 }
 
