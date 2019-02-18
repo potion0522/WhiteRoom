@@ -19,7 +19,6 @@ public:
 
 public:
 	void addDynamicCollider( SphereColliderWeakPtr collider );
-	void addDynamicCollider( SquareColliderWeakPtr collider );
 	void addStaticCollider( SphereColliderPtr collider );
 	void addStaticCollider( SquareColliderPtr collider );
 
@@ -31,7 +30,6 @@ private:
 
 private:
 	std::list< SphereColliderWeakPtr > _dynamic_sphere_obj;
-	std::list< SquareColliderWeakPtr > _dynamic_square_obj;
 
 	std::vector< SphereColliderPtr > _static_sphere_obj;
 	std::vector< SquareColliderPtr > _static_square_obj;

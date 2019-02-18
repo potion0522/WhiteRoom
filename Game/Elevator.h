@@ -24,7 +24,6 @@ public:
 	void update( );
 	void setMoveOrder( int order_floor );
 	void draw( ) const;
-	OBJECT_TAG getTag( ) const;
 
 private:
 	bool isItPossibleToOrderElevator( ) const;

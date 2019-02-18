@@ -1,17 +1,17 @@
 #include "SquareCollider.h"
 
-SquareCollider::SquareCollider( const Vector& pos, double width, double height ) :
-_pos( pos ),
+SquareCollider::SquareCollider( const Vector& pos, Vector norm, double width, double height, OBJECT_TAG tag ) :
+Collider( pos, tag ),
+_norm( norm ),
 _width( width ),
 _height( height ) {
-	_tag = OBJECT_TAG_NONE;
 }
 
 SquareCollider::~SquareCollider( ) {
 }
 
-const Vector& SquareCollider::getPos( ) const {
-	return _pos;
+const Vector& SquareCollider::getNorm( ) const {
+	return _norm;
 }
 
 const double& SquareCollider::getWidth( ) const {
@@ -20,11 +20,4 @@ const double& SquareCollider::getWidth( ) const {
 
 const double& SquareCollider::getHeight( ) const {
 	return _height;
-}
-
-OBJECT_TAG SquareCollider::getTag( ) const {
-	return _tag;
-}
-
-void SquareCollider::onColliderEnter( OBJECT_TAG tag ) {
 }

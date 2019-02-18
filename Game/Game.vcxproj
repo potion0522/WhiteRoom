@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CollideManager.cpp" />
+    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ConsoleButton.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Controller.cpp" />
@@ -178,7 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollideManager.h" />
-    <ClInclude Include="CollideNotifier.h" />
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="ConsoleButton.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="Controller.h" />

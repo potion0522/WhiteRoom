@@ -40,6 +40,9 @@
     <ClCompile Include="SquareCollider.cpp">
       <Filter>Game\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Game\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -103,9 +106,6 @@
     <ClInclude Include="ConsoleButton.h">
       <Filter>Game\Console\PageContent\Button</Filter>
     </ClInclude>
-    <ClInclude Include="CollideNotifier.h">
-      <Filter>Game\Collider</Filter>
-    </ClInclude>
     <ClInclude Include="SphereCollider.h">
       <Filter>Game\Collider</Filter>
     </ClInclude>
@@ -114,6 +114,9 @@
     </ClInclude>
     <ClInclude Include="TestObject.h" />
     <ClInclude Include="SquareCollider.h">
+      <Filter>Game\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
       <Filter>Game\Collider</Filter>
     </ClInclude>
   </ItemGroup>

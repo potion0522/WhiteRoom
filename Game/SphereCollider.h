@@ -1,20 +1,16 @@
 #pragma once
-#include "CollideNotifier.h"
+#include "Collider.h"
 #include "Mathematics.h"
 
-class SphereCollider : public CollideNotifier {
+class SphereCollider : public Collider {
 public:
-	SphereCollider( const Vector& pos, double radius );
+	SphereCollider( const Vector& pos, double radius, OBJECT_TAG tag = OBJECT_TAG_NONE );
 	virtual ~SphereCollider( );
 
 public:
-	const Vector& getPos( ) const;
 	const double& getRadius( ) const;
-	OBJECT_TAG getTag( ) const;
-	void onColliderEnter( OBJECT_TAG tag );
 
 private:
-	const Vector& _pos;
 	double _radius;
 };
 

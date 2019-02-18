@@ -13,7 +13,7 @@ public:
 	void update( );
 	void draw( ) const;
 
-	void onColliderEnter( OBJECT_TAG tag );
+	void onColliderEnter( ColliderPtr collider );
 
 private:
 	Vector _past_pos;

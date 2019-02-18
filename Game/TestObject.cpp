@@ -32,8 +32,8 @@ void TestObject::draw( ) const {
 	drawer->drawSphere( _pos * 0.001, 1000 * 0.001, 50, 0xff0000, true );
 }
 
-void TestObject::onColliderEnter( OBJECT_TAG tag ) {
-	if ( tag == OBJECT_TAG_WALL ) {
+void TestObject::onColliderEnter( ColliderPtr collider ) {
+	if ( collider->getTag( ) == OBJECT_TAG_WALL ) {
 		_pos = _past_pos;
 	}
 }

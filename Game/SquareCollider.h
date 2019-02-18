@@ -1,25 +1,23 @@
 #pragma once
-#include "CollideNotifier.h"
+#include "Collider.h"
 
 #include "smart_ptr.h"
 #include "Mathematics.h"
 
 PTR( SquareCollider );
 
-class SquareCollider : public CollideNotifier {
+class SquareCollider : public Collider {
 public:
-	SquareCollider( const Vector& pos, double width, double height );
+	SquareCollider( const Vector& pos, Vector norm, double width, double height, OBJECT_TAG tag = OBJECT_TAG_NONE );
 	virtual ~SquareCollider( );
 
 public:
-	const Vector& getPos( ) const;
+	const Vector& getNorm( ) const;
 	const double& getWidth( ) const;
 	const double& getHeight( ) const;
-	OBJECT_TAG getTag( ) const;
-	void onColliderEnter( OBJECT_TAG tag );
 
 private:
-	const Vector& _pos;
+	Vector _norm;
 	double _width;
 	double _height;
 };
