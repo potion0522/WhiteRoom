@@ -8,7 +8,10 @@ PTR( Floor );
 PTR( Elevator );
 PTR( Console );
 PTR( CollideManager );
+
+// debug
 PTR( TestObject );
+PTR( TestSquare );
 
 class SceneGame : public Scene {
 public:
@@ -27,6 +30,9 @@ private:
 	FloorPtr _floor_1;
 	ElevatorPtr _elevator;
 	ConsolePtr _console;
+
+	// debug class
 	TestObjectPtr _test;
+	TestSquarePtr _test_s;
 };
 

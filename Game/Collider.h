@@ -16,7 +16,7 @@ public:
 	OBJECT_TAG getTag( ) const;
 
 public:
-	virtual void onColliderEnter( ColliderPtr collider );
+	virtual void onColliderEnter( ColliderConstPtr collider );
 
 private:
 	const Vector& _pos;

@@ -11,6 +11,7 @@
 
 // debug
 #include "TestObject.h"
+#include "TestSquare.h"
 
 SceneGame::SceneGame( ) {
 	_collide_manager = CollideManagerPtr( new CollideManager );
@@ -18,11 +19,14 @@ SceneGame::SceneGame( ) {
 	_elevator = ElevatorPtr( new Elevator( Vector( FLOOR_WIDTH + ELEVATOR_WIDTH, 0, 0 ) ) );
 	_console = ConsolePtr( new Console( _elevator ) );
 
-	// debug
-	_test = TestObjectPtr( new TestObject );
+	{ // debug
+		_test = TestObjectPtr( new TestObject );
+		_test_s = TestSquarePtr( new TestSquare );
+	}
 
 	_collide_manager->addStaticCollider( _elevator );
 	_collide_manager->addDynamicCollider( _test );
+	_collide_manager->addStaticCollider( _test_s );
 
 	CameraPtr camera = Camera::getTask( );
 	camera->setCameraUp( Vector( 0, 1, 0 ) );
@@ -49,6 +53,7 @@ void SceneGame::draw( ) const {
 	_floor_1->draw( );
 	_console->draw( );
 	_test->draw( );
+	_test_s->draw( );
 
 	DrawerPtr drawer = Drawer::getTask( );
 	drawer->flip( );

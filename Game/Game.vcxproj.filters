@@ -43,6 +43,7 @@
     <ClCompile Include="Collider.cpp">
       <Filter>Game\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="TestSquare.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -119,5 +120,6 @@
     <ClInclude Include="Collider.h">
       <Filter>Game\Collider</Filter>
     </ClInclude>
+    <ClInclude Include="TestSquare.h" />
   </ItemGroup>
 </Project>

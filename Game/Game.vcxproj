@@ -171,6 +171,7 @@
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="SquareCollider.cpp" />
     <ClCompile Include="TestObject.cpp" />
+    <ClCompile Include="TestSquare.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Framework\Framework.vcxproj">
@@ -195,6 +196,7 @@
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="SquareCollider.h" />
     <ClInclude Include="TestObject.h" />
+    <ClInclude Include="TestSquare.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

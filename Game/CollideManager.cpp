@@ -101,26 +101,54 @@ bool CollideManager::isCollideSphereAndSphere( SphereColliderPtr collider1, Sphe
 }
 
 bool CollideManager::isCollideSphereAndSquare( SphereColliderPtr collider1, SquareColliderPtr collider2 ) {
-	Vector pos1 = collider1->getPos( );
-	double radius1 = collider1->getRadius( );
+	Vector sphere_pos = collider1->getPos( );
+	double radius = collider1->getRadius( );
 
-	Vector pos2 = collider2->getPos( );
+	Vector square_center_pos = collider2->getPos( );
 	Vector norm = collider2->getNorm( );
 	double width = collider2->getWidth( );
 	double height = collider2->getHeight( );
 
 	// 表裏どちらにあるかの判定
-	double dot = norm.dot( pos1 - pos2 );
+	Vector sphere_to_square_center = ( square_center_pos - sphere_pos ).normalize( ) * radius;
+	double dot = norm.dot( ( sphere_pos + sphere_to_square_center ) - square_center_pos );
 	if ( dot > 0 ) {
 		return false;
 	}
 
-	// 面の座標の割り出し 　0:左上 1:右上 2:左下 3:右下
+	// 面の座標の割り出し
 	Vector horizontal = norm.cross( Vector( norm.x, norm.y + 100, norm.z ) ).normalize( ); // 横
-	Vector vertical = norm.cross( horizontal ).normalize( ); //縦
-	Vector square_pos[ 4 ] = {
+	Vector vertical = norm.cross( horizontal ).normalize( ); // 縦
 
+	// 回転するようにする
+	Vector square_pos[ 4 ] = {
+		square_center_pos + ( horizontal * -1 * width * 0.5 ) + ( vertical *  1 * height * 0.5 ),
+		square_center_pos + ( horizontal *  1 * width * 0.5 ) + ( vertical *  1 * height * 0.5 ),
+		square_center_pos + ( horizontal *  1 * width * 0.5 ) + ( vertical * -1 * height * 0.5 ),
+		square_center_pos + ( horizontal * -1 * width * 0.5 ) + ( vertical * -1 * height * 0.5 ),
 	};
 
-	return false;
+	// 面の中に球があるかどうか
+	int past_dot = 999; // -1 or 1 を格納, 999は適当な初期値
+	for ( int i = 0; i < 4; i++ ) {
+		Vector vertex1 = square_pos[ ( i + 0 ) % 4 ];
+		Vector vertex2 = square_pos[ ( i + 1 ) % 4 ];
+
+		// line1, line2 で三角形を作成
+		Vector line1 = ( vertex2 - vertex1 );  
+		Vector line2 = line1 + norm * 100 * -1;
+		Vector cross = line1.cross( line2 ).normalize( ); // 作成した三角形の垂線
+
+		Vector line3 = sphere_pos - vertex1;
+		// 正射影(方向のみ)
+		int dot = ( cross.dot( line3 ) < 0 ? -1 : 1 );
+
+		// 方向が違うものがあれば内側にない
+		if ( past_dot != 999 && dot != past_dot ) {
+			return false;
+		}
+		past_dot = dot;
+	}
+
+	return true;
 }

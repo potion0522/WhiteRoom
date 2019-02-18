@@ -16,5 +16,5 @@ OBJECT_TAG Collider::getTag( ) const {
 	return _tag;
 }
 
-void Collider::onColliderEnter( ColliderPtr collider ) {
+void Collider::onColliderEnter( ColliderConstPtr collider ) {
 }
