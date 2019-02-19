@@ -9,9 +9,6 @@
     <ClCompile Include="SceneGame.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Floor.cpp">
-      <Filter>Game\Model</Filter>
-    </ClCompile>
     <ClCompile Include="Elevator.cpp">
       <Filter>Game\Model</Filter>
     </ClCompile>
@@ -47,6 +44,12 @@
     <ClCompile Include="Player.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>Game\Model\Floor</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Game\Model\Floor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -76,6 +79,9 @@
     <Filter Include="SceneInterface">
       <UniqueIdentifier>{9c5fed17-bba3-48f8-80c7-6c11008701af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Model\Floor">
+      <UniqueIdentifier>{0d500ab1-42b2-414e-90c6-af29a4a00268}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -88,9 +94,6 @@
     </ClInclude>
     <ClInclude Include="SceneGame.h">
       <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Floor.h">
-      <Filter>Game\Model</Filter>
     </ClInclude>
     <ClInclude Include="Elevator.h">
       <Filter>Game\Model</Filter>
@@ -126,6 +129,12 @@
     <ClInclude Include="TestSquare.h" />
     <ClInclude Include="Player.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Floor.h">
+      <Filter>Game\Model\Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>Game\Model\Floor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

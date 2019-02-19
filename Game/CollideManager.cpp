@@ -112,7 +112,7 @@ bool CollideManager::isCollideSphereAndSquare( SphereColliderPtr collider1, Squa
 	// •\— ‚Ç‚¿‚ç‚É‚ ‚é‚©‚Ì”»’è
 	Vector sphere_to_square_center = ( square_center_pos - sphere_pos ).normalize( ) * radius;
 	double dot = norm.dot( ( sphere_pos + sphere_to_square_center ) - square_center_pos );
-	if ( dot > 0 ) {
+	if ( dot >= 0 ) {
 		return false;
 	}
 

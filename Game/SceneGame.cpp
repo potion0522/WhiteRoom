@@ -11,8 +11,8 @@
 
 SceneGame::SceneGame( ) {
 	_collide_manager = CollideManagerPtr( new CollideManager );
-	_floor_1 = FloorPtr( new Floor( 0 ) );
-	_elevator = ElevatorPtr( new Elevator( Vector( FLOOR_WIDTH + ELEVATOR_WIDTH, 0, 0 ) ) );
+	_floor_1 = FloorPtr( new Floor( _collide_manager, 0 ) );
+	_elevator = ElevatorPtr( new Elevator( Vector( FLOOR_WIDTH / 2 + ELEVATOR_WIDTH, 0, 0 ) ) );
 	_console = ConsolePtr( new Console( _elevator ) );
 	_player = PlayerPtr( new Player );
 

@@ -1,8 +1,12 @@
 #pragma once
 #include "smart_ptr.h"
 
+#include <array>
+
 PTR( Floor );
 PTR( Model );
+PTR( Wall );
+PTR( CollideManager );
 
 /*
 
@@ -13,7 +17,7 @@ PTR( Model );
 
 class Floor {
 public:
-	Floor( double y );
+	Floor( CollideManagerPtr collide_manager, double y );
 	virtual ~Floor( );
 
 public:
@@ -28,5 +32,6 @@ private:
 	double _y;
 
 	ModelPtr _floor;
+	std::array< WallPtr, 4 > _wall_colliders;
 };
 

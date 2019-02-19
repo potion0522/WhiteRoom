@@ -1,5 +1,7 @@
 #include "Floor.h"
 #include "define.h"
+#include "Wall.h"
+#include "CollideManager.h"
 
 #include "Model.h"
 #include "Mathematics.h"
@@ -7,10 +9,34 @@
 
 const char* ROOM_TEXTURE = "Game/Texture/FloorTexture.png";
 
-Floor::Floor( double y ) :
+Floor::Floor( CollideManagerPtr collide_manager, double y ) :
 _y( y ) {
 	// 部屋(壁・床)の生成
 	generateFloor( );
+
+	// 当たり判定
+	Vector pos[ 4 ] = {
+		Vector(                0, _y + FLOOR_HEIGHT / 2,  FLOOR_WIDTH / 2 ),
+		Vector( -FLOOR_WIDTH / 2, _y + FLOOR_HEIGHT / 2,                0 ),
+		Vector(                0, _y + FLOOR_HEIGHT / 2, -FLOOR_WIDTH / 2 ),
+		Vector(  FLOOR_WIDTH / 2, _y + FLOOR_HEIGHT / 2,                0 ),
+	};
+	Vector norms[ 4 ] = {
+		Vector(  0,  0, -1 ),
+		Vector(  1,  0,  0 ),
+		Vector(  0,  0,  1 ),
+		Vector( -1,  0,  0 ),
+	};
+	for ( int i = 0; i < 4; i++ ) {
+		_wall_colliders[ i ] = WallPtr( new Wall( 
+			pos  [ i ], // pos
+			norms[ i ], // norm
+			FLOOR_WIDTH, // width
+			FLOOR_HEIGHT // height
+		) );
+
+		collide_manager->addStaticCollider( _wall_colliders[ i ] );
+	}
 }
 
 Floor::~Floor( ) {
@@ -36,11 +62,11 @@ void Floor::generateFloor( ) {
 
 	{ // 壁3枚
 		Vector vertex_pos[ 4 ] = {
-			Vector( -FLOOR_WIDTH, _y + FLOOR_HEIGHT, FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左上
-			Vector(  FLOOR_WIDTH, _y + FLOOR_HEIGHT, FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右上
-			Vector( -FLOOR_WIDTH, _y +            0, FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左下
-			Vector(  FLOOR_WIDTH, _y +            0, FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右下
-		};
+			Vector( -FLOOR_WIDTH / 2, _y + FLOOR_HEIGHT, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左上
+			Vector(  FLOOR_WIDTH / 2, _y + FLOOR_HEIGHT, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右上
+			Vector( -FLOOR_WIDTH / 2, _y +            0, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左下
+			Vector(  FLOOR_WIDTH / 2, _y +            0, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右下
+		};						 
 
 		for ( int i = 0; i < NORMAL_WALL; i++ ) {
 			// 90度の回転行列
@@ -67,17 +93,17 @@ void Floor::generateFloor( ) {
 
 
 	{ // エレベーターのある壁
-		const double WALL_WIDTH = ( FLOOR_WIDTH - ELEVATOR_WIDTH );
+		const double WALL_WIDTH = ( FLOOR_WIDTH / 2 - ELEVATOR_WIDTH );
 
 		// 270度の回転行列(壁が4枚なので)
 		Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI * 0.5 * NORMAL_WALL );
 
 		// 左側
 		Vector left_side_vertex_pos[ 4 ] = {
-			Vector( -FLOOR_WIDTH             , _y + ELEVATOR_HEIGHT, FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左上
-			Vector( -FLOOR_WIDTH + WALL_WIDTH, _y + ELEVATOR_HEIGHT, FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右上
-			Vector( -FLOOR_WIDTH             , _y +               0, FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左下
-			Vector( -FLOOR_WIDTH + WALL_WIDTH, _y +               0, FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右下
+			Vector( -FLOOR_WIDTH / 2             , _y + ELEVATOR_HEIGHT, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左上
+			Vector( -FLOOR_WIDTH / 2 + WALL_WIDTH, _y + ELEVATOR_HEIGHT, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右上
+			Vector( -FLOOR_WIDTH / 2             , _y +               0, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左下
+			Vector( -FLOOR_WIDTH / 2 + WALL_WIDTH, _y +               0, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右下
 		};
 		Model::Vertex left_side_vertex[ 4 ] = {
 			Model::Vertex( rot.multiply( left_side_vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
@@ -98,10 +124,10 @@ void Floor::generateFloor( ) {
 
 		// 右側
 		Vector right_side_vertex_pos[ 4 ] = {
-			Vector( FLOOR_WIDTH - WALL_WIDTH, _y + ELEVATOR_HEIGHT, FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左上
-			Vector( FLOOR_WIDTH             , _y + ELEVATOR_HEIGHT, FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右上
-			Vector( FLOOR_WIDTH - WALL_WIDTH, _y +               0, FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左下
-			Vector( FLOOR_WIDTH             , _y +               0, FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右下
+			Vector( FLOOR_WIDTH / 2 - WALL_WIDTH, _y + ELEVATOR_HEIGHT, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左上
+			Vector( FLOOR_WIDTH / 2             , _y + ELEVATOR_HEIGHT, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右上
+			Vector( FLOOR_WIDTH / 2 - WALL_WIDTH, _y +               0, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左下
+			Vector( FLOOR_WIDTH / 2             , _y +               0, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右下
 		};
 		Model::Vertex right_side_vertex[ 4 ] = {
 			Model::Vertex( rot.multiply( right_side_vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
@@ -125,10 +151,10 @@ void Floor::generateFloor( ) {
 
 	{ // 床
 		Model::Vertex vertex[ 4 ] = {
-			Model::Vertex( Vector( -FLOOR_WIDTH, _y,  FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, 0, 0, Vector( 0, 1, 0 ) ), // 左上
-			Model::Vertex( Vector(  FLOOR_WIDTH, _y,  FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, 1, 0, Vector( 0, 1, 0 ) ), // 右上
-			Model::Vertex( Vector( -FLOOR_WIDTH, _y, -FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, 0, 1, Vector( 0, 1, 0 ) ), // 左下
-			Model::Vertex( Vector(  FLOOR_WIDTH, _y, -FLOOR_WIDTH ) * MIRI_TO_METER_UNIT, 1, 1, Vector( 0, 1, 0 ) ), // 右下
+			Model::Vertex( Vector( -FLOOR_WIDTH / 2, _y,  FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, 0, 0, Vector( 0, 1, 0 ) ), // 左上
+			Model::Vertex( Vector(  FLOOR_WIDTH / 2, _y,  FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, 1, 0, Vector( 0, 1, 0 ) ), // 右上
+			Model::Vertex( Vector( -FLOOR_WIDTH / 2, _y, -FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, 0, 1, Vector( 0, 1, 0 ) ), // 左下
+			Model::Vertex( Vector(  FLOOR_WIDTH / 2, _y, -FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, 1, 1, Vector( 0, 1, 0 ) ), // 右下
 		};
 
 

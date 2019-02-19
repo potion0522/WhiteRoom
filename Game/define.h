@@ -21,8 +21,8 @@ enum OBJECT_TAG {
 const int SCREEN_WIDTH  = 1920;
 const int SCREEN_HEIGHT = 1080;
 
-const int FLOOR_HEIGHT = 3000; // 部屋の高さ( 床から )
-const int FLOOR_WIDTH  = 5000; // 部屋の幅( 中心から )
+const int FLOOR_HEIGHT = 3000;  // 部屋の高さ( 床から )
+const int FLOOR_WIDTH  = 10000; // 部屋の幅( 全体 )
 
 const int ELEVATOR_HEIGHT = FLOOR_HEIGHT; // 部屋のサイズと同じ
 const int ELEVATOR_WIDTH  = 1500; // エレベーターの幅( 中心から )

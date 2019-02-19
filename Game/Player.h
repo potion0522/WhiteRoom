@@ -23,7 +23,9 @@ private:
 	const double _HEIGHT;
 
 private:
-	Vector _pos;
+	Vector _stand_pos;
+	Vector _head_pos;
+	Vector _past_pos;
 	Vector _dir;
 	unsigned char _floor;
 };
