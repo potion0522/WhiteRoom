@@ -15,7 +15,7 @@ Player::Player( ) :
 _PLAYER_COLLIDER_RADIUS( 500 ),
 _HEIGHT( 1500 ),
 SphereCollider( _head_pos, _PLAYER_COLLIDER_RADIUS, OBJECT_TAG_PLAYER ),
-_stand_pos( ),
+_ground_pos( ),
 _head_pos( 0, _HEIGHT, 0 ),
 _dir( 0, 0, 1 ) {
 	CameraPtr camera = Camera::getTask( );
@@ -28,7 +28,7 @@ Player::~Player( ) {
 
 void Player::update( ) {
 	// 移動前座標の保存
-	_past_pos = _stand_pos;
+	_past_pos = _ground_pos;
 
 	// 視線更新
 	updateDir( );
@@ -42,23 +42,23 @@ void Player::update( ) {
 
 void Player::onColliderEnter( ColliderConstPtr collider ) {
 	if ( collider->getTag( ) == OBJECT_TAG_WALL ) {
-		_stand_pos = Vector( );
+		_ground_pos = Vector( );
 	}
 }
 
 void Player::updatePos( ) {
 	KeyboardPtr keyboard = Keyboard::getTask( );
 	if ( keyboard->getKeyState( "W" ) ) {
-		_stand_pos += Vector( _dir.x, 0, _dir.z ) *  MOVE_SPEED;
+		_ground_pos += Vector( _dir.x, 0, _dir.z ) *  MOVE_SPEED;
 	}
 	if ( keyboard->getKeyState( "S" ) ) {
-		_stand_pos += Vector( _dir.x, 0, _dir.z ) * -MOVE_SPEED;
+		_ground_pos += Vector( _dir.x, 0, _dir.z ) * -MOVE_SPEED;
 	}
 	if ( keyboard->getKeyState( "A" ) ) {
-		_stand_pos += _dir.cross( Vector( _dir.x, _dir.y + 100, _dir.z ) ).normalize( ) *  MOVE_SPEED;
+		_ground_pos += _dir.cross( Vector( _dir.x, _dir.y + 100, _dir.z ) ).normalize( ) *  MOVE_SPEED;
 	}
 	if ( keyboard->getKeyState( "D" ) ) {
-		_stand_pos += _dir.cross( Vector( _dir.x, _dir.y + 100, _dir.z ) ).normalize( ) * -MOVE_SPEED;
+		_ground_pos += _dir.cross( Vector( _dir.x, _dir.y + 100, _dir.z ) ).normalize( ) * -MOVE_SPEED;
 	}
 }
 
@@ -91,7 +91,7 @@ void Player::updateDir( ) {
 }
 
 void Player::updateEye( ) {
-	_head_pos = _stand_pos + Vector( 0, _HEIGHT, 0 );
+	_head_pos = _ground_pos + Vector( 0, _HEIGHT, 0 );
 
 	CameraPtr camera = Camera::getTask( );
 	camera->setCamera( _head_pos * MIRI_TO_METER_UNIT, ( _head_pos + _dir ) * MIRI_TO_METER_UNIT );
