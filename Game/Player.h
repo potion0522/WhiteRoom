@@ -23,9 +23,9 @@ private:
 	const double _HEIGHT;
 
 private:
-	Vector _stand_pos;
-	Vector _head_pos;
-	Vector _past_pos;
+	Vector _stand_pos; // 計算用(足元)
+	Vector _head_pos;  // カメラ用
+	Vector _past_pos;  // 前回座標(足元)
 	Vector _dir;
 	unsigned char _floor;
 };
