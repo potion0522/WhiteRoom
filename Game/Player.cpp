@@ -11,10 +11,15 @@ const double MAX_V_RADIAN = 15 * PI / 180; // 縦
 
 const double MOVE_SPEED = 100;
 
+
+// あとで外部ファイルにする
+const double HEIGHT = 1500.0;
+const double COLLIDER_SIZE = 500.0;
+
 Player::Player( ) :
-_PLAYER_COLLIDER_RADIUS( 500 ),
-_HEIGHT( 1500 ),
-SphereCollider( _head_pos, _PLAYER_COLLIDER_RADIUS, OBJECT_TAG_PLAYER ),
+SphereCollider( _head_pos, COLLIDER_SIZE, OBJECT_TAG_PLAYER ),
+_HEIGHT( HEIGHT ),
+_PLAYER_COLLIDER_RADIUS( COLLIDER_SIZE ),
 _ground_pos( ),
 _head_pos( 0, _HEIGHT, 0 ),
 _dir( 0, 0, 1 ) {

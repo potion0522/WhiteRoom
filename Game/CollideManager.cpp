@@ -109,10 +109,9 @@ bool CollideManager::isCollideSphereAndSquare( SphereColliderPtr collider1, Squa
 	double width = collider2->getWidth( );
 	double height = collider2->getHeight( );
 
-	// •\— ‚Ç‚¿‚ç‚É‚ ‚é‚©‚Ì”»’è
-	Vector sphere_to_square_center = ( square_center_pos - sphere_pos ).normalize( ) * radius;
-	double dot = norm.dot( ( sphere_pos + sphere_to_square_center ) - square_center_pos );
-	if ( dot >= 0 ) {
+	// –Ê‚ğ‰¡‚©‚çŒ©‚½‚É‹…‚ªd‚È‚Á‚Ä‚¢‚é‚©‚ğ”»’è
+	double dot = norm.dot( sphere_pos - square_center_pos );
+	if ( fabs( dot ) > radius ) {
 		return false;
 	}
 
