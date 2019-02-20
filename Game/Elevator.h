@@ -2,12 +2,12 @@
 #include "smart_ptr.h"
 #include "Mathematics.h"
 
-#include "SphereCollider.h"
+#include "SquareCollider.h"
 
 PTR( Elevator );
 PTR( Model );
 
-class Elevator : public SphereCollider {
+class Elevator {
 private:
 	enum ELEVATOR_STATE {
 		ELEVATOR_STATE_IDLE,

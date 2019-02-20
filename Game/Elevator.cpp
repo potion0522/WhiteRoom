@@ -11,7 +11,6 @@ const int DOOR_ANIM_TIME = 1000; // ƒ~ƒŠ•b
 const int MAX_DOOR_MOVE_LENGTH = ELEVATOR_WIDTH;
 
 Elevator::Elevator( const Vector& init_pos ) :
-SphereCollider( _elevator_pos, 1000, OBJECT_TAG_WALL ),
 _elevator_pos( init_pos ),
 _door_open_length( MAX_DOOR_MOVE_LENGTH ),
 _floor( FLOOR_GF ),

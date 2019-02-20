@@ -13,39 +13,10 @@ Floor::Floor( CollideManagerPtr collide_manager, double y ) :
 _y( y ) {
 	// 部屋(壁・床)の生成
 	generateFloor( );
+	generateFloorCollider( );
 
-	// 当たり判定
-	Vector pos[ WALL_NUM ] = {
-		Vector(                0, _y + FLOOR_HEIGHT / 2,                           FLOOR_WIDTH / 2 ), // 正面
-		Vector( -FLOOR_WIDTH / 2, _y + FLOOR_HEIGHT / 2,                                         0 ), // 左
-		Vector(                0, _y + FLOOR_HEIGHT / 2,                          -FLOOR_WIDTH / 2 ), // 後ろ
-		Vector(  FLOOR_WIDTH / 2, _y + FLOOR_HEIGHT / 2,  ( FLOOR_WIDTH / 2 - ( FLOOR_WIDTH / 2 - ELEVATOR_WIDTH ) / 2 ) ), // 右
-		Vector(  FLOOR_WIDTH / 2, _y + FLOOR_HEIGHT / 2, -( FLOOR_WIDTH / 2 - ( FLOOR_WIDTH / 2 - ELEVATOR_WIDTH ) / 2 ) ), // 右																	 // 右
-	};
-
-	Vector norms[ WALL_NUM ] = {
-		Vector(  0,  0, -1 ), // 正面
-		Vector(  1,  0,  0 ), // 左
-		Vector(  0,  0,  1 ), // 後ろ
-		Vector( -1,  0,  0 ), // 右
-		Vector( -1,  0,  0 ), // 右
-	};
-	for ( int i = 0; i < WALL_NUM; i++ ) {
-		double width = FLOOR_WIDTH;
-		// エレベーターのある面の壁
-		if ( i == WALL_NUM - 1 || i == WALL_NUM - 2 ) {
-			width = FLOOR_WIDTH / 2 - ELEVATOR_WIDTH;
-		}
-
-		_wall_colliders[ i ] = WallPtr( new Wall( 
-			pos  [ i ], // pos
-			norms[ i ], // norm
-			width, // width
-			FLOOR_HEIGHT // height
-		) );
-
-		collide_manager->addStaticCollider( _wall_colliders[ i ] );
-	}
+	// 当たり判定をマネージャーに登録する
+	setColliderToCollideManager( collide_manager );
 }
 
 Floor::~Floor( ) {
@@ -175,5 +146,50 @@ void Floor::generateFloor( ) {
 		_floor->setVertex( vertex_idx + 3, vertex[ 1 ] );
 		_floor->setVertex( vertex_idx + 4, vertex[ 3 ] );
 		_floor->setVertex( vertex_idx + 5, vertex[ 2 ] );
+	}
+}
+
+void Floor::generateFloorCollider( ) {
+	{ // 通常壁の当たり判定
+		Vector norm = Vector( 0, 0, -1 );
+		Vector pos  = Vector( 0, FLOOR_HEIGHT / 2, FLOOR_WIDTH / 2 );
+
+		for ( int i = 0; i < NORMAL_WALL_NUM; i++ ) {
+			Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI * 0.5 * i );
+			Vector pos_  = rot.multiply( pos );
+			Vector norm_ = rot.multiply( norm );
+			_wall_colliders[ i ] = WallPtr( new Wall( pos_, norm_, FLOOR_WIDTH, FLOOR_HEIGHT ) );
+		}
+	}
+	
+	{ // エレベーターのある壁の当たり判定
+		const double SIDE_WALL_WIDTH     = ( FLOOR_WIDTH - ELEVATOR_WIDTH * 2 ) / 2;
+		const double ELEVATOR_WALL_WIDTH = ELEVATOR_WIDTH;
+
+		Vector norm = Vector( 0, 0, -1 );
+		Vector pos[ ELEVATOR_SIDE_WALL_NUM ] = {
+			Vector( -FLOOR_WIDTH / 2, FLOOR_HEIGHT / 2, FLOOR_WIDTH / 2 ) + Vector( SIDE_WALL_WIDTH / 2, 0, 0 ),
+			Vector(                0, FLOOR_HEIGHT / 2, FLOOR_WIDTH / 2 ),
+			Vector(  FLOOR_WIDTH / 2, FLOOR_HEIGHT / 2, FLOOR_WIDTH / 2 ) - Vector( SIDE_WALL_WIDTH / 2, 0, 0 ),
+		};
+
+		// 270度回転
+		Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI * 0.5 * 3 );
+		for ( int i = 0; i < ELEVATOR_SIDE_WALL_NUM; i++ ) {
+			pos[ i ] = rot.multiply( pos[ i ] );
+		}
+		norm = rot.multiply( norm );
+
+		// 回転した座標で当たり判定を生成
+		_wall_colliders[ NORMAL_WALL_NUM + 0 ] = WallPtr( new Wall( pos[ 0 ], norm,     SIDE_WALL_WIDTH, FLOOR_HEIGHT ) );
+		_wall_colliders[ NORMAL_WALL_NUM + 1 ] = WallPtr( new Wall( pos[ 1 ], norm, ELEVATOR_WALL_WIDTH, FLOOR_HEIGHT ) );
+		_wall_colliders[ NORMAL_WALL_NUM + 2 ] = WallPtr( new Wall( pos[ 2 ], norm,     SIDE_WALL_WIDTH, FLOOR_HEIGHT ) );
+	}
+}
+
+void Floor::setColliderToCollideManager( CollideManagerPtr collide_manager ) {
+	// 壁
+	for ( int i = 0; i < NORMAL_WALL_NUM + ELEVATOR_SIDE_WALL_NUM; i++ ) {
+		collide_manager->addStaticCollider( _wall_colliders[ i ] );
 	}
 }

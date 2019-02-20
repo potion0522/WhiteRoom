@@ -14,7 +14,7 @@ const double MOVE_SPEED = 100;
 
 // あとで外部ファイルにする
 const double HEIGHT = 1500.0;
-const double COLLIDER_SIZE = 500.0;
+const double COLLIDER_SIZE = 1000.0;
 
 Player::Player( ) :
 SphereCollider( _head_pos, COLLIDER_SIZE, OBJECT_TAG_PLAYER ),

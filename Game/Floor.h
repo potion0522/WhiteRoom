@@ -27,14 +27,18 @@ public:
 
 private:
 	void generateFloor( );
+	void generateFloorCollider( );
+
+	void setColliderToCollideManager( CollideManagerPtr collide_manager );
 
 private:
-	static const int WALL_NUM = 5;
+	static const int NORMAL_WALL_NUM = 3;
+	static const int ELEVATOR_SIDE_WALL_NUM = 3;
 
 private:
 	double _y;
 
 	ModelPtr _floor;
-	std::array< WallPtr, WALL_NUM > _wall_colliders;
+	std::array< WallPtr, NORMAL_WALL_NUM + ELEVATOR_SIDE_WALL_NUM > _wall_colliders;
 };
 
