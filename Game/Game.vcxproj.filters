@@ -33,14 +33,12 @@
     <ClCompile Include="CollideManager.cpp">
       <Filter>Game\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="TestObject.cpp" />
     <ClCompile Include="SquareCollider.cpp">
       <Filter>Game\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Collider.cpp">
       <Filter>Game\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="TestSquare.cpp" />
     <ClCompile Include="Player.cpp">
       <Filter>Game</Filter>
     </ClCompile>
@@ -49,6 +47,12 @@
     </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>Game\Model\Floor</Filter>
+    </ClCompile>
+    <ClCompile Include="TestObject.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="TestSquare.cpp">
+      <Filter>Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +85,9 @@
     </Filter>
     <Filter Include="Game\Model\Floor">
       <UniqueIdentifier>{0d500ab1-42b2-414e-90c6-af29a4a00268}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{081684e2-0e5b-4257-868d-15e4e36977ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -119,14 +126,12 @@
     <ClInclude Include="CollideManager.h">
       <Filter>Game\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="TestObject.h" />
     <ClInclude Include="SquareCollider.h">
       <Filter>Game\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Game\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="TestSquare.h" />
     <ClInclude Include="Player.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -135,6 +140,12 @@
     </ClInclude>
     <ClInclude Include="Wall.h">
       <Filter>Game\Model\Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="TestObject.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="TestSquare.h">
+      <Filter>Debug</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

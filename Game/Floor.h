@@ -29,9 +29,12 @@ private:
 	void generateFloor( );
 
 private:
+	static const int WALL_NUM = 5;
+
+private:
 	double _y;
 
 	ModelPtr _floor;
-	std::array< WallPtr, 4 > _wall_colliders;
+	std::array< WallPtr, WALL_NUM > _wall_colliders;
 };
 

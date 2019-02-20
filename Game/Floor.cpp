@@ -15,23 +15,32 @@ _y( y ) {
 	generateFloor( );
 
 	// 当たり判定
-	Vector pos[ 4 ] = {
-		Vector(                0, _y + FLOOR_HEIGHT / 2,  FLOOR_WIDTH / 2 ),
-		Vector( -FLOOR_WIDTH / 2, _y + FLOOR_HEIGHT / 2,                0 ),
-		Vector(                0, _y + FLOOR_HEIGHT / 2, -FLOOR_WIDTH / 2 ),
-		Vector(  FLOOR_WIDTH / 2, _y + FLOOR_HEIGHT / 2,                0 ),
+	Vector pos[ WALL_NUM ] = {
+		Vector(                0, _y + FLOOR_HEIGHT / 2,                           FLOOR_WIDTH / 2 ), // 正面
+		Vector( -FLOOR_WIDTH / 2, _y + FLOOR_HEIGHT / 2,                                         0 ), // 左
+		Vector(                0, _y + FLOOR_HEIGHT / 2,                          -FLOOR_WIDTH / 2 ), // 後ろ
+		Vector(  FLOOR_WIDTH / 2, _y + FLOOR_HEIGHT / 2,  ( FLOOR_WIDTH / 2 - ( FLOOR_WIDTH / 2 - ELEVATOR_WIDTH ) / 2 ) ), // 右
+		Vector(  FLOOR_WIDTH / 2, _y + FLOOR_HEIGHT / 2, -( FLOOR_WIDTH / 2 - ( FLOOR_WIDTH / 2 - ELEVATOR_WIDTH ) / 2 ) ), // 右																	 // 右
 	};
-	Vector norms[ 4 ] = {
-		Vector(  0,  0, -1 ),
-		Vector(  1,  0,  0 ),
-		Vector(  0,  0,  1 ),
-		Vector( -1,  0,  0 ),
+
+	Vector norms[ WALL_NUM ] = {
+		Vector(  0,  0, -1 ), // 正面
+		Vector(  1,  0,  0 ), // 左
+		Vector(  0,  0,  1 ), // 後ろ
+		Vector( -1,  0,  0 ), // 右
+		Vector( -1,  0,  0 ), // 右
 	};
-	for ( int i = 0; i < 4; i++ ) {
+	for ( int i = 0; i < WALL_NUM; i++ ) {
+		double width = FLOOR_WIDTH;
+		// エレベーターのある面の壁
+		if ( i == WALL_NUM - 1 || i == WALL_NUM - 2 ) {
+			width = FLOOR_WIDTH / 2 - ELEVATOR_WIDTH;
+		}
+
 		_wall_colliders[ i ] = WallPtr( new Wall( 
 			pos  [ i ], // pos
 			norms[ i ], // norm
-			FLOOR_WIDTH, // width
+			width, // width
 			FLOOR_HEIGHT // height
 		) );
 
