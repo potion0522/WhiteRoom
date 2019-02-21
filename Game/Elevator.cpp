@@ -1,5 +1,9 @@
 #include "Elevator.h"
 #include "define.h"
+#include "ElevatorAnnounce.h"
+#include "Wall.h"
+#include "Door.h"
+#include "CollideManager.h"
 
 #include "Drawer.h"
 #include "Model.h"
@@ -8,16 +12,23 @@
 const char* ELEVATOR_TEXTURE = "Game/Texture/ElevatorTexture.png";
 const int ELEVATOR_MOVE_TIME = 2000; // ミリ秒
 const int DOOR_ANIM_TIME = 1000; // ミリ秒
-const int MAX_DOOR_MOVE_LENGTH = ELEVATOR_WIDTH;
+const int MAX_DOOR_MOVE_LENGTH = ELEVATOR_WIDTH / 2;
 
-Elevator::Elevator( const Vector& init_pos ) :
-_elevator_pos( init_pos ),
+Elevator::Elevator( const Vector& init_pos, CollideManagerPtr collide_manager ) :
+_pos( init_pos ),
 _door_open_length( MAX_DOOR_MOVE_LENGTH ),
 _floor( FLOOR_GF ),
 _state( ELEVATOR_STATE_IDLE ),
 _starting_time( 0 ) {
 	// モデルの作成
 	generateElevator( );
+	generateElevatorCollider( );
+
+	// 登録
+	for ( int i = 0; i < WALL_COLLIDER_NUM; i++ ) {
+		collide_manager->addStaticCollider( _wall_colliders[ i ] );
+	}
+	collide_manager->addStaticCollider( _door_collider );
 }
 
 Elevator::~Elevator( ) {
@@ -47,14 +58,23 @@ void Elevator::setMoveOrder( int order_floor ) {
 
 	// 現在フロアとオーダーフロアを記録
 	_past_floor = _floor;
-	_floor = order_floor;
+	_floor = ( FLOOR )order_floor;
 	_state = ELEVATOR_STATE_CLOSING;
 	_starting_time = getNowCount( );
+	
+	// 通知
+	for ( ElevatorAnnouncePtr announce : _subscribers ) {
+		announce->announceMove( );
+	}
+}
+
+void Elevator::subscribe( ElevatorAnnouncePtr subscriber ) {
+	_subscribers.push_back( subscriber );
 }
 
 void Elevator::draw( ) const {
 	// エレベータールームの描画
-	_elevator_room->draw( _elevator_pos * MIRI_TO_METER_UNIT );
+	_elevator_room->draw( _pos * MIRI_TO_METER_UNIT );
 
 	// ドアの開閉距離(ドアの開閉はz軸)
 	Vector door_open = Vector( 0, 0, _door_open_length );
@@ -62,8 +82,8 @@ void Elevator::draw( ) const {
 	// ドアの描画
 	Manager* manager = Manager::getInstance( );
 	manager->setUseBackCulling( false );
-	_elevator_door_left->draw ( ( _elevator_pos + door_open ) * MIRI_TO_METER_UNIT );
-	_elevator_door_right->draw( ( _elevator_pos - door_open ) * MIRI_TO_METER_UNIT );
+	_elevator_door_left->draw ( ( _pos + door_open ) * MIRI_TO_METER_UNIT );
+	_elevator_door_right->draw( ( _pos - door_open ) * MIRI_TO_METER_UNIT );
 	manager->setUseBackCulling( true );
 }
 
@@ -88,11 +108,11 @@ void Elevator::actOnMoving( ) {
 	double move = distance / ( double )ELEVATOR_MOVE_TIME * moving_count;
 
 	// 数字が低いほうがyが上なので符号を反転
-	_elevator_pos.y = ( _past_floor * FLOOR_HEIGHT + move ) * -1;
+	_pos.y = ( _past_floor * FLOOR_HEIGHT + move ) * -1;
 
 	// 到着
 	if ( ELEVATOR_MOVE_TIME < moving_count ) {
-		_elevator_pos.y = _floor * FLOOR_HEIGHT * -1;
+		_pos.y = _floor * FLOOR_HEIGHT * -1;
 		_state = ELEVATOR_STATE_OPENING;
 		_starting_time = getNowCount( );
 	}
@@ -111,6 +131,11 @@ void Elevator::actOnOpening( ) {
 	// 開け切ったら待機
 	if ( DOOR_ANIM_TIME < moving_count ) {
 		_state = ELEVATOR_STATE_IDLE;
+
+		// 通知
+		for ( ElevatorAnnouncePtr announce : _subscribers ) {
+			announce->announceArrive( _floor );
+		}
 	}
 }
 
@@ -144,10 +169,10 @@ void Elevator::generateElevator( ) {
 	// --------------------------------------------------------------------------- //
 	{ 
 		Vector vertex_pos[ 4 ] = {
-			Vector( -ELEVATOR_WIDTH, ELEVATOR_HEIGHT, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左上
-			Vector(  ELEVATOR_WIDTH, ELEVATOR_HEIGHT, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右上
-			Vector( -ELEVATOR_WIDTH,               0, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左下
-			Vector(  ELEVATOR_WIDTH,               0, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右下
+			Vector( -ELEVATOR_WIDTH / 2, ELEVATOR_HEIGHT, ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左上
+			Vector(  ELEVATOR_WIDTH / 2, ELEVATOR_HEIGHT, ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右上
+			Vector( -ELEVATOR_WIDTH / 2,               0, ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左下
+			Vector(  ELEVATOR_WIDTH / 2,               0, ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右下
 		};
 
 		for ( int i = 0; i < NORMAL_WALL; i++ ) {
@@ -177,10 +202,10 @@ void Elevator::generateElevator( ) {
 	{ 
 		// 床
 		Vector floor_vertex_pos[ 4 ] = {
-			Vector( -ELEVATOR_WIDTH, 0,  ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左上
-			Vector(  ELEVATOR_WIDTH, 0,  ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右上
-			Vector( -ELEVATOR_WIDTH, 0, -ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左下
-			Vector(  ELEVATOR_WIDTH, 0, -ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右下
+			Vector( -ELEVATOR_WIDTH / 2, 0,  ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左上
+			Vector(  ELEVATOR_WIDTH / 2, 0,  ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右上
+			Vector( -ELEVATOR_WIDTH / 2, 0, -ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左下
+			Vector(  ELEVATOR_WIDTH / 2, 0, -ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右下
 		};
 		Model::Vertex floor_vertex[ 4 ] = {
 			Model::Vertex( floor_vertex_pos[ 0 ], 0, 0, Vector( 0, 1, 0 ) ), // 左上
@@ -200,10 +225,10 @@ void Elevator::generateElevator( ) {
 
 		// 天井
 		Vector ceiling_vertex_pos[ 4 ] = {
-			Vector( -ELEVATOR_WIDTH, ELEVATOR_HEIGHT,  ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左上
-			Vector(  ELEVATOR_WIDTH, ELEVATOR_HEIGHT,  ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右上
-			Vector( -ELEVATOR_WIDTH, ELEVATOR_HEIGHT, -ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左下
-			Vector(  ELEVATOR_WIDTH, ELEVATOR_HEIGHT, -ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右下
+			Vector( -ELEVATOR_WIDTH / 2, ELEVATOR_HEIGHT,  ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左上
+			Vector(  ELEVATOR_WIDTH / 2, ELEVATOR_HEIGHT,  ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右上
+			Vector( -ELEVATOR_WIDTH / 2, ELEVATOR_HEIGHT, -ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左下
+			Vector(  ELEVATOR_WIDTH / 2, ELEVATOR_HEIGHT, -ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右下
 		};
 		Model::Vertex ceiling_vertex[ 4 ] = {
 			Model::Vertex( ceiling_vertex_pos[ 0 ], 0, 0, Vector( 0, 1, 0 ) ), // 左上
@@ -232,15 +257,15 @@ void Elevator::generateElevator( ) {
 	_elevator_door_right->setTexture( Drawer::getTask( )->getImage( ELEVATOR_TEXTURE ) );
 
 	{
-		const double DOOR_WIDTH = ELEVATOR_WIDTH;
+		const double DOOR_WIDTH = ELEVATOR_WIDTH / 2;
 		Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), -PI * 0.5 * NORMAL_WALL );
 
 		// 右側
 		Vector right_door_vertex_pos[ 4 ] = {
-			Vector( -DOOR_WIDTH, ELEVATOR_HEIGHT, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左上
-			Vector(           0, ELEVATOR_HEIGHT, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右上
-			Vector( -DOOR_WIDTH,               0, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左下
-			Vector(           0,               0, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右下
+			Vector( -DOOR_WIDTH, ELEVATOR_HEIGHT, ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左上
+			Vector(           0, ELEVATOR_HEIGHT, ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右上
+			Vector( -DOOR_WIDTH,               0, ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左下
+			Vector(           0,               0, ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右下
 		};
 		Model::Vertex right_door_vertex[ 4 ] = {
 			Model::Vertex( rot.multiply( right_door_vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
@@ -260,10 +285,10 @@ void Elevator::generateElevator( ) {
 
 		// 左側
 		Vector left_door_vertex_pos[ 4 ] = {
-			Vector(          0, ELEVATOR_HEIGHT, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左上
-			Vector( DOOR_WIDTH, ELEVATOR_HEIGHT, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右上
-			Vector(          0,               0, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 左下
-			Vector( DOOR_WIDTH,               0, ELEVATOR_WIDTH ) * MIRI_TO_METER_UNIT, // 右下
+			Vector(          0, ELEVATOR_HEIGHT, ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左上
+			Vector( DOOR_WIDTH, ELEVATOR_HEIGHT, ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右上
+			Vector(          0,               0, ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左下
+			Vector( DOOR_WIDTH,               0, ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右下
 		};
 		Model::Vertex left_door_vertex[ 4 ] = {
 			Model::Vertex( rot.multiply( left_door_vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
@@ -279,4 +304,24 @@ void Elevator::generateElevator( ) {
 		_elevator_door_left->setVertex( 4, left_door_vertex[ 3 ] );
 		_elevator_door_left->setVertex( 5, left_door_vertex[ 2 ] );
 	}
+}
+
+void Elevator::generateElevatorCollider( ) {
+	// 高さはGFがy=0で6階層したから伸ばすため　高さ * FLOOR_NUM
+	Vector pos  = Vector( 0, ( MAX_FLOOR * FLOOR_HEIGHT * -1 + FLOOR_HEIGHT ) / 2, ELEVATOR_WIDTH / 2 );
+	Vector norm = Vector( 0, 0, -1 );
+	
+	// 通常壁
+	for ( int i = 0; i < WALL_COLLIDER_NUM; i++ ) {
+		Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), -PI * 0.5 * i );
+		Vector pos_  = rot.multiply( pos ) + Vector( _pos.x, 0, _pos.z );
+		Vector norm_ = rot.multiply( norm );
+		_wall_colliders[ i ] = WallPtr( new Wall( pos_, norm_, ELEVATOR_WIDTH, ELEVATOR_HEIGHT * ( MAX_FLOOR + 1 ) ) );
+	}
+
+	// ドアの壁
+	Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), -PI * 0.5 * WALL_COLLIDER_NUM );
+	Vector pos_  = rot.multiply( pos ) + Vector( _pos.x, 0, _pos.z );
+	Vector norm_ = rot.multiply( norm );
+	_door_collider = DoorPtr( new Door( pos_, norm_, ELEVATOR_WIDTH, ELEVATOR_HEIGHT * ( MAX_FLOOR + 1 ) ) );
 }

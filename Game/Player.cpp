@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "define.h"
+#include "SquareCollider.h"
 
 #include "Camera.h"
 #include "Mouse.h"
@@ -13,7 +14,7 @@ const double MOVE_SPEED = 100;
 
 
 // あとで外部ファイルにする
-const double HEIGHT = 1500.0;
+const double HEIGHT = FLOOR_HEIGHT / 2;
 const double COLLIDER_SIZE = 1000.0;
 
 Player::Player( ) :
@@ -22,10 +23,14 @@ _HEIGHT( HEIGHT ),
 _PLAYER_COLLIDER_RADIUS( COLLIDER_SIZE ),
 _ground_pos( ),
 _head_pos( 0, _HEIGHT, 0 ),
-_dir( 0, 0, 1 ) {
+_dir( 0, 0, 1 ),
+_floor( FLOOR_GF ),
+_elevator_floor( FLOOR_GF ),
+_elevator_moving( false ) {
 	CameraPtr camera = Camera::getTask( );
 	camera->setCamera( _head_pos, _dir );
 	camera->setCameraUp( Vector( 0, 1, 0 ) );
+	camera->setNearFar( 1 * ( float )MIRI_TO_METER_UNIT, FLOOR_WIDTH );
 }
 
 Player::~Player( ) {
@@ -46,9 +51,37 @@ void Player::update( ) {
 }
 
 void Player::onColliderEnter( ColliderConstPtr collider ) {
-	if ( collider->getTag( ) == OBJECT_TAG_WALL ) {
-		_ground_pos = Vector( );
+
+	OBJECT_TAG tag = collider->getTag( );
+
+	// フロアの壁との接触
+	if ( tag == OBJECT_TAG_WALL ) {
+		adjustPosHitWall( collider );
 	}
+
+	// フロアのエレベーターのある壁との接触
+	if ( tag == OBJECT_TAG_ELEVATOR_SIDE_WALL ) {
+		// 自分のフロアとエレベーターのフロアが一緒なら何もしない
+		if ( _elevator_floor != _floor || _elevator_moving ) {
+			adjustPosHitWall( collider );
+		}
+	}
+
+	// エレベーターの壁
+	if ( tag == OBJECT_TAG_ELEVATOR_DOOR ) {
+		if ( _elevator_moving ) {
+			adjustPosHitWall( collider );
+		}
+	}
+}
+
+void Player::announceArrive( int floor ) {
+	_elevator_floor = ( FLOOR )floor;
+	_elevator_moving = false;
+}
+
+void Player::announceMove( ) {
+	_elevator_moving = true;
 }
 
 void Player::updatePos( ) {
@@ -100,4 +133,19 @@ void Player::updateEye( ) {
 
 	CameraPtr camera = Camera::getTask( );
 	camera->setCamera( _head_pos * MIRI_TO_METER_UNIT, ( _head_pos + _dir ) * MIRI_TO_METER_UNIT );
+}
+
+void Player::adjustPosHitWall( ColliderConstPtr collider ) {
+	SquareColliderConstPtr wall = std::dynamic_pointer_cast< const SquareCollider >( collider );
+	Vector norm = wall->getNorm( );
+	Vector wall_center = wall->getPos( );
+
+	// 調整する方向を計算
+	double dot = norm.dot( _past_pos - wall_center );
+	int dir = ( dot > 0 ? 1 : -1 );
+
+	// 超過した距離(半径を足した数)
+	double dist = ( norm * dir * -1 ).dot( ( _ground_pos + ( norm * dir * -1 ) * _PLAYER_COLLIDER_RADIUS ) - wall_center );
+
+	_ground_pos = _ground_pos + ( norm * dir * dist );
 }

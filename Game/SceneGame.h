@@ -22,6 +22,7 @@ public:
 private:
 	CollideManagerPtr _collide_manager;
 	FloorPtr _floor_1;
+	FloorPtr _floor_2;
 	ElevatorPtr _elevator;
 	ConsolePtr _console;
 	PlayerPtr _player;

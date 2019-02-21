@@ -9,9 +9,6 @@
     <ClCompile Include="SceneGame.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Elevator.cpp">
-      <Filter>Game\Model</Filter>
-    </ClCompile>
     <ClCompile Include="Page.cpp">
       <Filter>Game\Console</Filter>
     </ClCompile>
@@ -39,9 +36,6 @@
     <ClCompile Include="Collider.cpp">
       <Filter>Game\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="Floor.cpp">
       <Filter>Game\Model\Floor</Filter>
     </ClCompile>
@@ -53,6 +47,15 @@
     </ClCompile>
     <ClCompile Include="TestSquare.cpp">
       <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>Game\Model\Elevator</Filter>
+    </ClCompile>
+    <ClCompile Include="Elevator.cpp">
+      <Filter>Game\Model\Elevator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +92,15 @@
     <Filter Include="Debug">
       <UniqueIdentifier>{081684e2-0e5b-4257-868d-15e4e36977ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Interface">
+      <UniqueIdentifier>{fdee37cc-d2d7-4dac-8649-7e8c0e464326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Player">
+      <UniqueIdentifier>{e12a181e-1776-470e-8e27-c349ae8253f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Model\Elevator">
+      <UniqueIdentifier>{3533635d-677e-42c8-835f-7190a984d05a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -101,9 +113,6 @@
     </ClInclude>
     <ClInclude Include="SceneGame.h">
       <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Elevator.h">
-      <Filter>Game\Model</Filter>
     </ClInclude>
     <ClInclude Include="Page.h">
       <Filter>Game\Console</Filter>
@@ -132,9 +141,6 @@
     <ClInclude Include="Collider.h">
       <Filter>Game\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Floor.h">
       <Filter>Game\Model\Floor</Filter>
     </ClInclude>
@@ -146,6 +152,18 @@
     </ClInclude>
     <ClInclude Include="TestSquare.h">
       <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="ElevatorAnnounce.h">
+      <Filter>Game\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>Game\Model\Elevator</Filter>
+    </ClInclude>
+    <ClInclude Include="Elevator.h">
+      <Filter>Game\Model\Elevator</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

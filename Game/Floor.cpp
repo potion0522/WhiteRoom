@@ -6,6 +6,7 @@
 #include "Model.h"
 #include "Mathematics.h"
 #include "Drawer.h"
+#include "Manager.h"
 
 const char* ROOM_TEXTURE = "Game/Texture/FloorTexture.png";
 
@@ -23,7 +24,10 @@ Floor::~Floor( ) {
 }
 
 void Floor::draw( ) const {
+	Manager* manager = Manager::getInstance( );
+	manager->setUseBackCulling( false );
 	_floor->draw( );
+	manager->setUseBackCulling( true );
 }
 
 double Floor::getY( ) const {
@@ -73,7 +77,7 @@ void Floor::generateFloor( ) {
 
 
 	{ // エレベーターのある壁
-		const double WALL_WIDTH = ( FLOOR_WIDTH / 2 - ELEVATOR_WIDTH );
+		const double WALL_WIDTH = ( FLOOR_WIDTH / 2 - ELEVATOR_WIDTH / 2 );
 
 		// 270度の回転行列(壁が4枚なので)
 		Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI * 0.5 * NORMAL_WALL );
@@ -150,20 +154,22 @@ void Floor::generateFloor( ) {
 }
 
 void Floor::generateFloorCollider( ) {
+	const double OVER_SIZE = 500; // ちょっとだけ大きめに判定を作る
+
 	{ // 通常壁の当たり判定
 		Vector norm = Vector( 0, 0, -1 );
 		Vector pos  = Vector( 0, FLOOR_HEIGHT / 2, FLOOR_WIDTH / 2 );
 
 		for ( int i = 0; i < NORMAL_WALL_NUM; i++ ) {
 			Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI * 0.5 * i );
-			Vector pos_  = rot.multiply( pos );
+			Vector pos_  = rot.multiply( pos ) + Vector( 0, _y, 0 );
 			Vector norm_ = rot.multiply( norm );
-			_wall_colliders[ i ] = WallPtr( new Wall( pos_, norm_, FLOOR_WIDTH, FLOOR_HEIGHT ) );
+			_wall_colliders[ i ] = WallPtr( new Wall( pos_, norm_, FLOOR_WIDTH + OVER_SIZE, FLOOR_HEIGHT ) );
 		}
 	}
 	
 	{ // エレベーターのある壁の当たり判定
-		const double SIDE_WALL_WIDTH     = ( FLOOR_WIDTH - ELEVATOR_WIDTH * 2 ) / 2;
+		const double SIDE_WALL_WIDTH     = ( FLOOR_WIDTH - ELEVATOR_WIDTH ) / 2;
 		const double ELEVATOR_WALL_WIDTH = ELEVATOR_WIDTH;
 
 		Vector norm = Vector( 0, 0, -1 );
@@ -176,14 +182,14 @@ void Floor::generateFloorCollider( ) {
 		// 270度回転
 		Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI * 0.5 * 3 );
 		for ( int i = 0; i < ELEVATOR_SIDE_WALL_NUM; i++ ) {
-			pos[ i ] = rot.multiply( pos[ i ] );
+			pos[ i ] = rot.multiply( pos[ i ] ) + Vector( 0, _y, 0 );
 		}
 		norm = rot.multiply( norm );
 
 		// 回転した座標で当たり判定を生成
-		_wall_colliders[ NORMAL_WALL_NUM + 0 ] = WallPtr( new Wall( pos[ 0 ], norm,     SIDE_WALL_WIDTH, FLOOR_HEIGHT ) );
-		_wall_colliders[ NORMAL_WALL_NUM + 1 ] = WallPtr( new Wall( pos[ 1 ], norm, ELEVATOR_WALL_WIDTH, FLOOR_HEIGHT ) );
-		_wall_colliders[ NORMAL_WALL_NUM + 2 ] = WallPtr( new Wall( pos[ 2 ], norm,     SIDE_WALL_WIDTH, FLOOR_HEIGHT ) );
+		_wall_colliders[ NORMAL_WALL_NUM + 0 ] = WallPtr( new Wall( pos[ 0 ], norm,     SIDE_WALL_WIDTH + OVER_SIZE, FLOOR_HEIGHT ) );
+		_wall_colliders[ NORMAL_WALL_NUM + 1 ] = WallPtr( new Wall( pos[ 1 ], norm, ELEVATOR_WALL_WIDTH + OVER_SIZE, FLOOR_HEIGHT, OBJECT_TAG_ELEVATOR_SIDE_WALL ) );
+		_wall_colliders[ NORMAL_WALL_NUM + 2 ] = WallPtr( new Wall( pos[ 2 ], norm,     SIDE_WALL_WIDTH + OVER_SIZE, FLOOR_HEIGHT ) );
 	}
 }
 

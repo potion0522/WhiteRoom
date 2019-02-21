@@ -1,11 +1,17 @@
 #pragma once
 #include "smart_ptr.h"
 #include "Mathematics.h"
+#include "define.h"
 
-#include "SquareCollider.h"
+#include <array>
+#include <vector>
 
 PTR( Elevator );
 PTR( Model );
+PTR( ElevatorAnnounce );
+PTR( Wall );
+PTR( Door );
+PTR( CollideManager );
 
 class Elevator {
 private:
@@ -17,12 +23,13 @@ private:
 	};
 
 public:
-	Elevator( const Vector& init_pos );
+	Elevator( const Vector& init_pos, CollideManagerPtr collide_manager );
 	virtual ~Elevator( );
 
 public:
 	void update( );
 	void setMoveOrder( int order_floor );
+	void subscribe( ElevatorAnnouncePtr subscriber );
 	void draw( ) const;
 
 private:
@@ -33,17 +40,25 @@ private:
 	void actOnOpening( );
 	void actOnClosing( );
 	void generateElevator( );
+	void generateElevatorCollider( );
 
 private:
-	Vector _elevator_pos;
+	static const int WALL_COLLIDER_NUM = 3;
+
+private:
+	Vector _pos;
 	double _door_open_length;
-	unsigned char _past_floor;
-	unsigned char _floor;
+	FLOOR _past_floor;
+	FLOOR _floor;
 	unsigned int _starting_time;
 	ELEVATOR_STATE _state;
 
 	ModelPtr _elevator_room;
 	ModelPtr _elevator_door_left;
 	ModelPtr _elevator_door_right;
+	std::vector< ElevatorAnnouncePtr > _subscribers;
+
+	std::array< WallPtr, WALL_COLLIDER_NUM > _wall_colliders;
+	DoorPtr _door_collider;
 };
 
