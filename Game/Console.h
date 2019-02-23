@@ -4,7 +4,7 @@
 #include <array>
 
 PTR( Image );
-PTR( Elevator );
+PTR( ElevatorButton );
 PTR( Page );
 
 class Console {
@@ -31,7 +31,7 @@ public:
 	};
 
 public:
-	Console( ElevatorPtr elevator );
+	Console( ElevatorButtonPtr elevator_button );
 	virtual ~Console( );
 
 public:
@@ -58,7 +58,7 @@ private:
 	Vector _slide_start_pos;
 	Vector _slide_end_pos;
 	ImagePtr _bg;
-	ElevatorPtr _elevator;
+	ElevatorButtonPtr _elevator_button;
 	std::array< PagePtr, MAX_PAGE_NUM > _pages;
 };
 

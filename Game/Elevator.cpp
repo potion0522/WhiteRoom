@@ -4,6 +4,7 @@
 #include "Wall.h"
 #include "Door.h"
 #include "CollideManager.h"
+#include "ElevatorButton.h"
 
 #include "Drawer.h"
 #include "Model.h"
@@ -22,6 +23,9 @@ _state( ELEVATOR_STATE_IDLE ),
 _starting_time( 0 ) {
 	// 通知機構のインスタンス
 	_announce = ElevatorAnnouncePtr( new ElevatorAnnounce );
+	
+	// 外部からのアクセス用クラスのインスタンス
+	_elevator_button = ElevatorButtonPtr( new ElevatorButton( [ & ]( FLOOR floor ) { requestMoveElevatorButtonToElevator( floor ); } ) );
 
 	// モデルの作成
 	generateElevator( );
@@ -54,26 +58,12 @@ void Elevator::update( ) {
 	}
 }
 
-void Elevator::setMoveOrder( FLOOR order_floor ) {
-	if ( !isItPossibleToOrderElevator( ) ) {
-		return;
-	}
-
-	// 現在フロアとオーダーフロアを記録
-	_past_floor = _floor;
-	_floor = ( FLOOR )order_floor;
-	_state = ELEVATOR_STATE_CLOSING;
-	_starting_time = getNowCount( );
-	
-	// 通知
-	_announce->announceMove( );
-
-	// ドアの判定をつける
-	_door_collider->setEnabled( true );
-}
-
 ElevatorAnnounceObservablePtr Elevator::getAnnounceObservable( ) const {
 	return _announce;
+}
+
+ElevatorButtonPtr Elevator::getElevatorButton( ) const {
+	return _elevator_button;
 }
 
 void Elevator::draw( ) const {
@@ -89,6 +79,24 @@ void Elevator::draw( ) const {
 	_elevator_door_left->draw ( ( _pos + door_open ) * MIRI_TO_METER_UNIT );
 	_elevator_door_right->draw( ( _pos - door_open ) * MIRI_TO_METER_UNIT );
 	manager->setUseBackCulling( true );
+}
+
+void Elevator::requestMoveElevatorButtonToElevator( FLOOR order ) {
+	if ( !isItPossibleToOrderElevator( ) ) {
+		return;
+	}
+
+	// 現在フロアとオーダーフロアを記録
+	_past_floor = _floor;
+	_floor = ( FLOOR )order;
+	_state = ELEVATOR_STATE_CLOSING;
+	_starting_time = getNowCount( );
+	
+	// 通知
+	_announce->announceMove( );
+
+	// ドアの判定をつける
+	_door_collider->setEnabled( true );
 }
 
 bool Elevator::isItPossibleToOrderElevator( ) const {

@@ -13,6 +13,7 @@ PTR( ElevatorAnnounceObservable );
 PTR( Wall );
 PTR( Door );
 PTR( CollideManager );
+PTR( ElevatorButton );
 
 class Elevator {
 private:
@@ -28,13 +29,13 @@ public:
 	virtual ~Elevator( );
 
 public:
-	void initializeCall( );
 	void update( );
 	void draw( ) const;
 	ElevatorAnnounceObservablePtr getAnnounceObservable( ) const;
-	void setMoveOrder( FLOOR floor );
+	ElevatorButtonPtr getElevatorButton( ) const;
 
 private:
+	void requestMoveElevatorButtonToElevator( FLOOR order );
 	bool isItPossibleToOrderElevator( ) const;
 	int getNowCount( ) const;
 	void actOnIdle( );
@@ -59,6 +60,7 @@ private:
 	ModelPtr _elevator_door_left;
 	ModelPtr _elevator_door_right;
 	ElevatorAnnouncePtr _announce;
+	ElevatorButtonPtr _elevator_button;
 
 	std::array< WallPtr, WALL_COLLIDER_NUM > _wall_colliders;
 	DoorPtr _door_collider;

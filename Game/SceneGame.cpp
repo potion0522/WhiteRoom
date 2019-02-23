@@ -15,7 +15,7 @@ SceneGame::SceneGame( ) {
 	_elevator = ElevatorPtr( new Elevator( Vector( FLOOR_WIDTH / 2 + ELEVATOR_WIDTH / 2, 0, 0 ), _collide_manager ) );
 	_floor_1 = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ), FLOOR_GF ) );
 	_floor_2 = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ), FLOOR_1 ) );
-	_console = ConsolePtr( new Console( _elevator ) );
+	_console = ConsolePtr( new Console( _elevator->getElevatorButton( ) ) );
 	_player = PlayerPtr( new Player );
 
 	// “–‚½‚è”»’è

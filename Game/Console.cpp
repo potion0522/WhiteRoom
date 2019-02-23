@@ -1,5 +1,5 @@
 #include "Console.h"
-#include "Elevator.h"
+#include "ElevatorButton.h"
 #include "Page.h"
 #include "define.h"
 
@@ -11,8 +11,8 @@
 const char* CONSOLE_BG_FILEPATH = "Game/Console/ConsoleBG.png";
 const double SLIDE_DETECT_LENGTH = SCREEN_HEIGHT * 0.30; // ‰æ–Ê‚‚³‚Ì30%ˆÈã‚ÅƒXƒ‰ƒCƒh
 
-Console::Console( ElevatorPtr elevator ) :
-_elevator( elevator ), 
+Console::Console( ElevatorButtonPtr elevator_button ) :
+_elevator_button( elevator_button ), 
 _state( CONSOLE_STATE_NONE ),
 _page_num( PAGE_NUM_1 ),
 _slide_start_pos( ),
@@ -172,5 +172,5 @@ void Console::actOnSlideRight( ) {
 }
 
 void Console::orderFloorChangeToElevator( int floor ) {
-	_elevator->setMoveOrder( ( FLOOR )floor );
+	_elevator_button->pushButton( ( FLOOR )floor );
 }
