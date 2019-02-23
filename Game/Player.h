@@ -1,13 +1,15 @@
 #pragma once
 #include "SphereCollider.h"
 #include "ElevatorAnnounce.h"
+#include "ElevatorBox.h"
 #include "smart_ptr.h"
 
 PTR( Player );
+PTR( ElevatorBox );
 
 class Player : public SphereCollider {
 public:
-	Player( );
+	Player( ElevatorBoxPtr elevator_box );
 	virtual ~Player( );
 
 public:
@@ -31,5 +33,6 @@ private:
 	Vector _dir;
 	FLOOR _floor;
 	FLOOR _elevator_floor;
+	ElevatorBoxPtr _elevator_box;
 };
 

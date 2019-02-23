@@ -63,6 +63,9 @@
     <ClCompile Include="ElevatorButton.cpp">
       <Filter>Game\Model\Elevator</Filter>
     </ClCompile>
+    <ClCompile Include="ElevatorBox.cpp">
+      <Filter>Game\Model\Elevator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -178,6 +181,9 @@
       <Filter>Game\Model\Elevator\Announce</Filter>
     </ClInclude>
     <ClInclude Include="ElevatorButton.h">
+      <Filter>Game\Model\Elevator</Filter>
+    </ClInclude>
+    <ClInclude Include="ElevatorBox.h">
       <Filter>Game\Model\Elevator</Filter>
     </ClInclude>
   </ItemGroup>

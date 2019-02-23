@@ -16,12 +16,11 @@ SceneGame::SceneGame( ) {
 	_floor_1 = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ), FLOOR_GF ) );
 	_floor_2 = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ), FLOOR_1 ) );
 	_console = ConsolePtr( new Console( _elevator->getElevatorButton( ) ) );
-	_player = PlayerPtr( new Player );
+	_player = PlayerPtr( new Player( _elevator->getElevatorBox( ) ) );
 
 	// 当たり判定
 	_collide_manager->addDynamicCollider( _player );
-
-	// エレベーターイベント
+	_collide_manager->addDynamicCollider( _elevator );
 }
 
 SceneGame::~SceneGame( ) {

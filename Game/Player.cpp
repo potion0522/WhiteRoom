@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "define.h"
+#include "ElevatorBox.h"
 #include "SquareCollider.h"
 
 #include "Camera.h"
@@ -17,7 +18,10 @@ const double MOVE_SPEED = 100;
 const double HEIGHT = FLOOR_HEIGHT / 2;
 const double COLLIDER_SIZE = 1000.0;
 
-Player::Player( ) :
+PTR( SphereCollider );
+PTR( SquareCollider );
+
+Player::Player( ElevatorBoxPtr elevator_box ) :
 SphereCollider( _head_pos, COLLIDER_SIZE, OBJECT_TAG_PLAYER ),
 _HEIGHT( HEIGHT ),
 _PLAYER_COLLIDER_RADIUS( COLLIDER_SIZE ),
@@ -25,7 +29,8 @@ _ground_pos( ),
 _head_pos( 0, _HEIGHT, 0 ),
 _dir( 0, 0, 1 ),
 _floor( FLOOR_GF ),
-_elevator_floor( ELEVATOR_INIT_FLOOR ) {
+_elevator_floor( ELEVATOR_INIT_FLOOR ),
+_elevator_box( elevator_box ) {
 	CameraPtr camera = Camera::getTask( );
 	camera->setCamera( _head_pos, _dir );
 	camera->setCameraUp( Vector( 0, 1, 0 ) );
@@ -66,6 +71,18 @@ void Player::onColliderEnter( ColliderConstPtr collider ) {
 	// エレベーターの壁
 	if ( tag == OBJECT_TAG_ELEVATOR_DOOR ) {
 		adjustPosHitWall( collider );
+	}
+
+	// エレベーターに乗っている
+	if ( tag == OBJECT_TAG_ELEVATOR ) {
+		SphereColliderConstPtr sphere = std::dynamic_pointer_cast< const SphereCollider >( collider );
+		double len = ( sphere->getPos( ) - _head_pos ).getLength2( );
+		double c = sphere->getRadius( );
+		if ( len > c * c ) {
+			return;
+		}
+
+		_elevator_box->requestRideOnElevator( &_ground_pos );
 	}
 }
 

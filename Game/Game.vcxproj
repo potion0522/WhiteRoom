@@ -163,6 +163,7 @@
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Elevator.cpp" />
     <ClCompile Include="ElevatorAnnounce.cpp" />
+    <ClCompile Include="ElevatorBox.cpp" />
     <ClCompile Include="ElevatorButton.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Floor.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="ElevatorAnnounce.h" />
     <ClInclude Include="ElevatorAnnounceObservable.h" />
     <ClInclude Include="ElevatorAnnounceObserver.h" />
+    <ClInclude Include="ElevatorBox.h" />
     <ClInclude Include="ElevatorButton.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Page.h" />
