@@ -88,6 +88,10 @@ void CollideManager::detectDynamicToStaticObject( ) {
 }
 
 bool CollideManager::isCollideSphereAndSphere( SphereColliderPtr collider1, SphereColliderPtr collider2 ) {
+	if ( !collider1->isEnabled( ) || !collider2->isEnabled( ) ) {
+		return false;
+	}
+
 	Vector pos1 = collider1->getPos( );
 	double radius1 = collider1->getRadius( );
 
@@ -101,6 +105,10 @@ bool CollideManager::isCollideSphereAndSphere( SphereColliderPtr collider1, Sphe
 }
 
 bool CollideManager::isCollideSphereAndSquare( SphereColliderPtr collider1, SquareColliderPtr collider2 ) {
+	if ( !collider1->isEnabled( ) || !collider2->isEnabled( ) ) {
+		return false;
+	}
+
 	Vector sphere_pos = collider1->getPos( );
 	double radius = collider1->getRadius( );
 

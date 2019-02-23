@@ -172,5 +172,5 @@ void Console::actOnSlideRight( ) {
 }
 
 void Console::orderFloorChangeToElevator( int floor ) {
-	_elevator->setMoveOrder( floor );
+	_elevator->setMoveOrder( ( FLOOR )floor );
 }

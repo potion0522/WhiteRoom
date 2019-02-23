@@ -1,7 +1,21 @@
 #pragma once
-class ElevatorAnnounce {
+#include "ElevatorAnnounceObservable.h"
+#include "ElevatorAnnounceObserver.h"
+#include <vector>
+
+class ElevatorAnnounce : public ElevatorAnnounceObservable, public ElevatorAnnounceObserver {
 public:
-	virtual void announceArrive( int floor ) = 0;
-	virtual void announceMove( ) = 0;
+	ElevatorAnnounce( );
+	virtual ~ElevatorAnnounce( );
+
+public:
+	void subscribeAnnounceArrive( std::function< void( FLOOR floor ) > func );
+	void subscribeAnnounceMove( std::function< void( ) > func );
+	void announceArrive( FLOOR floor );
+	void announceMove( );
+
+private:
+	std::vector< std::function< void( FLOOR floor ) > > _announce_arrive;
+	std::vector< std::function< void( ) > > _announce_move;
 };
 

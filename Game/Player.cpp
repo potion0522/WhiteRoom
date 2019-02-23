@@ -25,8 +25,7 @@ _ground_pos( ),
 _head_pos( 0, _HEIGHT, 0 ),
 _dir( 0, 0, 1 ),
 _floor( FLOOR_GF ),
-_elevator_floor( FLOOR_GF ),
-_elevator_moving( false ) {
+_elevator_floor( ELEVATOR_INIT_FLOOR ) {
 	CameraPtr camera = Camera::getTask( );
 	camera->setCamera( _head_pos, _dir );
 	camera->setCameraUp( Vector( 0, 1, 0 ) );
@@ -61,27 +60,13 @@ void Player::onColliderEnter( ColliderConstPtr collider ) {
 
 	// フロアのエレベーターのある壁との接触
 	if ( tag == OBJECT_TAG_ELEVATOR_SIDE_WALL ) {
-		// 自分のフロアとエレベーターのフロアが一緒なら何もしない
-		if ( _elevator_floor != _floor || _elevator_moving ) {
-			adjustPosHitWall( collider );
-		}
+		adjustPosHitWall( collider );
 	}
 
 	// エレベーターの壁
 	if ( tag == OBJECT_TAG_ELEVATOR_DOOR ) {
-		if ( _elevator_moving ) {
-			adjustPosHitWall( collider );
-		}
+		adjustPosHitWall( collider );
 	}
-}
-
-void Player::announceArrive( int floor ) {
-	_elevator_floor = ( FLOOR )floor;
-	_elevator_moving = false;
-}
-
-void Player::announceMove( ) {
-	_elevator_moving = true;
 }
 
 void Player::updatePos( ) {

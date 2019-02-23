@@ -14,6 +14,8 @@ public:
 public:
 	const Vector& getPos( ) const;
 	OBJECT_TAG getTag( ) const;
+	bool isEnabled( ) const;
+	void setEnabled( bool enabled );
 
 public:
 	virtual void onColliderEnter( ColliderConstPtr collider );
@@ -21,5 +23,6 @@ public:
 private:
 	const Vector& _pos;
 	OBJECT_TAG _tag;
+	bool _enabled;
 };
 

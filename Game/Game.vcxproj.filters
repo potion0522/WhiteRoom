@@ -57,6 +57,9 @@
     <ClCompile Include="Elevator.cpp">
       <Filter>Game\Model\Elevator</Filter>
     </ClCompile>
+    <ClCompile Include="ElevatorAnnounce.cpp">
+      <Filter>Game\Model\Elevator\Announce</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -92,14 +95,14 @@
     <Filter Include="Debug">
       <UniqueIdentifier>{081684e2-0e5b-4257-868d-15e4e36977ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Interface">
-      <UniqueIdentifier>{fdee37cc-d2d7-4dac-8649-7e8c0e464326}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Player">
       <UniqueIdentifier>{e12a181e-1776-470e-8e27-c349ae8253f7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\Model\Elevator">
       <UniqueIdentifier>{3533635d-677e-42c8-835f-7190a984d05a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Model\Elevator\Announce">
+      <UniqueIdentifier>{282873fc-8843-47c7-9a67-6ec140539fec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -153,9 +156,6 @@
     <ClInclude Include="TestSquare.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="ElevatorAnnounce.h">
-      <Filter>Game\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Game\Player</Filter>
     </ClInclude>
@@ -164,6 +164,15 @@
     </ClInclude>
     <ClInclude Include="Elevator.h">
       <Filter>Game\Model\Elevator</Filter>
+    </ClInclude>
+    <ClInclude Include="ElevatorAnnounceObservable.h">
+      <Filter>Game\Model\Elevator\Announce</Filter>
+    </ClInclude>
+    <ClInclude Include="ElevatorAnnounceObserver.h">
+      <Filter>Game\Model\Elevator\Announce</Filter>
+    </ClInclude>
+    <ClInclude Include="ElevatorAnnounce.h">
+      <Filter>Game\Model\Elevator\Announce</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

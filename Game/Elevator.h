@@ -9,6 +9,7 @@
 PTR( Elevator );
 PTR( Model );
 PTR( ElevatorAnnounce );
+PTR( ElevatorAnnounceObservable );
 PTR( Wall );
 PTR( Door );
 PTR( CollideManager );
@@ -27,10 +28,11 @@ public:
 	virtual ~Elevator( );
 
 public:
+	void initializeCall( );
 	void update( );
-	void setMoveOrder( int order_floor );
-	void subscribe( ElevatorAnnouncePtr subscriber );
 	void draw( ) const;
+	ElevatorAnnounceObservablePtr getAnnounceObservable( ) const;
+	void setMoveOrder( FLOOR floor );
 
 private:
 	bool isItPossibleToOrderElevator( ) const;
@@ -56,7 +58,7 @@ private:
 	ModelPtr _elevator_room;
 	ModelPtr _elevator_door_left;
 	ModelPtr _elevator_door_right;
-	std::vector< ElevatorAnnouncePtr > _subscribers;
+	ElevatorAnnouncePtr _announce;
 
 	std::array< WallPtr, WALL_COLLIDER_NUM > _wall_colliders;
 	DoorPtr _door_collider;

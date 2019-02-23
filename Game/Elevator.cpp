@@ -17,9 +17,12 @@ const int MAX_DOOR_MOVE_LENGTH = ELEVATOR_WIDTH / 2;
 Elevator::Elevator( const Vector& init_pos, CollideManagerPtr collide_manager ) :
 _pos( init_pos ),
 _door_open_length( MAX_DOOR_MOVE_LENGTH ),
-_floor( FLOOR_GF ),
+_floor( ELEVATOR_INIT_FLOOR ),
 _state( ELEVATOR_STATE_IDLE ),
 _starting_time( 0 ) {
+	// 通知機構のインスタンス
+	_announce = ElevatorAnnouncePtr( new ElevatorAnnounce );
+
 	// モデルの作成
 	generateElevator( );
 	generateElevatorCollider( );
@@ -51,7 +54,7 @@ void Elevator::update( ) {
 	}
 }
 
-void Elevator::setMoveOrder( int order_floor ) {
+void Elevator::setMoveOrder( FLOOR order_floor ) {
 	if ( !isItPossibleToOrderElevator( ) ) {
 		return;
 	}
@@ -63,13 +66,14 @@ void Elevator::setMoveOrder( int order_floor ) {
 	_starting_time = getNowCount( );
 	
 	// 通知
-	for ( ElevatorAnnouncePtr announce : _subscribers ) {
-		announce->announceMove( );
-	}
+	_announce->announceMove( );
+
+	// ドアの判定をつける
+	_door_collider->setEnabled( true );
 }
 
-void Elevator::subscribe( ElevatorAnnouncePtr subscriber ) {
-	_subscribers.push_back( subscriber );
+ElevatorAnnounceObservablePtr Elevator::getAnnounceObservable( ) const {
+	return _announce;
 }
 
 void Elevator::draw( ) const {
@@ -97,6 +101,7 @@ int Elevator::getNowCount( ) const {
 
 
 void Elevator::actOnIdle( ) {
+	_door_collider->setEnabled( false );
 }
 
 void Elevator::actOnMoving( ) {
@@ -133,9 +138,7 @@ void Elevator::actOnOpening( ) {
 		_state = ELEVATOR_STATE_IDLE;
 
 		// 通知
-		for ( ElevatorAnnouncePtr announce : _subscribers ) {
-			announce->announceArrive( _floor );
-		}
+		_announce->announceArrive( _floor );
 	}
 }
 

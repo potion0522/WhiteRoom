@@ -2,6 +2,7 @@
 #include "define.h"
 #include "Wall.h"
 #include "CollideManager.h"
+#include "ElevatorAnnounceObservable.h"
 
 #include "Model.h"
 #include "Mathematics.h"
@@ -10,23 +11,44 @@
 
 const char* ROOM_TEXTURE = "Game/Texture/FloorTexture.png";
 
-Floor::Floor( CollideManagerPtr collide_manager, double y ) :
-_y( y ) {
+Floor::Floor( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr observable, FLOOR floor ) :
+_floor( floor ) {
+	// y座標計算
+	_y = ( int )_floor * FLOOR_HEIGHT * -1;
+
 	// 部屋(壁・床)の生成
 	generateFloor( );
 	generateFloorCollider( );
 
 	// 当たり判定をマネージャーに登録する
 	setColliderToCollideManager( collide_manager );
+
+	// エレベーターの通知
+	observable->subscribeAnnounceArrive( 
+		[ & ]( FLOOR elevator_floor ) { 
+		if ( elevator_floor == _floor ) {	
+			_elevator_side_wall->setEnabled( false );
+		} else {
+			_elevator_side_wall->setEnabled( true );
+		}
+	} );
+
+	// エレベーターの初期地点と同じなら非アクティブにする
+	if ( _floor == ELEVATOR_INIT_FLOOR ) {
+		_elevator_side_wall->setEnabled( false );
+	}
 }
 
 Floor::~Floor( ) {
 }
 
+void Floor::update( ) {
+}
+
 void Floor::draw( ) const {
 	Manager* manager = Manager::getInstance( );
 	manager->setUseBackCulling( false );
-	_floor->draw( );
+	_floor_model->draw( );
 	manager->setUseBackCulling( true );
 }
 
@@ -35,14 +57,14 @@ double Floor::getY( ) const {
 }
 
 void Floor::generateFloor( ) {
-	_floor = ModelPtr( new Model );
+	_floor_model = ModelPtr( new Model );
 
 	const int NORMAL_WALL   = 3;
 	const int ELEVATOR_WALL = 2;
 	const int FLOOR_NUM     = 1;
-	_floor->alloc( ( NORMAL_WALL + ELEVATOR_WALL + FLOOR_NUM ) * 2 );
+	_floor_model->alloc( ( NORMAL_WALL + ELEVATOR_WALL + FLOOR_NUM ) * 2 );
 
-	_floor->setTexture( Drawer::getTask( )->getImage( ROOM_TEXTURE ) );
+	_floor_model->setTexture( Drawer::getTask( )->getImage( ROOM_TEXTURE ) );
 
 	{ // 壁3枚
 		Vector vertex_pos[ 4 ] = {
@@ -64,13 +86,13 @@ void Floor::generateFloor( ) {
 			};
 
 			int vertex_idx = i * 6;
-			_floor->setVertex( vertex_idx + 0, vertex[ 0 ] );
-			_floor->setVertex( vertex_idx + 1, vertex[ 1 ] );
-			_floor->setVertex( vertex_idx + 2, vertex[ 2 ] );
+			_floor_model->setVertex( vertex_idx + 0, vertex[ 0 ] );
+			_floor_model->setVertex( vertex_idx + 1, vertex[ 1 ] );
+			_floor_model->setVertex( vertex_idx + 2, vertex[ 2 ] );
 
-			_floor->setVertex( vertex_idx + 3, vertex[ 1 ] );
-			_floor->setVertex( vertex_idx + 4, vertex[ 3 ] );
-			_floor->setVertex( vertex_idx + 5, vertex[ 2 ] );
+			_floor_model->setVertex( vertex_idx + 3, vertex[ 1 ] );
+			_floor_model->setVertex( vertex_idx + 4, vertex[ 3 ] );
+			_floor_model->setVertex( vertex_idx + 5, vertex[ 2 ] );
 		}
 	}
 
@@ -97,13 +119,13 @@ void Floor::generateFloor( ) {
 		};
 
 		int vertex_idx = NORMAL_WALL * 6;
-		_floor->setVertex( vertex_idx + 0, left_side_vertex[ 0 ] );
-		_floor->setVertex( vertex_idx + 1, left_side_vertex[ 1 ] );
-		_floor->setVertex( vertex_idx + 2, left_side_vertex[ 2 ] );
+		_floor_model->setVertex( vertex_idx + 0, left_side_vertex[ 0 ] );
+		_floor_model->setVertex( vertex_idx + 1, left_side_vertex[ 1 ] );
+		_floor_model->setVertex( vertex_idx + 2, left_side_vertex[ 2 ] );
 
-		_floor->setVertex( vertex_idx + 3, left_side_vertex[ 1 ] );
-		_floor->setVertex( vertex_idx + 4, left_side_vertex[ 3 ] );
-		_floor->setVertex( vertex_idx + 5, left_side_vertex[ 2 ] );
+		_floor_model->setVertex( vertex_idx + 3, left_side_vertex[ 1 ] );
+		_floor_model->setVertex( vertex_idx + 4, left_side_vertex[ 3 ] );
+		_floor_model->setVertex( vertex_idx + 5, left_side_vertex[ 2 ] );
 
 
 		// 右側
@@ -121,13 +143,13 @@ void Floor::generateFloor( ) {
 		};
 
 		vertex_idx = ( NORMAL_WALL + 1 ) * 6;
-		_floor->setVertex( vertex_idx + 0, right_side_vertex[ 0 ] );
-		_floor->setVertex( vertex_idx + 1, right_side_vertex[ 1 ] );
-		_floor->setVertex( vertex_idx + 2, right_side_vertex[ 2 ] );
+		_floor_model->setVertex( vertex_idx + 0, right_side_vertex[ 0 ] );
+		_floor_model->setVertex( vertex_idx + 1, right_side_vertex[ 1 ] );
+		_floor_model->setVertex( vertex_idx + 2, right_side_vertex[ 2 ] );
 
-		_floor->setVertex( vertex_idx + 3, right_side_vertex[ 1 ] );
-		_floor->setVertex( vertex_idx + 4, right_side_vertex[ 3 ] );
-		_floor->setVertex( vertex_idx + 5, right_side_vertex[ 2 ] );
+		_floor_model->setVertex( vertex_idx + 3, right_side_vertex[ 1 ] );
+		_floor_model->setVertex( vertex_idx + 4, right_side_vertex[ 3 ] );
+		_floor_model->setVertex( vertex_idx + 5, right_side_vertex[ 2 ] );
 	}
 
 
@@ -143,13 +165,13 @@ void Floor::generateFloor( ) {
 
 
 		int vertex_idx = ( NORMAL_WALL + ELEVATOR_WALL ) * 6;
-		_floor->setVertex( vertex_idx + 0, vertex[ 0 ] );
-		_floor->setVertex( vertex_idx + 1, vertex[ 1 ] );
-		_floor->setVertex( vertex_idx + 2, vertex[ 2 ] );
+		_floor_model->setVertex( vertex_idx + 0, vertex[ 0 ] );
+		_floor_model->setVertex( vertex_idx + 1, vertex[ 1 ] );
+		_floor_model->setVertex( vertex_idx + 2, vertex[ 2 ] );
 
-		_floor->setVertex( vertex_idx + 3, vertex[ 1 ] );
-		_floor->setVertex( vertex_idx + 4, vertex[ 3 ] );
-		_floor->setVertex( vertex_idx + 5, vertex[ 2 ] );
+		_floor_model->setVertex( vertex_idx + 3, vertex[ 1 ] );
+		_floor_model->setVertex( vertex_idx + 4, vertex[ 3 ] );
+		_floor_model->setVertex( vertex_idx + 5, vertex[ 2 ] );
 	}
 }
 
@@ -168,14 +190,13 @@ void Floor::generateFloorCollider( ) {
 		}
 	}
 	
-	{ // エレベーターのある壁の当たり判定
+	{ // エレベーターのある壁 + その両端の壁
 		const double SIDE_WALL_WIDTH     = ( FLOOR_WIDTH - ELEVATOR_WIDTH ) / 2;
 		const double ELEVATOR_WALL_WIDTH = ELEVATOR_WIDTH;
 
 		Vector norm = Vector( 0, 0, -1 );
 		Vector pos[ ELEVATOR_SIDE_WALL_NUM ] = {
 			Vector( -FLOOR_WIDTH / 2, FLOOR_HEIGHT / 2, FLOOR_WIDTH / 2 ) + Vector( SIDE_WALL_WIDTH / 2, 0, 0 ),
-			Vector(                0, FLOOR_HEIGHT / 2, FLOOR_WIDTH / 2 ),
 			Vector(  FLOOR_WIDTH / 2, FLOOR_HEIGHT / 2, FLOOR_WIDTH / 2 ) - Vector( SIDE_WALL_WIDTH / 2, 0, 0 ),
 		};
 
@@ -187,10 +208,15 @@ void Floor::generateFloorCollider( ) {
 		norm = rot.multiply( norm );
 
 		// 回転した座標で当たり判定を生成
-		_wall_colliders[ NORMAL_WALL_NUM + 0 ] = WallPtr( new Wall( pos[ 0 ], norm,     SIDE_WALL_WIDTH + OVER_SIZE, FLOOR_HEIGHT ) );
-		_wall_colliders[ NORMAL_WALL_NUM + 1 ] = WallPtr( new Wall( pos[ 1 ], norm, ELEVATOR_WALL_WIDTH + OVER_SIZE, FLOOR_HEIGHT, OBJECT_TAG_ELEVATOR_SIDE_WALL ) );
-		_wall_colliders[ NORMAL_WALL_NUM + 2 ] = WallPtr( new Wall( pos[ 2 ], norm,     SIDE_WALL_WIDTH + OVER_SIZE, FLOOR_HEIGHT ) );
+		_wall_colliders[ NORMAL_WALL_NUM + 0 ] = WallPtr( new Wall( pos[ 0 ], norm, SIDE_WALL_WIDTH + OVER_SIZE, FLOOR_HEIGHT ) );
+		_wall_colliders[ NORMAL_WALL_NUM + 1 ] = WallPtr( new Wall( pos[ 1 ], norm, SIDE_WALL_WIDTH + OVER_SIZE, FLOOR_HEIGHT ) );
+
+
+
+		// エレベーターのある壁
+		_elevator_side_wall = WallPtr( new Wall( rot.multiply( Vector( 0, FLOOR_HEIGHT / 2, FLOOR_WIDTH / 2 ) + Vector( 0, _y, 0 ) ), norm, ELEVATOR_WALL_WIDTH + OVER_SIZE, FLOOR_HEIGHT, OBJECT_TAG_ELEVATOR_SIDE_WALL ) );
 	}
+
 }
 
 void Floor::setColliderToCollideManager( CollideManagerPtr collide_manager ) {
@@ -198,4 +224,5 @@ void Floor::setColliderToCollideManager( CollideManagerPtr collide_manager ) {
 	for ( int i = 0; i < NORMAL_WALL_NUM + ELEVATOR_SIDE_WALL_NUM; i++ ) {
 		collide_manager->addStaticCollider( _wall_colliders[ i ] );
 	}
+	collide_manager->addStaticCollider( _elevator_side_wall );
 }
