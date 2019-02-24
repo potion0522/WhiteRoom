@@ -9,7 +9,7 @@
 #include "Drawer.h"
 #include "Manager.h"
 
-const char* ROOM_TEXTURE = "Game/Texture/FloorTexture.png";
+const char* ROOM_TEXTURE = "Game/Texture/WallTexture.png";
 
 Floor::Floor( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr observable, FLOOR floor ) :
 _floor( floor ) {
