@@ -2,6 +2,8 @@
 #include "smart_ptr.h"
 
 #include "Scene.h"
+#include "define.h"
+#include <array>
 
 PTR( SceneGame );
 PTR( Floor );
@@ -21,8 +23,7 @@ public:
 
 private:
 	CollideManagerPtr _collide_manager;
-	FloorPtr _floor_1;
-	FloorPtr _floor_2;
+	std::array< FloorPtr, MAX_FLOOR > _floors;
 	ElevatorPtr _elevator;
 	ConsolePtr _console;
 	PlayerPtr _player;

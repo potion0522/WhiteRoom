@@ -26,8 +26,8 @@ const int SCREEN_WIDTH  = 1920;
 const int SCREEN_HEIGHT = 1080;
 
 const int FLOOR_HEIGHT = 5000;  // 部屋の高さ( 床から )
-const int FLOOR_WIDTH  = 25000; // 部屋の幅( 全体 )
-const int FLOOR_TO_FLOOR_SPACE = 500; // 部屋同士の間隔
+const int FLOOR_WIDTH  = 50000; // 部屋の幅( 全体 )
+const int FLOOR_TO_FLOOR_SPACE = 1000; // 部屋同士の間隔
 const int FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT = FLOOR_HEIGHT + FLOOR_TO_FLOOR_SPACE;
 
 const int ELEVATOR_HEIGHT = FLOOR_HEIGHT; // 部屋のサイズと同じ

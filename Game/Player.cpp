@@ -34,7 +34,7 @@ _elevator_box( elevator_box ) {
 	CameraPtr camera = Camera::getTask( );
 	camera->setCamera( _head_pos, _dir );
 	camera->setCameraUp( Vector( 0, 1, 0 ) );
-	camera->setNearFar( 1 * ( float )MIRI_TO_METER_UNIT, FLOOR_WIDTH );
+	camera->setNearFar( 5.0f * ( float )MIRI_TO_METER_UNIT, ( float )( FLOOR_WIDTH * 2 * MIRI_TO_METER_UNIT ) );
 }
 
 Player::~Player( ) {
