@@ -6,6 +6,8 @@
 PTR( Image );
 PTR( ElevatorButton );
 PTR( Page );
+PTR( ConsoleObserver );
+PTR( ConsoleActiveObservable );
 
 class Console {
 public:
@@ -37,6 +39,7 @@ public:
 public:
 	void update( );
 	void draw( ) const;
+	ConsoleActiveObservablePtr getActiveObservable( ) const;
 
 private:
 	bool isChangeActivate( ) const;
@@ -60,5 +63,6 @@ private:
 	ImagePtr _bg;
 	ElevatorButtonPtr _elevator_button;
 	std::array< PagePtr, MAX_PAGE_NUM > _pages;
+	ConsoleObserverPtr _observer;
 };
 

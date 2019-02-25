@@ -2,6 +2,7 @@
 #include "define.h"
 #include "ElevatorBox.h"
 #include "SquareCollider.h"
+#include "ConsoleActiveObservable.h"
 
 #include "Camera.h"
 #include "Mouse.h"
@@ -15,22 +16,34 @@ const double MOVE_SPEED = 100;
 
 
 // あとで外部ファイルにする
-const double HEIGHT = FLOOR_HEIGHT / 2;
-const double COLLIDER_SIZE = 1000.0;
+const double HEIGHT = 1500.0;
+const double COLLIDER_SIZE = 500.0;
 
 PTR( SphereCollider );
 PTR( SquareCollider );
 
-Player::Player( ElevatorBoxPtr elevator_box ) :
+Player::Player( ElevatorBoxPtr elevator_box, ConsoleActiveObservablePtr console_observable ) :
 SphereCollider( _head_pos, COLLIDER_SIZE, OBJECT_TAG_PLAYER ),
 _HEIGHT( HEIGHT ),
 _PLAYER_COLLIDER_RADIUS( COLLIDER_SIZE ),
+_console_active( false ),
 _ground_pos( ),
 _head_pos( 0, _HEIGHT, 0 ),
 _dir( 0, 0, 1 ),
 _floor( FLOOR_GF ),
 _elevator_floor( ELEVATOR_INIT_FLOOR ),
 _elevator_box( elevator_box ) {
+	// コンソールのアクティブ通知を受け取る
+	console_observable->subscribeOnActive( [ & ]( bool active ) { 
+		_console_active = active;
+		// コンソールを解除したらマウスを真ん中に合わせる
+		if ( !_console_active ) {
+			Mouse::getTask( )->setMousePoint( SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 );
+		}
+	} );
+
+
+	// カメラ初期設定
 	CameraPtr camera = Camera::getTask( );
 	camera->setCamera( _head_pos, _dir );
 	camera->setCameraUp( Vector( 0, 1, 0 ) );
@@ -44,8 +57,10 @@ void Player::update( ) {
 	// 移動前座標の保存
 	_past_pos = _ground_pos;
 
-	// 視線更新
-	updateDir( );
+	// 視線更新(コンソール非表示時)
+	if ( !_console_active ) {
+		updateDir( );
+	}
 
 	// 移動
 	updatePos( );

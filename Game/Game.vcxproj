@@ -159,6 +159,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ConsoleButton.cpp" />
     <ClCompile Include="Console.cpp" />
+    <ClCompile Include="ConsoleObserver.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Elevator.cpp" />
@@ -187,8 +188,11 @@
   <ItemGroup>
     <ClInclude Include="CollideManager.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="ConsoleActiveObservable.h" />
+    <ClInclude Include="ConsoleActiveObserver.h" />
     <ClInclude Include="ConsoleButton.h" />
     <ClInclude Include="Console.h" />
+    <ClInclude Include="ConsoleObserver.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="Door.h" />

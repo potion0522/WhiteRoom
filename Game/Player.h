@@ -6,10 +6,11 @@
 
 PTR( Player );
 PTR( ElevatorBox );
+PTR( ConsoleActiveObservable );
 
 class Player : public SphereCollider {
 public:
-	Player( ElevatorBoxPtr elevator_box );
+	Player( ElevatorBoxPtr elevator_box, ConsoleActiveObservablePtr console_observable );
 	virtual ~Player( );
 
 public:
@@ -27,6 +28,7 @@ private:
 	const double _HEIGHT;
 
 private:
+	bool _console_active;
 	Vector _ground_pos; // 計算用(足元)
 	Vector _head_pos;  // カメラ用
 	Vector _past_pos;  // 前回座標(足元)

@@ -16,7 +16,7 @@ SceneGame::SceneGame( ) {
 		_floors[ i ] = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ), ( FLOOR )i ) );
 	}
 	_console = ConsolePtr( new Console( _elevator->getElevatorButton( ) ) );
-	_player = PlayerPtr( new Player( _elevator->getElevatorBox( ) ) );
+	_player = PlayerPtr( new Player( _elevator->getElevatorBox( ), _console->getActiveObservable( ) ) );
 
 	// “–‚½‚è”»’è
 	_collide_manager->addDynamicCollider( _player );

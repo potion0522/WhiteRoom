@@ -2,6 +2,7 @@
 #include "ElevatorButton.h"
 #include "Page.h"
 #include "define.h"
+#include "ConsoleObserver.h"
 
 #include "Image.h"
 #include "Keyboard.h"
@@ -17,6 +18,10 @@ _state( CONSOLE_STATE_NONE ),
 _page_num( PAGE_NUM_1 ),
 _slide_start_pos( ),
 _slide_end_pos( ) {
+	// Observer
+	_observer = ConsoleObserverPtr( new ConsoleObserver );
+
+	// ”wŒi
 	DrawerPtr drawer = Drawer::getTask( );
 	_bg = drawer->getImage( CONSOLE_BG_FILEPATH );
 
@@ -68,6 +73,11 @@ void Console::draw( ) const {
 	}
 }
 
+ConsoleActiveObservablePtr Console::getActiveObservable( ) const {
+	return _observer;
+}
+
+
 bool Console::isChangeActivate( ) const {
 	return Keyboard::getTask( )->getKeyDown( "E" );
 }
@@ -87,6 +97,7 @@ void Console::slidePage( int add_x, int add_y ) {
 void Console::actOnNone( ) {
 	if ( isChangeActivate( ) ) {
 		changeState( CONSOLE_STATE_OPENING );
+		_observer->onActive( true );
 	}
 }
 
@@ -145,6 +156,7 @@ void Console::actOnOpening( ) {
 
 void Console::actOnClosing( ) {
 	changeState( CONSOLE_STATE_NONE );
+	_observer->onActive( false );
 }
 
 void Console::actOnSlideUp( ) {

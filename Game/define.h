@@ -25,13 +25,13 @@ enum OBJECT_TAG {
 const int SCREEN_WIDTH  = 1920;
 const int SCREEN_HEIGHT = 1080;
 
-const int FLOOR_HEIGHT = 5000;  // 部屋の高さ( 床から )
-const int FLOOR_WIDTH  = 50000; // 部屋の幅( 全体 )
+const int FLOOR_HEIGHT = 3000;  // 部屋の高さ( 床から )
+const int FLOOR_WIDTH  = 15000; // 部屋の幅( 全体 )
 const int FLOOR_TO_FLOOR_SPACE = 1000; // 部屋同士の間隔
 const int FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT = FLOOR_HEIGHT + FLOOR_TO_FLOOR_SPACE;
 
 const int ELEVATOR_HEIGHT = FLOOR_HEIGHT; // 部屋のサイズと同じ
-const int ELEVATOR_WIDTH  = 5000; // エレベーターの幅( 全体 )
+const int ELEVATOR_WIDTH  = 2000; // エレベーターの幅( 全体 )
 const int ELEVATOR_TO_FLOOR_SPACE = 100; // エレベーターとフロアとの間隔
 
 const int    METER_TO_MIRI_UNIT = 1000;

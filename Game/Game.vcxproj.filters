@@ -66,6 +66,9 @@
     <ClCompile Include="ElevatorBox.cpp">
       <Filter>Game\Model\Elevator</Filter>
     </ClCompile>
+    <ClCompile Include="ConsoleObserver.cpp">
+      <Filter>Game\Console\Observer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -109,6 +112,9 @@
     </Filter>
     <Filter Include="Game\Model\Elevator\Announce">
       <UniqueIdentifier>{282873fc-8843-47c7-9a67-6ec140539fec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Console\Observer">
+      <UniqueIdentifier>{31f1f65e-d8b6-4640-a8b9-b8f6497d3721}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +191,15 @@
     </ClInclude>
     <ClInclude Include="ElevatorBox.h">
       <Filter>Game\Model\Elevator</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleActiveObservable.h">
+      <Filter>Game\Console\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleActiveObserver.h">
+      <Filter>Game\Console\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleObserver.h">
+      <Filter>Game\Console\Observer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
