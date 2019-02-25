@@ -128,14 +128,14 @@ void Elevator::actOnIdle( ) {
 
 void Elevator::actOnMoving( ) {
 	int movement_floor = _floor - _past_floor;
-	int distance = movement_floor * FLOOR_HEIGHT;
+	int distance = movement_floor * FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT;
 
 	int now_count = getNowCount( );
 	int moving_count = now_count - _starting_time;
 	double move = distance / ( double )ELEVATOR_MOVE_TIME * moving_count;
 
 	// 数字が低いほうがyが上なので符号を反転
-	_pos.y = ( _past_floor * FLOOR_HEIGHT + move ) * -1;
+	_pos.y = ( _past_floor * FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT + move ) * -1;
 
 	// 乗っているオブジェクトのyを変更
 	for ( int i = 0; i < _ride_obj.size( ); i++ ) {
@@ -144,7 +144,7 @@ void Elevator::actOnMoving( ) {
 
 	// 到着
 	if ( ELEVATOR_MOVE_TIME < moving_count ) {
-		_pos.y = _floor * FLOOR_HEIGHT * -1;
+		_pos.y = _floor * FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * -1;
 		_state = ELEVATOR_STATE_OPENING;
 		_starting_time = getNowCount( );
 	}

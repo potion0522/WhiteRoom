@@ -14,7 +14,7 @@ const char* ROOM_TEXTURE = "Game/Texture/WallTexture.png";
 Floor::Floor( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr observable, FLOOR floor ) :
 _floor( floor ) {
 	// y座標計算
-	_y = ( int )_floor * FLOOR_HEIGHT * -1;
+	_y = ( int )_floor * FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * -1;
 
 	// 部屋(壁・床)の生成
 	generateFloor( );
@@ -46,10 +46,7 @@ void Floor::update( ) {
 }
 
 void Floor::draw( ) const {
-	Manager* manager = Manager::getInstance( );
-	manager->setUseBackCulling( false );
 	_floor_model->draw( );
-	manager->setUseBackCulling( true );
 }
 
 double Floor::getY( ) const {
@@ -61,8 +58,8 @@ void Floor::generateFloor( ) {
 
 	const int NORMAL_WALL   = 3;
 	const int ELEVATOR_WALL = 2;
-	const int FLOOR_NUM     = 1;
-	_floor_model->alloc( ( NORMAL_WALL + ELEVATOR_WALL + FLOOR_NUM ) * 2 );
+	const int FLOOR_PLANE   = 2;
+	_floor_model->alloc( ( NORMAL_WALL + ELEVATOR_WALL + FLOOR_PLANE ) * 2 );
 
 	_floor_model->setTexture( Drawer::getTask( )->getImage( ROOM_TEXTURE ) );
 
@@ -155,7 +152,8 @@ void Floor::generateFloor( ) {
 
 
 
-	{ // 床
+	{ // 床 天井
+
 		Model::Vertex vertex[ 4 ] = {
 			Model::Vertex( Vector( -FLOOR_WIDTH / 2, _y,  FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, 0, 0, Vector( 0, 1, 0 ) ), // 左上
 			Model::Vertex( Vector(  FLOOR_WIDTH / 2, _y,  FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, 1, 0, Vector( 0, 1, 0 ) ), // 右上
@@ -163,7 +161,7 @@ void Floor::generateFloor( ) {
 			Model::Vertex( Vector(  FLOOR_WIDTH / 2, _y, -FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, 1, 1, Vector( 0, 1, 0 ) ), // 右下
 		};
 
-
+		// 床
 		int vertex_idx = ( NORMAL_WALL + ELEVATOR_WALL ) * 6;
 		_floor_model->setVertex( vertex_idx + 0, vertex[ 0 ] );
 		_floor_model->setVertex( vertex_idx + 1, vertex[ 1 ] );
@@ -172,6 +170,21 @@ void Floor::generateFloor( ) {
 		_floor_model->setVertex( vertex_idx + 3, vertex[ 1 ] );
 		_floor_model->setVertex( vertex_idx + 4, vertex[ 3 ] );
 		_floor_model->setVertex( vertex_idx + 5, vertex[ 2 ] );
+
+		// 天井
+		for ( int i = 0; i < 4; i++ ) {
+			vertex[ i ].pos += Vector( 0, FLOOR_HEIGHT, 0 ) * MIRI_TO_METER_UNIT;
+		}
+
+		vertex_idx = ( NORMAL_WALL + ELEVATOR_WALL + 1 ) * 6;
+		_floor_model->setVertex( vertex_idx + 0, vertex[ 1 ] );
+		_floor_model->setVertex( vertex_idx + 1, vertex[ 0 ] );
+		_floor_model->setVertex( vertex_idx + 2, vertex[ 2 ] );
+															
+		_floor_model->setVertex( vertex_idx + 3, vertex[ 1 ] );
+		_floor_model->setVertex( vertex_idx + 4, vertex[ 2 ] );
+		_floor_model->setVertex( vertex_idx + 5, vertex[ 3 ] );
+
 	}
 }
 
