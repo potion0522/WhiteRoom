@@ -3,6 +3,13 @@
 #include "ConsoleActiveObserver.h"
 #include <vector>
 
+/*
+
+コンソールが開かれた・閉じられたを通知するクラス
+発行、購読両機能を持っている
+
+*/
+
 class ConsoleObserver : 
 	public ConsoleActiveObservable, public ConsoleActiveObserver {
 public:

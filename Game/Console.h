@@ -1,7 +1,15 @@
 #pragma once
 #include "smart_ptr.h"
 #include "Mathematics.h"
+#include "define.h"
 #include <array>
+
+/*
+
+ページを管理しているコンソールのクラス
+ページからの通知を受け取ってエレベーターなどに反映する
+
+*/
 
 PTR( Image );
 PTR( ElevatorButton );
@@ -53,7 +61,7 @@ private:
 	void actOnSlideDown( );
 	void actOnSlideLeft( );
 	void actOnSlideRight( );
-	void orderFloorChangeToElevator( int floor );
+	void orderFloorChangeToElevator( FLOOR floor );
 
 private:
 	CONSOLE_STATE _state;

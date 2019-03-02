@@ -9,10 +9,8 @@
 const char* DEFAULT_BUTTON_FILEPATH = "Game/Console/Button";
 const char* PUSH_BUTTON_FILEPATH    = "Game/Console/ButtonPush";
 
-ConsoleButton::ConsoleButton( Console::PAGE_NUM page_num, const int& x, const int& y, std::function< void( ) > func ) :
-PageContent( x, y ) {
-	// callbackä÷êîÇÃìoò^
-	setCallback( func );
+ConsoleButton::ConsoleButton( Console::PAGE_NUM page_num, const int& x, const int& y, std::function< void( ) > callback ) :
+PageContent( x, y, callback ) {
 
 	// filepathÇïœçX
 	std::string floor_num;
@@ -54,7 +52,7 @@ void ConsoleButton::update( ) {
 	_button->update( );
 
 	if ( _button->isClicked( ) ) {
-		_func( );
+		_callback( );
 	}
 }
 

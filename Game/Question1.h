@@ -6,7 +6,7 @@ PTR( Question1 );
 
 class Question1 : public PageContent {
 public:
-	Question1( const int& x, const int& y, std::function< void( ) > func );
+	Question1( const int& x, const int& y, std::function< void( ) > callback );
 	virtual ~Question1( );
 
 public:

@@ -1,7 +1,6 @@
 #include "Console.h"
 #include "ElevatorButton.h"
 #include "Page.h"
-#include "define.h"
 #include "ConsoleObserver.h"
 
 #include "Image.h"
@@ -26,7 +25,7 @@ _slide_end_pos( ) {
 	_bg = drawer->getImage( CONSOLE_BG_FILEPATH );
 
 	for ( int i = 0; i < MAX_PAGE_NUM; i++ ) {
-		_pages[ i ] = PagePtr( new Page( ( PAGE_NUM )i, [ & ]( const int floor ) { orderFloorChangeToElevator( floor ); } ) );
+		_pages[ i ] = PagePtr( new Page( ( PAGE_NUM )i, [ & ]( const FLOOR floor ) { orderFloorChangeToElevator( floor ); } ) );
 	}
 }
 
@@ -183,6 +182,6 @@ void Console::actOnSlideRight( ) {
 	_page_num = PAGE_NUM_4;
 }
 
-void Console::orderFloorChangeToElevator( int floor ) {
-	_elevator_button->pushButton( ( FLOOR )floor );
+void Console::orderFloorChangeToElevator( FLOOR floor ) {
+	_elevator_button->pushButton( floor );
 }

@@ -3,12 +3,22 @@
 #include "Console.h"
 #include <functional>
 
+/*
+
+コンソールの1ページ分を管理するクラス
+
+問題かボタンどちらかを保持し、切り替える
+ボタンの押下をコンソールに通知するためのクラス
+
+*/
+
+
 PTR( Page );
 PTR( PageContent );
 
 class Page {
 public:
-	Page( Console::PAGE_NUM page_num, std::function< void( int ) > func );
+	Page( Console::PAGE_NUM page_num, std::function< void( FLOOR ) > func_button_push );
 	virtual ~Page( );
 
 public:
@@ -26,6 +36,6 @@ private:
 	int _x;
 	int _y;
 	PageContentPtr _content;
-	std::function< void( int ) > _func_button_push;
+	std::function< void( FLOOR ) > _func_button_push;
 };
 

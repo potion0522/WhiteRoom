@@ -5,11 +5,11 @@
 
 #include "Drawer.h"
 
-Page::Page( Console::PAGE_NUM page_num, std::function< void( int ) > func ) :
+Page::Page( Console::PAGE_NUM page_num, std::function< void( FLOOR ) > func_button_push ) :
 _page_num( page_num ),
 _x( 0 ),
 _y( 0 ),
-_func_button_push( func ) {
+_func_button_push( func_button_push ) {
 	// 初期化
 	switch ( _page_num ) {
 		case Console::PAGE_NUM_1:
@@ -61,12 +61,11 @@ void Page::slide( int add_x, int add_y ) {
 }
 
 void Page::callbackPushButton( ) {
+	// ボタンが押されたとき、そのフロア番号を渡す
 	if ( _page_num == Console::PAGE_NUM_6 ) {
-		// GF
 		_func_button_push( FLOOR_GF );
 	} else {
-		// GFが0のため、Floor1 + ページ番号(0~4)
-		_func_button_push( FLOOR_1 + _page_num );
+		_func_button_push( ( FLOOR )( FLOOR_1 + _page_num ) );
 	}
 }
 
