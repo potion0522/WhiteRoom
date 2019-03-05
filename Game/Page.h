@@ -35,6 +35,11 @@ private:
 	Console::PAGE_NUM _page_num;
 	int _x;
 	int _y;
+	int _slide_x;
+	int _slide_y;
+
+	int _view_x;
+	int _view_y;
 	PageContentPtr _content;
 	std::function< void( FLOOR ) > _func_button_push;
 };

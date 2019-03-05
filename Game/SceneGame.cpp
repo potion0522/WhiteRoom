@@ -6,6 +6,7 @@
 #include "QuestionManager.h"
 #include "Floor.h"
 #include "Floor1.h"
+#include "Floor2.h"
 
 #include "Drawer.h"
 
@@ -14,9 +15,9 @@ SceneGame::SceneGame( ) {
 	_question_manager       = QuestionManagerPtr( new QuestionManager );
 	_collide_manager        = CollideManagerPtr( new CollideManager );
 	_elevator               = ElevatorPtr( new Elevator( Vector( FLOOR_WIDTH / 2 + ELEVATOR_WIDTH / 2 + ELEVATOR_TO_FLOOR_SPACE, 0, 0 ), _collide_manager ) );
-	_floors[ FLOOR_1  ]     = Floor1Ptr( new Floor1( _collide_manager, _elevator->getAnnounceObservable( ), _question_manager, FLOOR_1 ) );
 	_floors[ FLOOR_GF ]     = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ),FLOOR_GF ) );
-	_floors[ FLOOR_2  ]     = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ),FLOOR_2  ) );
+	_floors[ FLOOR_1  ]     = Floor1Ptr( new Floor1( _collide_manager, _elevator->getAnnounceObservable( ), _question_manager, FLOOR_1 ) );
+	_floors[ FLOOR_2  ]     = Floor2Ptr( new Floor2( _collide_manager, _elevator->getAnnounceObservable( ), _question_manager,FLOOR_2  ) );
 	_floors[ FLOOR_3  ]     = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ),FLOOR_3  ) );
 	_floors[ FLOOR_4  ]     = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ),FLOOR_4  ) );
 	_floors[ FLOOR_5  ]     = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ),FLOOR_5  ) );

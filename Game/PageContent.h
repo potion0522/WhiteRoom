@@ -9,16 +9,14 @@
 
 class PageContent {
 public:
-	PageContent( const int& x, const int& y, std::function< void( ) > callback );
+	PageContent( std::function< void( ) > callback );
 	~PageContent( );
 
 public:
 	virtual void update( ) = 0;
-	virtual void draw( ) const = 0;
+	virtual void draw( int x, int y ) const = 0;
 
 protected:
-	const int& _x;
-	const int& _y;
 	std::function< void( ) > _callback;
 };
 

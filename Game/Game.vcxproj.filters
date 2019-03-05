@@ -78,7 +78,12 @@
     <ClCompile Include="ConsoleQuestion.cpp">
       <Filter>Game\Console\PageContent\Question</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleQuestion1.cpp" />
+    <ClCompile Include="ConsoleQuestion1.cpp">
+      <Filter>Game\Console\PageContent\Question</Filter>
+    </ClCompile>
+    <ClCompile Include="Floor2.cpp">
+      <Filter>Game\Model\Floor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -229,6 +234,11 @@
     <ClInclude Include="ConsoleQuestion.h">
       <Filter>Game\Console\PageContent\Question</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleQuestion1.h" />
+    <ClInclude Include="ConsoleQuestion1.h">
+      <Filter>Game\Console\PageContent\Question</Filter>
+    </ClInclude>
+    <ClInclude Include="Floor2.h">
+      <Filter>Game\Model\Floor</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

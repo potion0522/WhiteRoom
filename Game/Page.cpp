@@ -9,33 +9,37 @@ Page::Page( Console::PAGE_NUM page_num, std::function< void( FLOOR ) > func_butt
 _page_num( page_num ),
 _x( 0 ),
 _y( 0 ),
+_view_x( 0 ),
+_view_y( 0 ),
+_slide_x( 0 ),
+_slide_y( 0 ),
 _func_button_push( func_button_push ) {
 	// ‰Šú‰»
 	switch ( _page_num ) {
 		case Console::PAGE_NUM_1:
 			_y = CONSOLE_HEIGHT * 0;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
 			break;
 		case Console::PAGE_NUM_2:
 			_y = CONSOLE_HEIGHT * 1;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
 			break;
 		case Console::PAGE_NUM_3:
 			_y = CONSOLE_HEIGHT * 2;
-			_content = ConsoleQuestion1Ptr( new ConsoleQuestion1( _x, _y, [ & ] { callbackAnswer( ); }, question_manager ) );
+			_content = ConsoleQuestion1Ptr( new ConsoleQuestion1( [ & ] { callbackAnswer( ); }, question_manager ) );
 			break;
 		case Console::PAGE_NUM_4:
 			_y = CONSOLE_HEIGHT * 3;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
 			break;
 		case Console::PAGE_NUM_5:
 			_y = CONSOLE_HEIGHT * 4;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
 			break;
 		case Console::PAGE_NUM_6:
 			_x = CONSOLE_WIDTH;
 			_y = CONSOLE_HEIGHT * 3;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
 			break;
 	}
 
@@ -49,15 +53,14 @@ void Page::update( ) {
 }
 
 void Page::draw( ) const {
-	_content->draw( );
-
-	DrawerPtr drawer = Drawer::getTask( );
-	drawer->drawFormatString( ( float )_x, ( float )_y, 0xff0000, "PAGE : %d ", _page_num );
+	_content->draw( _view_x, _view_y );
 }
 
 void Page::slide( int add_x, int add_y ) {
-	_x += add_x;
-	_y += add_y;
+	_slide_x += add_x;
+	_slide_y += add_y;
+	_view_x = _x + _slide_x;
+	_view_y = _y + _slide_y;
 }
 
 void Page::callbackPushButton( ) {
@@ -72,29 +75,22 @@ void Page::callbackPushButton( ) {
 void Page::callbackAnswer( ) {
 	switch ( _page_num ) {
 		case Console::PAGE_NUM_1:
-			_y = CONSOLE_HEIGHT * 0;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
 			break;
 		case Console::PAGE_NUM_2:
-			_y = CONSOLE_HEIGHT * 1;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
 			break;
 		case Console::PAGE_NUM_3:
-			_y = CONSOLE_HEIGHT * 2;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
 			break;
 		case Console::PAGE_NUM_4:
-			_y = CONSOLE_HEIGHT * 3;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
 			break;
 		case Console::PAGE_NUM_5:
-			_y = CONSOLE_HEIGHT * 4;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
 			break;
 		case Console::PAGE_NUM_6:
-			_x = CONSOLE_WIDTH;
-			_y = CONSOLE_HEIGHT * 3;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
 			break;
 	}
 }

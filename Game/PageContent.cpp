@@ -1,8 +1,6 @@
 #include "PageContent.h"
 
-PageContent::PageContent( const int& x, const int& y, std::function< void( ) > callback ) :
-_x( x ),
-_y( y ),
+PageContent::PageContent( std::function< void( ) > callback ) :
 _callback( callback ) {
 }
 

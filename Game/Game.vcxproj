@@ -169,6 +169,7 @@
     <ClCompile Include="ElevatorBox.cpp" />
     <ClCompile Include="ElevatorButton.cpp" />
     <ClCompile Include="Floor1.cpp" />
+    <ClCompile Include="Floor2.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Page.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="ElevatorButton.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Floor1.h" />
+    <ClInclude Include="Floor2.h" />
     <ClInclude Include="Page.h" />
     <ClInclude Include="PageContent.h" />
     <ClInclude Include="Player.h" />

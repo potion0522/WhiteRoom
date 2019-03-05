@@ -9,8 +9,8 @@
 const char* DEFAULT_BUTTON_FILEPATH = "Game/Console/Button";
 const char* PUSH_BUTTON_FILEPATH    = "Game/Console/ButtonPush";
 
-ConsoleButton::ConsoleButton( Console::PAGE_NUM page_num, const int& x, const int& y, std::function< void( ) > callback ) :
-PageContent( x, y, callback ) {
+ConsoleButton::ConsoleButton( Console::PAGE_NUM page_num, std::function< void( ) > callback ) :
+PageContent( callback ) {
 
 	// filepath‚ð•ÏX
 	std::string floor_num;
@@ -41,7 +41,6 @@ PageContent( x, y, callback ) {
 	_button = ButtonPtr( new Button );
 	_button->setDefaultImage( default_button_filepath.c_str( ) );
 	_button->setPushImage( push_button_filepath.c_str( ) );
-	_button->setPos( Vector( _x, _y ) );
 }
 
 ConsoleButton::~ConsoleButton( ) {
@@ -56,8 +55,8 @@ void ConsoleButton::update( ) {
 	}
 }
 
-void ConsoleButton::draw( ) const {
+void ConsoleButton::draw( int x, int y ) const {
 	// •`‰æˆÊ’u‚Ì“¯Šú
-	_button->setPos( Vector( SCREEN_WIDTH / 2 + _x, SCREEN_HEIGHT / 2 + _y ) );
+	_button->setPos( Vector( SCREEN_WIDTH / 2 + x, SCREEN_HEIGHT / 2 + y ) );
 	_button->draw( );
 }

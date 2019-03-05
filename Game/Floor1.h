@@ -10,7 +10,6 @@
 
 PTR( Floor1 );
 PTR( QuestionManager );
-PTR( Question1FloorHint );
 
 class Floor1 : public Floor {
 public:
@@ -19,8 +18,5 @@ public:
 
 public:
 	void draw( ) const;
-
-private:
-	Question1FloorHintPtr _question1_hint;
 };
 

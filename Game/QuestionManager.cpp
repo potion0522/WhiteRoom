@@ -19,7 +19,12 @@ QuestionManager::~QuestionManager( ) {
 }
 
 bool QuestionManager::answerQuestion1( unsigned char num1, unsigned char num2, unsigned char num3 ) const {
-	return false;
+	for ( int i = 0; i < 3; i++ ) {
+		if ( num1 != _question1.nums[ i ] && num2 != _question1.nums[ i ] && num3 != _question1.nums[ i ] ) {
+			return false;
+		}
+	}
+	return true;
 }
 
 bool QuestionManager::answerQuestion2( unsigned char mark1, unsigned char mark2, unsigned char mark3 ) const {

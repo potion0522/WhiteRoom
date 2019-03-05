@@ -14,12 +14,12 @@ PTR( Button );
 
 class ConsoleButton : public PageContent {
 public:
-	ConsoleButton( Console::PAGE_NUM page_num, const int& x, const int& y, std::function< void( ) > callback );
+	ConsoleButton( Console::PAGE_NUM page_num, std::function< void( ) > callback );
 	~ConsoleButton( );
 
 public:
 	void update( );
-	void draw( ) const;
+	void draw( int x, int y ) const;
 
 private:
 	int _button_width;
