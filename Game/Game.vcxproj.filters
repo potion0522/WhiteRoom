@@ -69,6 +69,9 @@
     <ClCompile Include="ConsoleObserver.cpp">
       <Filter>Game\Console\Observer</Filter>
     </ClCompile>
+    <ClCompile Include="QuestionManager.cpp">
+      <Filter>Game\Question</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -115,6 +118,9 @@
     </Filter>
     <Filter Include="Game\Console\Observer">
       <UniqueIdentifier>{31f1f65e-d8b6-4640-a8b9-b8f6497d3721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Question">
+      <UniqueIdentifier>{ec3d1df7-0c9c-4479-97cd-a5c9ded5d876}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="ConsoleObserver.h">
       <Filter>Game\Console\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestionManager.h">
+      <Filter>Game\Question</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -4,11 +4,13 @@
 #include "Console.h"
 #include "CollideManager.h"
 #include "Player.h"
+#include "QuestionManager.h"
 
 #include "Drawer.h"
 
 
 SceneGame::SceneGame( ) {
+	_question_manager = QuestionManagerPtr( new QuestionManager );
 	_collide_manager = CollideManagerPtr( new CollideManager );
 
 	_elevator = ElevatorPtr( new Elevator( Vector( FLOOR_WIDTH / 2 + ELEVATOR_WIDTH / 2 + ELEVATOR_TO_FLOOR_SPACE, 0, 0 ), _collide_manager ) );

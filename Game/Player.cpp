@@ -27,10 +27,10 @@ SphereCollider( _head_pos, COLLIDER_SIZE, OBJECT_TAG_PLAYER ),
 _HEIGHT( HEIGHT ),
 _PLAYER_COLLIDER_RADIUS( COLLIDER_SIZE ),
 _console_active( false ),
-_ground_pos( ),
-_head_pos( 0, _HEIGHT, 0 ),
+_ground_pos( 0, PLAYER_INIT_FLOOR * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT, 0 ),
+_head_pos( 0, _ground_pos.y + _HEIGHT, 0 ),
 _dir( 0, 0, 1 ),
-_floor( FLOOR_GF ),
+_floor( PLAYER_INIT_FLOOR ),
 _elevator_floor( ELEVATOR_INIT_FLOOR ),
 _elevator_box( elevator_box ) {
 	// コンソールのアクティブ通知を受け取る

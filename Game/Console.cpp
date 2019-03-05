@@ -14,7 +14,7 @@ const double SLIDE_DETECT_LENGTH = SCREEN_HEIGHT * 0.30; // âÊñ çÇÇ≥ÇÃ30%à»è„Ç≈É
 Console::Console( ElevatorButtonPtr elevator_button ) :
 _elevator_button( elevator_button ), 
 _state( CONSOLE_STATE_NONE ),
-_page_num( PAGE_NUM_1 ),
+_page_num( _INIT_PAGE_NUM ),
 _slide_start_pos( ),
 _slide_end_pos( ) {
 	// Observer
@@ -27,6 +27,9 @@ _slide_end_pos( ) {
 	for ( int i = 0; i < MAX_PAGE_NUM; i++ ) {
 		_pages[ i ] = PagePtr( new Page( ( PAGE_NUM )i, [ & ]( const FLOOR floor ) { orderFloorChangeToElevator( floor ); } ) );
 	}
+
+	// ÉyÅ[ÉWç¿ïWÇèâä˙âª
+	slidePage( 0, -CONSOLE_HEIGHT * _INIT_PAGE_NUM );
 }
 
 Console::~Console( ) {

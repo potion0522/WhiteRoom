@@ -11,6 +11,7 @@ PTR( Elevator );
 PTR( Console );
 PTR( CollideManager );
 PTR( Player );
+PTR( QuestionManager );
 
 class SceneGame : public Scene {
 public:
@@ -27,5 +28,6 @@ private:
 	ElevatorPtr _elevator;
 	ConsolePtr _console;
 	PlayerPtr _player;
+	QuestionManagerPtr _question_manager;
 };
 

@@ -18,7 +18,7 @@ const int MAX_DOOR_MOVE_LENGTH = ELEVATOR_WIDTH / 2;
 
 Elevator::Elevator( const Vector& init_pos, CollideManagerPtr collide_manager ) :
 SphereCollider( _sphere_collider_pos, ELEVATOR_WIDTH / 2, OBJECT_TAG_ELEVATOR ),
-_pos( init_pos ),
+_pos( init_pos + Vector( 0, ELEVATOR_INIT_FLOOR * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT, 0 ) ),
 _sphere_collider_pos( _pos + Vector( 0, ELEVATOR_HEIGHT / 2, 0 ) ),
 _door_open_length( MAX_DOOR_MOVE_LENGTH ),
 _floor( ELEVATOR_INIT_FLOOR ),
@@ -29,7 +29,7 @@ _starting_time( 0 ) {
 	
 	// 外部からのアクセス用クラスのインスタンス
 	_elevator_button = ElevatorButtonPtr( new ElevatorButton( [ & ]( FLOOR floor ) { requestMoveElevatorButtonToElevator( floor ); } ) );
-	_elevator_box = ElevatorBoxPtr( new ElevatorBox( [ & ]( Vector* obj_pos ) { requextRideElevatorBoxToElevator( obj_pos ); } ) );
+	_elevator_box    = ElevatorBoxPtr   ( new ElevatorBox( [ & ]( Vector* obj_pos ) { requextRideElevatorBoxToElevator( obj_pos ); } ) );
 
 	// モデルの作成
 	generateElevator( );
