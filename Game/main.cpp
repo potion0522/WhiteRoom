@@ -12,6 +12,8 @@ int main( ) {
 	Manager* manager = Manager::getInstance( );
 	manager->setScreenSize( SCREEN_WIDTH, SCREEN_HEIGHT );
 	manager->setWindowSize( 1280, 720 );
+	manager->setUseZBaffur( true );
+	manager->setWriteZBaffur( true );
 
 	// Framework
 	DrawerPtr drawer( new Drawer( "Resources/Image" ) );

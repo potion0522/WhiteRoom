@@ -4,31 +4,29 @@
 
 #include <array>
 
-PTR( Floor );
+/*************************************
+
+	ŠK‘w’PˆÊ‚ÅŠÇ—‚·‚éƒNƒ‰ƒX
+	•Ç‚È‚Ç‚Ìƒ|ƒŠƒSƒ“‚ğ©g‚Å•`‰æ
+
+*************************************/
+
 PTR( Model );
 PTR( Wall );
 PTR( CollideManager );
 PTR( ElevatorAnnounceObservable );
 
-PTR( QuestionManager );
-
-/*
-
-	ŠK‘w’PˆÊ‚ÅŠÇ—‚·‚éƒNƒ‰ƒX
-	•Ç‚È‚Ç‚Ìƒ|ƒŠƒSƒ“‚ğ©g‚Å•`‰æ
-
-*/
 
 class Floor {
 public:
-	Floor( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr observable, QuestionManagerConstPtr question_manager, FLOOR floor );
+	Floor( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr observable, FLOOR floor );
 	virtual ~Floor( );
 
 public:
-	void update( );
-	double getY( ) const;
+	virtual void draw( ) const;
 
-	void draw( ) const;
+protected:
+	void drawFloor( ) const;
 
 private:
 	void generateFloor( );
@@ -40,10 +38,11 @@ private:
 	static const int NORMAL_WALL_NUM = 3;
 	static const int ELEVATOR_SIDE_WALL_NUM = 2;
 
-private:
+protected:
 	double _y;
 	FLOOR _floor;
 
+private:
 	ModelPtr _floor_model;
 	std::array< WallPtr, NORMAL_WALL_NUM + ELEVATOR_SIDE_WALL_NUM > _wall_colliders;
 	WallPtr _elevator_side_wall;

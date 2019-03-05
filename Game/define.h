@@ -7,7 +7,6 @@ enum FLOOR {
 	FLOOR_3,
 	FLOOR_4,
 	FLOOR_5,
-	FLOOR_HF,
 	MAX_FLOOR,
 };
 

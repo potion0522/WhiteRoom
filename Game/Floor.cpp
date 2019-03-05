@@ -9,11 +9,9 @@
 #include "Drawer.h"
 #include "Manager.h"
 
-#include "QuestionManager.h"
-
 const char* ROOM_TEXTURE = "Game/Texture/WallTexture.png";
 
-Floor::Floor( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr observable, QuestionManagerConstPtr question_manager, FLOOR floor ) :
+Floor::Floor( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr observable, FLOOR floor ) :
 _floor( floor ) {
 	// yÀ•WŒvŽZ
 	_y = ( int )_floor * FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * -1;
@@ -44,15 +42,12 @@ _floor( floor ) {
 Floor::~Floor( ) {
 }
 
-void Floor::update( ) {
-}
-
 void Floor::draw( ) const {
-	_floor_model->draw( );
+	drawFloor( );
 }
 
-double Floor::getY( ) const {
-	return _y;
+void Floor::drawFloor( ) const {
+	_floor_model->draw( );
 }
 
 void Floor::generateFloor( ) {

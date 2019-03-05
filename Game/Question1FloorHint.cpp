@@ -24,10 +24,10 @@ Question1FloorHint::Question1FloorHint( QuestionManagerConstPtr question_manager
 
 	// 左上基準
 	Vector ver_pos[ 4 ] = {
-		Vector(            0,             0, 0 ) + Vector( 0, -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * FLOOR_1 + FLOOR_HEIGHT, FLOOR_WIDTH / 2 - 100 ), // 左上
-		Vector( SQUARE_WIDTH,             0, 0 ) + Vector( 0, -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * FLOOR_1 + FLOOR_HEIGHT, FLOOR_WIDTH / 2 - 100 ), // 右上
-		Vector(            0, -SQUARE_WIDTH, 0 ) + Vector( 0, -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * FLOOR_1 + FLOOR_HEIGHT, FLOOR_WIDTH / 2 - 100 ), // 左下
-		Vector( SQUARE_WIDTH, -SQUARE_WIDTH, 0 ) + Vector( 0, -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * FLOOR_1 + FLOOR_HEIGHT, FLOOR_WIDTH / 2 - 100 ), // 右下
+		Vector(            0,             0, 0 ) + Vector( 0, -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * FLOOR_1 + FLOOR_HEIGHT, FLOOR_WIDTH / 2 - 200 ), // 左上
+		Vector( SQUARE_WIDTH,             0, 0 ) + Vector( 0, -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * FLOOR_1 + FLOOR_HEIGHT, FLOOR_WIDTH / 2 - 200 ), // 右上
+		Vector(            0, -SQUARE_WIDTH, 0 ) + Vector( 0, -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * FLOOR_1 + FLOOR_HEIGHT, FLOOR_WIDTH / 2 - 200 ), // 左下
+		Vector( SQUARE_WIDTH, -SQUARE_WIDTH, 0 ) + Vector( 0, -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * FLOOR_1 + FLOOR_HEIGHT, FLOOR_WIDTH / 2 - 200 ), // 右下
 	};
 
 	std::array< unsigned char, 3 > answer = question_manager->getHintQuestion1( );

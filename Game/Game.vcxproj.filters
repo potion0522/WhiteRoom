@@ -75,6 +75,7 @@
     <ClCompile Include="Question1FloorHint.cpp">
       <Filter>Game\Model\Floor\Hint</Filter>
     </ClCompile>
+    <ClCompile Include="Floor1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -219,5 +220,6 @@
     <ClInclude Include="Question1FloorHint.h">
       <Filter>Game\Model\Floor\Hint</Filter>
     </ClInclude>
+    <ClInclude Include="Floor1.h" />
   </ItemGroup>
 </Project>
