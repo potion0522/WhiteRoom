@@ -160,6 +160,8 @@
     <ClCompile Include="ConsoleButton.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="ConsoleObserver.cpp" />
+    <ClCompile Include="ConsoleQuestion.cpp" />
+    <ClCompile Include="ConsoleQuestion1.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Elevator.cpp" />
@@ -172,7 +174,6 @@
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="PageContent.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Question1.cpp" />
     <ClCompile Include="Question1FloorHint.cpp" />
     <ClCompile Include="QuestionManager.cpp" />
     <ClCompile Include="SceneGame.cpp" />
@@ -196,6 +197,8 @@
     <ClInclude Include="ConsoleButton.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="ConsoleObserver.h" />
+    <ClInclude Include="ConsoleQuestion.h" />
+    <ClInclude Include="ConsoleQuestion1.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="Door.h" />
@@ -210,7 +213,6 @@
     <ClInclude Include="Page.h" />
     <ClInclude Include="PageContent.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Question1.h" />
     <ClInclude Include="Question1FloorHint.h" />
     <ClInclude Include="QuestionManager.h" />
     <ClInclude Include="Scene.h" />

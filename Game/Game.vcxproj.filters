@@ -18,9 +18,6 @@
     <ClCompile Include="PageContent.cpp">
       <Filter>Game\Console\PageContent</Filter>
     </ClCompile>
-    <ClCompile Include="Question1.cpp">
-      <Filter>Game\Console\PageContent\Question</Filter>
-    </ClCompile>
     <ClCompile Include="ConsoleButton.cpp">
       <Filter>Game\Console\PageContent\Button</Filter>
     </ClCompile>
@@ -35,12 +32,6 @@
     </ClCompile>
     <ClCompile Include="Collider.cpp">
       <Filter>Game\Collider</Filter>
-    </ClCompile>
-    <ClCompile Include="Floor.cpp">
-      <Filter>Game\Model\Floor</Filter>
-    </ClCompile>
-    <ClCompile Include="Wall.cpp">
-      <Filter>Game\Model\Floor</Filter>
     </ClCompile>
     <ClCompile Include="TestObject.cpp">
       <Filter>Debug</Filter>
@@ -75,7 +66,19 @@
     <ClCompile Include="Question1FloorHint.cpp">
       <Filter>Game\Model\Floor\Hint</Filter>
     </ClCompile>
-    <ClCompile Include="Floor1.cpp" />
+    <ClCompile Include="Floor1.cpp">
+      <Filter>Game\Model\Floor</Filter>
+    </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>Game\Model\Floor\BaseFloor</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Game\Model\Floor\BaseFloor</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleQuestion.cpp">
+      <Filter>Game\Console\PageContent\Question</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleQuestion1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -129,6 +132,9 @@
     <Filter Include="Game\Model\Floor\Hint">
       <UniqueIdentifier>{2d55013f-cdd8-4f9e-a20f-b28879ca03fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Model\Floor\BaseFloor">
+      <UniqueIdentifier>{294389c7-c458-4966-ba9a-8cd07008de67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -151,9 +157,6 @@
     <ClInclude Include="PageContent.h">
       <Filter>Game\Console\PageContent</Filter>
     </ClInclude>
-    <ClInclude Include="Question1.h">
-      <Filter>Game\Console\PageContent\Question</Filter>
-    </ClInclude>
     <ClInclude Include="ConsoleButton.h">
       <Filter>Game\Console\PageContent\Button</Filter>
     </ClInclude>
@@ -168,12 +171,6 @@
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Game\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="Floor.h">
-      <Filter>Game\Model\Floor</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall.h">
-      <Filter>Game\Model\Floor</Filter>
     </ClInclude>
     <ClInclude Include="TestObject.h">
       <Filter>Debug</Filter>
@@ -220,6 +217,18 @@
     <ClInclude Include="Question1FloorHint.h">
       <Filter>Game\Model\Floor\Hint</Filter>
     </ClInclude>
-    <ClInclude Include="Floor1.h" />
+    <ClInclude Include="Floor1.h">
+      <Filter>Game\Model\Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="Floor.h">
+      <Filter>Game\Model\Floor\BaseFloor</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>Game\Model\Floor\BaseFloor</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleQuestion.h">
+      <Filter>Game\Console\PageContent\Question</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleQuestion1.h" />
   </ItemGroup>
 </Project>

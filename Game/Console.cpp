@@ -9,9 +9,9 @@
 #include "Mouse.h"
 
 const char* CONSOLE_BG_FILEPATH = "Game/Console/ConsoleBG.png";
-const double SLIDE_DETECT_LENGTH = SCREEN_HEIGHT * 0.30; // 画面高さの30%以上でスライド
+const double SLIDE_DETECT_LENGTH = SCREEN_HEIGHT * 0.10; // 画面高さの10%以上でスライド
 
-Console::Console( ElevatorButtonPtr elevator_button ) :
+Console::Console( ElevatorButtonPtr elevator_button, QuestionManagerConstPtr question_manager ) :
 _elevator_button( elevator_button ), 
 _state( CONSOLE_STATE_NONE ),
 _page_num( _INIT_PAGE_NUM ),
@@ -25,7 +25,7 @@ _slide_end_pos( ) {
 	_bg = drawer->getImage( CONSOLE_BG_FILEPATH );
 
 	for ( int i = 0; i < MAX_PAGE_NUM; i++ ) {
-		_pages[ i ] = PagePtr( new Page( ( PAGE_NUM )i, [ & ]( const FLOOR floor ) { orderFloorChangeToElevator( floor ); } ) );
+		_pages[ i ] = PagePtr( new Page( ( PAGE_NUM )i, [ & ]( const FLOOR floor ) { orderFloorChangeToElevator( floor ); }, question_manager ) );
 	}
 
 	// ページ座標を初期化

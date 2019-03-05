@@ -18,7 +18,7 @@ PTR( PageContent );
 
 class Page {
 public:
-	Page( Console::PAGE_NUM page_num, std::function< void( FLOOR ) > func_button_push );
+	Page( Console::PAGE_NUM page_num, std::function< void( FLOOR ) > func_button_push, QuestionManagerConstPtr question_manager );
 	virtual ~Page( );
 
 public:

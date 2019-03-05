@@ -14,9 +14,10 @@ Floor1::~Floor1( ) {
 }
 
 void Floor1::draw( ) const {
-	Manager* manager = Manager::getInstance( );
 
 	drawFloor( );
+
+	Manager* manager = Manager::getInstance( );
 	manager->setWriteZBaffur( false );
 	_question1_hint->drawQuestion1Hint( );
 	manager->setWriteZBaffur( true );

@@ -20,7 +20,7 @@ SceneGame::SceneGame( ) {
 	_floors[ FLOOR_3  ]     = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ),FLOOR_3  ) );
 	_floors[ FLOOR_4  ]     = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ),FLOOR_4  ) );
 	_floors[ FLOOR_5  ]     = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ),FLOOR_5  ) );
-	_console                = ConsolePtr( new Console( _elevator->getElevatorButton( ) ) );
+	_console                = ConsolePtr( new Console( _elevator->getElevatorButton( ), _question_manager ) );
 	_player                 = PlayerPtr( new Player( _elevator->getElevatorBox( ), _console->getActiveObservable( ) ) );
 
 	// “–‚½‚è”»’è

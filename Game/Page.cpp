@@ -1,11 +1,11 @@
 #include "Page.h"
 #include "define.h"
 #include "ConsoleButton.h"
-#include "Question1.h"
+#include "ConsoleQuestion1.h"
 
 #include "Drawer.h"
 
-Page::Page( Console::PAGE_NUM page_num, std::function< void( FLOOR ) > func_button_push ) :
+Page::Page( Console::PAGE_NUM page_num, std::function< void( FLOOR ) > func_button_push, QuestionManagerConstPtr question_manager ) :
 _page_num( page_num ),
 _x( 0 ),
 _y( 0 ),
@@ -22,7 +22,7 @@ _func_button_push( func_button_push ) {
 			break;
 		case Console::PAGE_NUM_3:
 			_y = CONSOLE_HEIGHT * 2;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleQuestion1Ptr( new ConsoleQuestion1( _x, _y, [ & ] { callbackAnswer( ); }, question_manager ) );
 			break;
 		case Console::PAGE_NUM_4:
 			_y = CONSOLE_HEIGHT * 3;
@@ -70,4 +70,31 @@ void Page::callbackPushButton( ) {
 }
 
 void Page::callbackAnswer( ) {
+	switch ( _page_num ) {
+		case Console::PAGE_NUM_1:
+			_y = CONSOLE_HEIGHT * 0;
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			break;
+		case Console::PAGE_NUM_2:
+			_y = CONSOLE_HEIGHT * 1;
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			break;
+		case Console::PAGE_NUM_3:
+			_y = CONSOLE_HEIGHT * 2;
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			break;
+		case Console::PAGE_NUM_4:
+			_y = CONSOLE_HEIGHT * 3;
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			break;
+		case Console::PAGE_NUM_5:
+			_y = CONSOLE_HEIGHT * 4;
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			break;
+		case Console::PAGE_NUM_6:
+			_x = CONSOLE_WIDTH;
+			_y = CONSOLE_HEIGHT * 3;
+			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, _x, _y, [ & ] { callbackPushButton( ); } ) );
+			break;
+	}
 }

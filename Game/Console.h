@@ -16,6 +16,7 @@ PTR( ElevatorButton );
 PTR( Page );
 PTR( ConsoleObserver );
 PTR( ConsoleActiveObservable );
+PTR( QuestionManager );
 
 class Console {
 public:
@@ -41,7 +42,7 @@ public:
 	};
 
 public:
-	Console( ElevatorButtonPtr elevator_button );
+	Console( ElevatorButtonPtr elevator_button, QuestionManagerConstPtr question_manager );
 	virtual ~Console( );
 
 public:
