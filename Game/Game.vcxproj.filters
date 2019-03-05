@@ -72,6 +72,9 @@
     <ClCompile Include="QuestionManager.cpp">
       <Filter>Game\Question</Filter>
     </ClCompile>
+    <ClCompile Include="Question1FloorHint.cpp">
+      <Filter>Game\Model\Floor\Hint</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -121,6 +124,9 @@
     </Filter>
     <Filter Include="Game\Question">
       <UniqueIdentifier>{ec3d1df7-0c9c-4479-97cd-a5c9ded5d876}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Model\Floor\Hint">
+      <UniqueIdentifier>{2d55013f-cdd8-4f9e-a20f-b28879ca03fb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -209,6 +215,9 @@
     </ClInclude>
     <ClInclude Include="QuestionManager.h">
       <Filter>Game\Question</Filter>
+    </ClInclude>
+    <ClInclude Include="Question1FloorHint.h">
+      <Filter>Game\Model\Floor\Hint</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

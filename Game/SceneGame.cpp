@@ -15,7 +15,7 @@ SceneGame::SceneGame( ) {
 
 	_elevator = ElevatorPtr( new Elevator( Vector( FLOOR_WIDTH / 2 + ELEVATOR_WIDTH / 2 + ELEVATOR_TO_FLOOR_SPACE, 0, 0 ), _collide_manager ) );
 	for ( int i = 0; i < MAX_FLOOR; i++ ) {
-		_floors[ i ] = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ), ( FLOOR )i ) );
+		_floors[ i ] = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ), _question_manager, ( FLOOR )i ) );
 	}
 	_console = ConsolePtr( new Console( _elevator->getElevatorButton( ) ) );
 	_player = PlayerPtr( new Player( _elevator->getElevatorBox( ), _console->getActiveObservable( ) ) );

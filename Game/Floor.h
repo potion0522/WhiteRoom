@@ -10,6 +10,8 @@ PTR( Wall );
 PTR( CollideManager );
 PTR( ElevatorAnnounceObservable );
 
+PTR( QuestionManager );
+
 /*
 
 	ŠK‘w’PˆÊ‚ÅŠÇ—‚·‚éƒNƒ‰ƒX
@@ -19,7 +21,7 @@ PTR( ElevatorAnnounceObservable );
 
 class Floor {
 public:
-	Floor( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr observable, FLOOR floor );
+	Floor( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr observable, QuestionManagerConstPtr question_manager, FLOOR floor );
 	virtual ~Floor( );
 
 public:
