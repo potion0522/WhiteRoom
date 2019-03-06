@@ -84,6 +84,9 @@
     <ClCompile Include="Floor2.cpp">
       <Filter>Game\Model\Floor</Filter>
     </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Game\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -239,6 +242,9 @@
     </ClInclude>
     <ClInclude Include="Floor2.h">
       <Filter>Game\Model\Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Game\Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

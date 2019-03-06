@@ -179,6 +179,7 @@
     <ClCompile Include="QuestionManager.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="SquareCollider.cpp" />
     <ClCompile Include="TestObject.cpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneTitle.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="SquareCollider.h" />
     <ClInclude Include="TestObject.h" />
