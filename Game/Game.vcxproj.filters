@@ -87,6 +87,10 @@
     <ClCompile Include="Sphere.cpp">
       <Filter>Game\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Question2FloorHint.cpp">
+      <Filter>Game\Model\Floor\Hint</Filter>
+    </ClCompile>
+    <ClCompile Include="Question2Sphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -246,5 +250,9 @@
     <ClInclude Include="Sphere.h">
       <Filter>Game\Model</Filter>
     </ClInclude>
+    <ClInclude Include="Question2FloorHint.h">
+      <Filter>Game\Model\Floor\Hint</Filter>
+    </ClInclude>
+    <ClInclude Include="Question2Sphere.h" />
   </ItemGroup>
 </Project>

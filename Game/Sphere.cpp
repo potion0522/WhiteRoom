@@ -5,7 +5,8 @@
 #include "Model.h"
 #include "Drawer.h"
 
-Sphere::Sphere( Vector pos, double radius ) :
+Sphere::Sphere( Vector pos, double radius, OBJECT_TAG tag ) :
+SphereCollider( _pos, radius, tag ),
 _pos( pos ),
 _radius( radius ) {
 	generate( );
@@ -17,6 +18,10 @@ Sphere::~Sphere( ) {
 void Sphere::draw( ) const {
 	_model->draw( _pos );
 }
+
+void Sphere::onColliderEnter( ColliderConstPtr collider ) {
+}
+
 
 void Sphere::generate( ) {
 	// ‹…‚ğc‰¡‚ÉDIV_NUM(”¼•ª)•ªŠ„‚µ‚Ä‰ñ“]‚ğg—p‚µ‚Ä’¸“_‚ğ‹‚ß‚é

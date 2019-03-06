@@ -1,6 +1,7 @@
 #pragma once
 #include "smart_ptr.h"
 #include "Mathematics.h"
+#include "SphereCollider.h"
 
 /**************************************************
 
@@ -11,13 +12,14 @@
 
 PTR( Model );
 
-class Sphere {
+class Sphere : public SphereCollider {
 public:
-	Sphere( Vector pos, double radius );
+	Sphere( Vector pos, double radius, OBJECT_TAG tag = OBJECT_TAG_SPHERE );
 	virtual ~Sphere( );
 
 public:
 	void draw( ) const;
+	virtual void onColliderEnter( ColliderConstPtr collider );
 
 private:
 	void generate( );
