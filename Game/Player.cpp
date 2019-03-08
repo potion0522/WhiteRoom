@@ -31,7 +31,6 @@ _ground_pos( 0, PLAYER_INIT_FLOOR * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT, 0 ),
 _head_pos( 0, _ground_pos.y + _HEIGHT, 0 ),
 _dir( 0, 0, 1 ),
 _floor( PLAYER_INIT_FLOOR ),
-_elevator_floor( ELEVATOR_INIT_FLOOR ),
 _elevator_box( elevator_box ) {
 	// コンソールのアクティブ通知を受け取る
 	console_observable->subscribeOnActive( [ & ]( bool active ) { 
@@ -67,6 +66,9 @@ void Player::update( ) {
 
 	// カメラの更新
 	updateEye( );
+
+	// フロア更新
+	updateFloor( );
 }
 
 void Player::onColliderEnter( ColliderConstPtr collider ) {
@@ -99,6 +101,10 @@ void Player::onColliderEnter( ColliderConstPtr collider ) {
 
 		_elevator_box->requestRideOnElevator( &_ground_pos );
 	}
+}
+
+FLOOR Player::getFloor( ) const {
+	return _floor;
 }
 
 void Player::updatePos( ) {
@@ -150,6 +156,10 @@ void Player::updateEye( ) {
 
 	CameraPtr camera = Camera::getTask( );
 	camera->setCamera( _head_pos * MIRI_TO_METER_UNIT, ( _head_pos + _dir ) * MIRI_TO_METER_UNIT );
+}
+
+void Player::updateFloor( ) {
+	_floor = ( FLOOR )( int )( fabs( _head_pos.y - FLOOR_HEIGHT ) / FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT );
 }
 
 void Player::adjustPosHitWall( ColliderConstPtr collider ) {

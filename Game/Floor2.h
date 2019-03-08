@@ -11,6 +11,7 @@
 PTR( Floor2 );
 PTR( QuestionManager );
 PTR( Question1FloorHint );
+PTR( Question2FloorHint );
 
 class Floor2 : public Floor {
 public:
@@ -22,5 +23,6 @@ public:
 
 private:
 	Question1FloorHintPtr _question1_hint;
+	Question2FloorHintPtr _question2_hint;
 };
 

@@ -16,11 +16,13 @@ public:
 public:
 	void update( );
 	void onColliderEnter( ColliderConstPtr collider );
+	FLOOR getFloor( ) const;
 
 private:
 	void updateDir( );
 	void updatePos( );
 	void updateEye( );
+	void updateFloor( );
 	void adjustPosHitWall( ColliderConstPtr collider );
 
 private:

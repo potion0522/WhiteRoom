@@ -25,7 +25,7 @@ private:
 	void generate( );
 
 private:
-	static const int _DIV_NUM = 30;
+	static const int _DIV_NUM = 25;
 
 protected:
 	ModelPtr _model;

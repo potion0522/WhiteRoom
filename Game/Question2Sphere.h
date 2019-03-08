@@ -18,5 +18,8 @@ public:
 
 private:
 	const double _SPHERE_RADIUS = 1000.0;
+
+private:
+	std::function< void( OBJECT_TAG ) > _callback;
 };
 

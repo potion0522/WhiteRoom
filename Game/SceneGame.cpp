@@ -33,20 +33,19 @@ SceneGame::~SceneGame( ) {
 }
 
 void SceneGame::update( ) {
+	// collider
+	_collide_manager->update( );
+
 	_player->update( );
 	_elevator->update( );
 	_console->update( );
-
-	// collider
-	_collide_manager->update( );
 }
 
 void SceneGame::draw( ) const {
 	_elevator->draw( );
 
-	for ( int i = 0; i < MAX_FLOOR; i++ ) {
-		_floors[ i ]->draw( );
-	}
+	FLOOR player_floor = _player->getFloor( );
+	_floors[ player_floor ]->draw( );
 
 	_console->draw( );
 

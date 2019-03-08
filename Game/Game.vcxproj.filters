@@ -84,13 +84,15 @@
     <ClCompile Include="Floor2.cpp">
       <Filter>Game\Model\Floor</Filter>
     </ClCompile>
-    <ClCompile Include="Sphere.cpp">
-      <Filter>Game\Model</Filter>
-    </ClCompile>
     <ClCompile Include="Question2FloorHint.cpp">
       <Filter>Game\Model\Floor\Hint</Filter>
     </ClCompile>
-    <ClCompile Include="Question2Sphere.cpp" />
+    <ClCompile Include="Question2Sphere.cpp">
+      <Filter>Game\Model\Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Game\Model\Sphere</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -146,6 +148,9 @@
     </Filter>
     <Filter Include="Game\Model\Floor\BaseFloor">
       <UniqueIdentifier>{294389c7-c458-4966-ba9a-8cd07008de67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Model\Sphere">
+      <UniqueIdentifier>{fee77477-60d9-41bd-88b8-2dfa6a7d86b6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -247,12 +252,14 @@
     <ClInclude Include="Floor2.h">
       <Filter>Game\Model\Floor</Filter>
     </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>Game\Model</Filter>
-    </ClInclude>
     <ClInclude Include="Question2FloorHint.h">
       <Filter>Game\Model\Floor\Hint</Filter>
     </ClInclude>
-    <ClInclude Include="Question2Sphere.h" />
+    <ClInclude Include="Question2Sphere.h">
+      <Filter>Game\Model\Sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Game\Model\Sphere</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
