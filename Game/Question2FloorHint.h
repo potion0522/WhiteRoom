@@ -1,6 +1,7 @@
 #pragma once
 #include "smart_ptr.h"
 #include "define.h"
+#include "Mathematics.h"
 #include <map>
 #include <vector>
 
@@ -27,6 +28,7 @@ public:
 private:
 	void addDockingSphere( OBJECT_TAG tag );
 	void dockingSphere( OBJECT_TAG tag1, OBJECT_TAG tag2 );
+	void generateSphere( OBJECT_TAG tag, const Vector& pos );
 
 private:
 	FLOOR _floor;
