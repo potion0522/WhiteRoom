@@ -115,6 +115,28 @@ void QuestionManager::generateQuestion1( ) {
 }
 
 void QuestionManager::generateQuestion2( ) {
+	const int MAX_IDX = 3;
+	std::vector< unsigned char > nums;
+
+	while ( nums.size( ) < 3 ) {
+		int num = genrand_int31( ) % QUESTION_2_MAX_SUIT_NUM;
+		
+		bool insert = true;
+		for ( int i = 0; i < nums.size( ); i++ ) {
+			if ( num == nums[ i ] ) {
+				insert = false;
+				break;
+			}
+		}
+
+		if ( insert ) {
+			nums.push_back( num );
+		}
+	}
+
+	_question2.floor2_num = nums[ 0 ];
+	_question2.floor3_num = nums[ 1 ];
+	_question2.floor4_num = nums[ 2 ];
 }
 
 void QuestionManager::generateQuestion3( ) {

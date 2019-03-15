@@ -13,6 +13,10 @@
 PTR( QuestionManager );
 
 class QuestionManager {
+public:
+	// 1.club 2.heart 3.diamont 4.spade
+	static const int QUESTION_2_MAX_SUIT_NUM = 4;
+
 private:
 	struct Question1 {
 		std::array< unsigned char, 3 > nums;

@@ -28,17 +28,13 @@ void CollideManager::addStaticCollider( SquareColliderPtr collider ) {
 void CollideManager::detectDynamicToDynamicObject( ) {
 	std::list< SphereColliderWeakPtr >::iterator ite1 = _dynamic_sphere_obj.begin( );
 	for ( ite1; ite1 != _dynamic_sphere_obj.end( ); ite1++ ) {
-		SphereColliderPtr collider1 = ( *ite1 ).lock( );
-		if ( !collider1 ) {
-			continue;
-		}
-
 		{ // sphere Å® sphere
 			std::list< SphereColliderWeakPtr >::iterator ite2 = ite1;
 			ite2++;
 			for ( ite2; ite2 != _dynamic_sphere_obj.end( ); ite2++ ) {
+				SphereColliderPtr collider1 = ( *ite1 ).lock( );
 				SphereColliderPtr collider2 = ( *ite2 ).lock( );
-				if ( !collider2 ) {
+				if ( !collider1 || !collider2 ) {
 					continue;
 				}
 				bool collide = isCollideSphereAndSphere( collider1, collider2 );
@@ -54,14 +50,15 @@ void CollideManager::detectDynamicToDynamicObject( ) {
 void CollideManager::detectDynamicToStaticObject( ) {
 	std::list< SphereColliderWeakPtr >::iterator ite = _dynamic_sphere_obj.begin( );
 	for ( ite; ite != _dynamic_sphere_obj.end( ); ite++ ) {
-		SphereColliderPtr collider1 = ( *ite ).lock( );
-		if ( !collider1 ) {
-			continue;
-		}
 
 		{ // sphere Å® sphere
 			for ( int i = 0; i < _static_sphere_obj.size( ); i++ ) {
+				SphereColliderPtr collider1 = ( *ite ).lock( );
 				SphereColliderPtr collider2 = _static_sphere_obj[ i ];
+
+				if ( !collider1 ) {
+					break;
+				}
 
 				bool collide = isCollideSphereAndSphere( collider1, collider2 );
 
@@ -74,7 +71,12 @@ void CollideManager::detectDynamicToStaticObject( ) {
 
 		{ // sphere Å® square
 			for ( int i = 0; i < _static_square_obj.size( ); i++ ) {
+				SphereColliderPtr collider1 = ( *ite ).lock( );
 				SquareColliderPtr collider2 = _static_square_obj[ i ];
+
+				if ( !collider1 ) {
+					break;
+				}
 
 				bool collide = isCollideSphereAndSquare( collider1, collider2 );
 
