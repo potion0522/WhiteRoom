@@ -23,7 +23,8 @@ public:
 	virtual ~Question2FloorHint( );
 
 public:
-	void drawQuestion2Hint( ) const;
+	void update( );
+	void draw( ) const;
 
 private:
 	void addDockingSphere( OBJECT_TAG tag );

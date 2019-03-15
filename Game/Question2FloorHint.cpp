@@ -7,20 +7,20 @@
 
 const char* TEST_TEXTURE = "Game/Texture/ElevatorTexture.png";
 const char* TEXTURE[ 3 ][ 5 ] = {
-	{ "Game/Texture/ElevatorTexture.png", "Game/Texture/ElevatorTexture.png", "Game/Texture/ElevatorTexture.png", "Game/Texture/ElevatorTexture.png", "Game/Texture/ElevatorTexture.png" },
-	{ "Game/Texture/ElevatorTexture.png", "Game/Texture/ElevatorTexture.png", "Game/Texture/ElevatorTexture.png", "Game/Texture/ElevatorTexture.png", "Game/Texture/ElevatorTexture.png" },
-	{ "Game/Texture/ElevatorTexture.png", "Game/Texture/ElevatorTexture.png", "Game/Texture/ElevatorTexture.png", "Game/Texture/ElevatorTexture.png", "Game/Texture/ElevatorTexture.png" },
+	{ "Game/Texture/ClubTexture.png", "Game/Texture/ClubTexture.png", "Game/Texture/ClubTexture.png", "Game/Texture/ClubTexture.png", "Game/Texture/ClubTexture.png" },
+	{ "Game/Texture/ClubTexture.png", "Game/Texture/ClubTexture.png", "Game/Texture/ClubTexture.png", "Game/Texture/ClubTexture.png", "Game/Texture/ClubTexture.png" },
+	{ "Game/Texture/ClubTexture.png", "Game/Texture/ClubTexture.png", "Game/Texture/ClubTexture.png", "Game/Texture/ClubTexture.png", "Game/Texture/ClubTexture.png" },
 };
 
 Question2FloorHint::Question2FloorHint( QuestionManagerConstPtr question_manager, CollideManagerPtr collide_manager, FLOOR floor ) :
 _floor( floor ),
 _collide_manager( collide_manager ) {
-	double y = ( int )_floor * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT + FLOOR_HEIGHT / 2;
+	double y = ( int )_floor * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT;
 	ImagePtr test_texture = Drawer::getTask( )->getImage( TEST_TEXTURE );
 
-	generateSphere( OBJECT_TAG_Q2SPHERE_1, Vector(    0, y, 1000 ) * 0.001 );
-	generateSphere( OBJECT_TAG_Q2SPHERE_2, Vector( 1000, y,    0 ) * 0.001 );
-	generateSphere( OBJECT_TAG_Q2SPHERE_3, Vector( 1000, y, 1000 ) * 0.001 );
+	generateSphere( OBJECT_TAG_Q2SPHERE_1, Vector(    0, y, 1000 ) );
+	generateSphere( OBJECT_TAG_Q2SPHERE_2, Vector( 1000, y,    0 ) );
+	generateSphere( OBJECT_TAG_Q2SPHERE_3, Vector( 1000, y, 1000 ) );
 
 
 	std::map< OBJECT_TAG, Question2SpherePtr >::iterator ite = _spheres.begin( );
@@ -32,10 +32,15 @@ _collide_manager( collide_manager ) {
 Question2FloorHint::~Question2FloorHint( ) {
 }
 
-void Question2FloorHint::drawQuestion2Hint( ) const {
-	std::map< OBJECT_TAG, Question2SpherePtr >::const_iterator ite = _spheres.begin( );
-	for ( ite; ite != _spheres.end( ); ite++ ) {
-		ite->second->draw( );
+void Question2FloorHint::update( ) {
+	for ( const std::pair< OBJECT_TAG, Question2SpherePtr >& sphere : _spheres ) {
+		sphere.second->update( );
+	}
+}
+
+void Question2FloorHint::draw( ) const {
+	for ( const std::pair< OBJECT_TAG, Question2SpherePtr >& sphere : _spheres ) {
+		sphere.second->draw( );
 	}
 }
 

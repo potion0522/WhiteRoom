@@ -17,7 +17,7 @@ public:
 	virtual ~Question1FloorHint( );
 
 public:
-	void drawQuestion1Hint( ) const;
+	void draw( ) const;
 
 private:
 	ModelPtr _hint;

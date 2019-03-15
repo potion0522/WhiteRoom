@@ -70,6 +70,6 @@ Question1FloorHint::Question1FloorHint( QuestionManagerConstPtr question_manager
 Question1FloorHint::~Question1FloorHint( ) {
 }
 
-void Question1FloorHint::drawQuestion1Hint( ) const {
+void Question1FloorHint::draw( ) const {
 	_hint->draw( );
 }

@@ -39,6 +39,9 @@ void SceneGame::update( ) {
 	_player->update( );
 	_elevator->update( );
 	_console->update( );
+
+	FLOOR player_floor = _player->getFloor( );
+	_floors[ player_floor ]->update( );
 }
 
 void SceneGame::draw( ) const {

@@ -23,6 +23,7 @@ public:
 	virtual ~Floor( );
 
 public:
+	virtual void update( ) { };
 	virtual void draw( ) const;
 
 protected:

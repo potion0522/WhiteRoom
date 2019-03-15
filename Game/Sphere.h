@@ -3,11 +3,12 @@
 #include "Mathematics.h"
 #include "SphereCollider.h"
 
-/**************************************************
+/******************************************************************
 
 球体そのもののクラス
+エレベーターがある場合、当たり判定が消えるので壁の判定は独自で行う
 
-**************************************************/
+******************************************************************/
 
 
 PTR( Model );
@@ -18,18 +19,27 @@ public:
 	virtual ~Sphere( );
 
 public:
+	void update( );
 	void draw( ) const;
 	virtual void onColliderEnter( ColliderConstPtr collider );
 
 private:
 	void generate( );
+	void adjustInFloor( ); // 壁に埋まった時の強制脱出
+	void setSpeed( const Vector& speed );
+	void refrection( ); // 壁反射
+	void move( );
+	Vector getRefrectionVector( const Vector& wall_norm );
 
 private:
-	static const int _DIV_NUM = 25;
+	static const int _DIV_NUM = 30;
 
 protected:
 	ModelPtr _model;
 	Vector _pos;
+	Vector _past_pos;
+	Vector _speed;
+	Matrix _rot;
 	double _radius;
 };
 

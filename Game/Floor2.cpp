@@ -15,6 +15,10 @@ Floor( collide_manager, observable, floor  ) {
 Floor2::~Floor2( ) {
 }
 
+void Floor2::update( ) {
+	_question2_hint->update( );
+}
+
 void Floor2::draw( ) const {
 
 	drawFloor( );
@@ -22,9 +26,9 @@ void Floor2::draw( ) const {
 	// question1
 	Manager* manager = Manager::getInstance( );
 	manager->setWriteZBaffur( false );
-	_question1_hint->drawQuestion1Hint( );
+	_question1_hint->draw( );
 	manager->setWriteZBaffur( true );
 
 	// question2
-	_question2_hint->drawQuestion2Hint( );
+	_question2_hint->draw( );
 }

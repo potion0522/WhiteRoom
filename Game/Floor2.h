@@ -19,6 +19,7 @@ public:
 	virtual ~Floor2( );
 
 public:
+	void update( );
 	void draw( ) const;
 
 private:
