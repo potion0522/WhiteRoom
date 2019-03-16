@@ -16,6 +16,10 @@ class QuestionManager {
 public:
 	// 1.club 2.heart 3.diamont 4.spade
 	static const int QUESTION_2_MAX_SUIT_NUM = 4;
+	static const unsigned char SUIT_CLUB    = 0x01;
+	static const unsigned char SUIT_HEART   = 0x02;
+	static const unsigned char SUIT_DIAMOND = 0x03;
+	static const unsigned char SUIT_SPADE   = 0x04;
 
 private:
 	struct Question1 {

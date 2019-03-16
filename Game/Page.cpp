@@ -2,6 +2,7 @@
 #include "define.h"
 #include "ConsoleButton.h"
 #include "ConsoleQuestion1.h"
+#include "ConsoleQuestion2.h"
 
 #include "Drawer.h"
 
@@ -18,7 +19,7 @@ _func_button_push( func_button_push ) {
 	switch ( _page_num ) {
 		case Console::PAGE_NUM_1:
 			_y = CONSOLE_HEIGHT * 0;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleQuestion2Ptr( new ConsoleQuestion2( [ & ] { callbackPushButton( ); }, question_manager ) );
 			break;
 		case Console::PAGE_NUM_2:
 			_y = CONSOLE_HEIGHT * 1;
@@ -73,24 +74,5 @@ void Page::callbackPushButton( ) {
 }
 
 void Page::callbackAnswer( ) {
-	switch ( _page_num ) {
-		case Console::PAGE_NUM_1:
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
-			break;
-		case Console::PAGE_NUM_2:
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
-			break;
-		case Console::PAGE_NUM_3:
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
-			break;
-		case Console::PAGE_NUM_4:
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
-			break;
-		case Console::PAGE_NUM_5:
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
-			break;
-		case Console::PAGE_NUM_6:
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
-			break;
-	}
+	_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
 }

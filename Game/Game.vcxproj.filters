@@ -99,6 +99,9 @@
     <ClCompile Include="Floor4.cpp">
       <Filter>Game\Floor</Filter>
     </ClCompile>
+    <ClCompile Include="ConsoleQuestion2.cpp">
+      <Filter>Game\Console\PageContent\Question</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -272,6 +275,9 @@
     </ClInclude>
     <ClInclude Include="Floor4.h">
       <Filter>Game\Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleQuestion2.h">
+      <Filter>Game\Console\PageContent\Question</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

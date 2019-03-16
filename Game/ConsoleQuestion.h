@@ -2,6 +2,12 @@
 #include "PageContent.h"
 #include "smart_ptr.h"
 
+/************************************************
+
+コンソールの問題解答欄のベースクラス
+
+************************************************/
+
 PTR( QuestionManager );
 
 class ConsoleQuestion : public PageContent {
