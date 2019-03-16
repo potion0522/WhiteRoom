@@ -63,5 +63,7 @@ void SceneTitle::draw( ) const {
 	_click_to_start_font->draw( );
 
 	DrawerPtr drawer = Drawer::getTask( );
+	drawer->waitForSync( );
+	drawer->drawFPS( );
 	drawer->flip( );
 }

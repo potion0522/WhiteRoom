@@ -1,10 +1,8 @@
 #include "Question2Sphere.h"
 #include "Model.h"
 
-const float RADIUS = 650.0;
-
 Question2Sphere::Question2Sphere( Vector pos, ImagePtr texture, std::function< void( OBJECT_TAG ) > callback, OBJECT_TAG tag  ) :
-Sphere( pos + Vector( 0, RADIUS, 0 ), RADIUS, tag ),
+Sphere( pos, SPHERE_OBJECT_RADIUS, tag ),
 _callback( callback ) {
 	_model->setTexture( texture );
 }

@@ -43,19 +43,19 @@
       <Filter>Game\Player</Filter>
     </ClCompile>
     <ClCompile Include="Door.cpp">
-      <Filter>Game\Model\Elevator</Filter>
+      <Filter>Game\Elevator</Filter>
     </ClCompile>
     <ClCompile Include="Elevator.cpp">
-      <Filter>Game\Model\Elevator</Filter>
+      <Filter>Game\Elevator</Filter>
     </ClCompile>
     <ClCompile Include="ElevatorAnnounce.cpp">
-      <Filter>Game\Model\Elevator\Announce</Filter>
+      <Filter>Game\Elevator\Announce</Filter>
     </ClCompile>
     <ClCompile Include="ElevatorButton.cpp">
-      <Filter>Game\Model\Elevator</Filter>
+      <Filter>Game\Elevator</Filter>
     </ClCompile>
     <ClCompile Include="ElevatorBox.cpp">
-      <Filter>Game\Model\Elevator</Filter>
+      <Filter>Game\Elevator</Filter>
     </ClCompile>
     <ClCompile Include="ConsoleObserver.cpp">
       <Filter>Game\Console\Observer</Filter>
@@ -64,16 +64,16 @@
       <Filter>Game\Question</Filter>
     </ClCompile>
     <ClCompile Include="Question1FloorHint.cpp">
-      <Filter>Game\Model\Floor\Hint</Filter>
+      <Filter>Game\Floor\Hint</Filter>
     </ClCompile>
     <ClCompile Include="Floor1.cpp">
-      <Filter>Game\Model\Floor</Filter>
+      <Filter>Game\Floor</Filter>
     </ClCompile>
     <ClCompile Include="Floor.cpp">
-      <Filter>Game\Model\Floor\BaseFloor</Filter>
+      <Filter>Game\Floor\BaseFloor</Filter>
     </ClCompile>
     <ClCompile Include="Wall.cpp">
-      <Filter>Game\Model\Floor\BaseFloor</Filter>
+      <Filter>Game\Floor\BaseFloor</Filter>
     </ClCompile>
     <ClCompile Include="ConsoleQuestion.cpp">
       <Filter>Game\Console\PageContent\Question</Filter>
@@ -82,16 +82,22 @@
       <Filter>Game\Console\PageContent\Question</Filter>
     </ClCompile>
     <ClCompile Include="Floor2.cpp">
-      <Filter>Game\Model\Floor</Filter>
+      <Filter>Game\Floor</Filter>
     </ClCompile>
     <ClCompile Include="Question2FloorHint.cpp">
-      <Filter>Game\Model\Floor\Hint</Filter>
+      <Filter>Game\Floor\Hint</Filter>
     </ClCompile>
     <ClCompile Include="Question2Sphere.cpp">
-      <Filter>Game\Model\Sphere</Filter>
+      <Filter>Game\Object\Sphere</Filter>
     </ClCompile>
     <ClCompile Include="Sphere.cpp">
-      <Filter>Game\Model\Sphere</Filter>
+      <Filter>Game\Object\Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="Floor3.cpp">
+      <Filter>Game\Floor</Filter>
+    </ClCompile>
+    <ClCompile Include="Floor4.cpp">
+      <Filter>Game\Floor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -100,9 +106,6 @@
     </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{0f0e56a9-7ac4-4fb8-9fbb-3ced98547bb0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Model">
-      <UniqueIdentifier>{da8359a8-09cb-4089-a1f1-c771a133544f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\Console">
       <UniqueIdentifier>{ba72a5a1-4431-4eb2-ab59-82dcc480a4c7}</UniqueIdentifier>
@@ -122,20 +125,11 @@
     <Filter Include="SceneInterface">
       <UniqueIdentifier>{9c5fed17-bba3-48f8-80c7-6c11008701af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Model\Floor">
-      <UniqueIdentifier>{0d500ab1-42b2-414e-90c6-af29a4a00268}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Debug">
       <UniqueIdentifier>{081684e2-0e5b-4257-868d-15e4e36977ed}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\Player">
       <UniqueIdentifier>{e12a181e-1776-470e-8e27-c349ae8253f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Model\Elevator">
-      <UniqueIdentifier>{3533635d-677e-42c8-835f-7190a984d05a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Model\Elevator\Announce">
-      <UniqueIdentifier>{282873fc-8843-47c7-9a67-6ec140539fec}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\Console\Observer">
       <UniqueIdentifier>{31f1f65e-d8b6-4640-a8b9-b8f6497d3721}</UniqueIdentifier>
@@ -143,13 +137,25 @@
     <Filter Include="Game\Question">
       <UniqueIdentifier>{ec3d1df7-0c9c-4479-97cd-a5c9ded5d876}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Model\Floor\Hint">
+    <Filter Include="Game\Elevator">
+      <UniqueIdentifier>{3533635d-677e-42c8-835f-7190a984d05a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Elevator\Announce">
+      <UniqueIdentifier>{282873fc-8843-47c7-9a67-6ec140539fec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Floor">
+      <UniqueIdentifier>{0d500ab1-42b2-414e-90c6-af29a4a00268}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Floor\Hint">
       <UniqueIdentifier>{2d55013f-cdd8-4f9e-a20f-b28879ca03fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Model\Floor\BaseFloor">
+    <Filter Include="Game\Floor\BaseFloor">
       <UniqueIdentifier>{294389c7-c458-4966-ba9a-8cd07008de67}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Model\Sphere">
+    <Filter Include="Game\Object">
+      <UniqueIdentifier>{da8359a8-09cb-4089-a1f1-c771a133544f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Sphere">
       <UniqueIdentifier>{fee77477-60d9-41bd-88b8-2dfa6a7d86b6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -199,25 +205,25 @@
       <Filter>Game\Player</Filter>
     </ClInclude>
     <ClInclude Include="Door.h">
-      <Filter>Game\Model\Elevator</Filter>
+      <Filter>Game\Elevator</Filter>
     </ClInclude>
     <ClInclude Include="Elevator.h">
-      <Filter>Game\Model\Elevator</Filter>
+      <Filter>Game\Elevator</Filter>
     </ClInclude>
     <ClInclude Include="ElevatorAnnounceObservable.h">
-      <Filter>Game\Model\Elevator\Announce</Filter>
+      <Filter>Game\Elevator\Announce</Filter>
     </ClInclude>
     <ClInclude Include="ElevatorAnnounceObserver.h">
-      <Filter>Game\Model\Elevator\Announce</Filter>
+      <Filter>Game\Elevator\Announce</Filter>
     </ClInclude>
     <ClInclude Include="ElevatorAnnounce.h">
-      <Filter>Game\Model\Elevator\Announce</Filter>
+      <Filter>Game\Elevator\Announce</Filter>
     </ClInclude>
     <ClInclude Include="ElevatorButton.h">
-      <Filter>Game\Model\Elevator</Filter>
+      <Filter>Game\Elevator</Filter>
     </ClInclude>
     <ClInclude Include="ElevatorBox.h">
-      <Filter>Game\Model\Elevator</Filter>
+      <Filter>Game\Elevator</Filter>
     </ClInclude>
     <ClInclude Include="ConsoleActiveObservable.h">
       <Filter>Game\Console\Observer</Filter>
@@ -232,16 +238,16 @@
       <Filter>Game\Question</Filter>
     </ClInclude>
     <ClInclude Include="Question1FloorHint.h">
-      <Filter>Game\Model\Floor\Hint</Filter>
+      <Filter>Game\Floor\Hint</Filter>
     </ClInclude>
     <ClInclude Include="Floor1.h">
-      <Filter>Game\Model\Floor</Filter>
+      <Filter>Game\Floor</Filter>
     </ClInclude>
     <ClInclude Include="Floor.h">
-      <Filter>Game\Model\Floor\BaseFloor</Filter>
+      <Filter>Game\Floor\BaseFloor</Filter>
     </ClInclude>
     <ClInclude Include="Wall.h">
-      <Filter>Game\Model\Floor\BaseFloor</Filter>
+      <Filter>Game\Floor\BaseFloor</Filter>
     </ClInclude>
     <ClInclude Include="ConsoleQuestion.h">
       <Filter>Game\Console\PageContent\Question</Filter>
@@ -250,16 +256,22 @@
       <Filter>Game\Console\PageContent\Question</Filter>
     </ClInclude>
     <ClInclude Include="Floor2.h">
-      <Filter>Game\Model\Floor</Filter>
+      <Filter>Game\Floor</Filter>
     </ClInclude>
     <ClInclude Include="Question2FloorHint.h">
-      <Filter>Game\Model\Floor\Hint</Filter>
+      <Filter>Game\Floor\Hint</Filter>
     </ClInclude>
     <ClInclude Include="Question2Sphere.h">
-      <Filter>Game\Model\Sphere</Filter>
+      <Filter>Game\Object\Sphere</Filter>
     </ClInclude>
     <ClInclude Include="Sphere.h">
-      <Filter>Game\Model\Sphere</Filter>
+      <Filter>Game\Object\Sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="Floor3.h">
+      <Filter>Game\Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="Floor4.h">
+      <Filter>Game\Floor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

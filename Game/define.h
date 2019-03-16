@@ -40,6 +40,8 @@ const int ELEVATOR_HEIGHT = FLOOR_HEIGHT; // 部屋のサイズと同じ
 const int ELEVATOR_WIDTH  = 2000; // エレベーターの幅( 全体 )
 const int ELEVATOR_TO_FLOOR_SPACE = 100; // エレベーターとフロアとの間隔
 
+const double SPHERE_OBJECT_RADIUS = 650.0;
+
 const int    METER_TO_MIRI_UNIT = 1000;
 const double MIRI_TO_METER_UNIT = 0.001;
 

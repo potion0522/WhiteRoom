@@ -32,7 +32,7 @@ private:
 	Vector getRefrectionVector( const Vector& wall_norm );
 
 private:
-	static const int _DIV_NUM = 30;
+	static const int _DIV_NUM = 24;
 
 protected:
 	ModelPtr _model;

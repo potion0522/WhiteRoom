@@ -3,6 +3,7 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Camera.h"
+#include "Random.h"
 
 #include "Controller.h"
 #include "define.h"
@@ -20,6 +21,7 @@ int main( ) {
 	KeyboardPtr keyboard( new Keyboard );
 	MousePtr mouse( new Mouse );
 	CameraPtr camera( new Camera );
+	RandomPtr rand( new Random );
 
 	// WhiteRoom
 	ControllerPtr controller( new Controller );
@@ -30,5 +32,6 @@ int main( ) {
 	manager->add( Keyboard  ::getTag( ), keyboard   );
 	manager->add( Mouse     ::getTag( ), mouse      );
 	manager->add( Camera    ::getTag( ), camera     );
+	manager->add( Random    ::getTag( ), rand       );
 	return 0;
 }

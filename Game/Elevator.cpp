@@ -18,7 +18,7 @@ const int MAX_DOOR_MOVE_LENGTH = ELEVATOR_WIDTH / 2;
 
 Elevator::Elevator( const Vector& init_pos, CollideManagerPtr collide_manager ) :
 SphereCollider( _sphere_collider_pos, ELEVATOR_WIDTH / 2, OBJECT_TAG_ELEVATOR ),
-_pos( init_pos + Vector( 0, ELEVATOR_INIT_FLOOR * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT, 0 ) ),
+_pos( init_pos ),
 _sphere_collider_pos( _pos + Vector( 0, ELEVATOR_HEIGHT / 2, 0 ) ),
 _door_open_length( MAX_DOOR_MOVE_LENGTH ),
 _floor( ELEVATOR_INIT_FLOOR ),
@@ -287,7 +287,7 @@ void Elevator::generateElevator( ) {
 	_elevator_door_right->setTexture( Drawer::getTask( )->getImage( ELEVATOR_TEXTURE ) );
 
 	{
-		const double DOOR_WIDTH = ELEVATOR_WIDTH / 2;
+		const double DOOR_WIDTH = ELEVATOR_WIDTH / 2 + 200;
 		Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), -PI * 0.5 * NORMAL_WALL );
 
 		// âEë§
@@ -338,7 +338,7 @@ void Elevator::generateElevator( ) {
 
 void Elevator::generateElevatorCollider( ) {
 	// çÇÇ≥ÇÕGFÇ™y=0Ç≈6äKëwÇµÇΩÇ©ÇÁêLÇŒÇ∑ÇΩÇﬂÅ@çÇÇ≥ * FLOOR_NUM
-	Vector pos  = Vector( 0, ( MAX_FLOOR * FLOOR_HEIGHT * -1 + FLOOR_HEIGHT ) / 2, ELEVATOR_WIDTH / 2 );
+	Vector pos  = Vector( 0, FLOOR_HEIGHT - ( MAX_FLOOR * FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT ) / 2, ELEVATOR_WIDTH / 2 );
 	Vector norm = Vector( 0, 0, -1 );
 	
 	// í èÌï«
@@ -346,12 +346,12 @@ void Elevator::generateElevatorCollider( ) {
 		Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), -PI * 0.5 * i );
 		Vector pos_  = rot.multiply( pos ) + Vector( _pos.x, 0, _pos.z );
 		Vector norm_ = rot.multiply( norm );
-		_wall_colliders[ i ] = WallPtr( new Wall( pos_, norm_, ELEVATOR_WIDTH, ELEVATOR_HEIGHT * ( MAX_FLOOR + 1 ) ) );
+		_wall_colliders[ i ] = WallPtr( new Wall( pos_, norm_, ELEVATOR_WIDTH, FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * MAX_FLOOR ) );
 	}
 
 	// ÉhÉAÇÃï«
 	Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), -PI * 0.5 * WALL_COLLIDER_NUM );
 	Vector pos_  = rot.multiply( pos ) + Vector( _pos.x, 0, _pos.z );
 	Vector norm_ = rot.multiply( norm );
-	_door_collider = DoorPtr( new Door( pos_, norm_, ELEVATOR_WIDTH, ELEVATOR_HEIGHT * ( MAX_FLOOR + 1 ) ) );
+	_door_collider = DoorPtr( new Door( pos_, norm_, ELEVATOR_WIDTH, FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * MAX_FLOOR ) );
 }

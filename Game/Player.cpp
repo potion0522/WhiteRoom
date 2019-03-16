@@ -12,7 +12,7 @@
 const double MAX_H_RADIAN = 45 * PI / 180; // 横
 const double MAX_V_RADIAN = 15 * PI / 180; // 縦
 
-const double MOVE_SPEED = 100;
+const double MOVE_SPEED = 150.0;
 
 
 // あとで外部ファイルにする
@@ -46,7 +46,7 @@ _elevator_box( elevator_box ) {
 	CameraPtr camera = Camera::getTask( );
 	camera->setCamera( _head_pos, _dir );
 	camera->setCameraUp( Vector( 0, 1, 0 ) );
-	camera->setNearFar( 5.0f * ( float )MIRI_TO_METER_UNIT, ( float )( FLOOR_WIDTH * 2 * MIRI_TO_METER_UNIT ) );
+	camera->setNearFar( 100.0f * ( float )MIRI_TO_METER_UNIT, ( float )( FLOOR_WIDTH * 2 * MIRI_TO_METER_UNIT ) );
 }
 
 Player::~Player( ) {

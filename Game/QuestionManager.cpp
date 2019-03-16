@@ -1,13 +1,11 @@
 #include "QuestionManager.h"
 
-#include "MersenneTwister.h"
+#include "Random.h"
 
 #include <unordered_map>
 #include <vector>
 
 QuestionManager::QuestionManager( ) {
-	init_genrand( ( unsigned int )time( NULL ) );
-
 	generateQuestion1( );
 	generateQuestion2( );
 	generateQuestion3( );
@@ -97,9 +95,10 @@ void QuestionManager::generateQuestion1( ) {
 	}
 
 	std::vector< unsigned char > select_nums;
+	RandomPtr random = Random::getTask( );
 	// 3個選出するまでループ
 	while ( nums.size( ) > MAX_IDX - 3 ) {
-		int idx = genrand_int31( ) % MAX_IDX;
+		int idx = random->getRand( ) % MAX_IDX;
 		if ( nums.count( idx ) == 0 ) {
 			continue;
 		}
@@ -117,9 +116,10 @@ void QuestionManager::generateQuestion1( ) {
 void QuestionManager::generateQuestion2( ) {
 	const int MAX_IDX = 3;
 	std::vector< unsigned char > nums;
+	RandomPtr random = Random::getTask( );
 
 	while ( nums.size( ) < 3 ) {
-		int num = genrand_int31( ) % QUESTION_2_MAX_SUIT_NUM;
+		int num = random->getRand( ) % QUESTION_2_MAX_SUIT_NUM;
 		
 		bool insert = true;
 		for ( int i = 0; i < nums.size( ); i++ ) {

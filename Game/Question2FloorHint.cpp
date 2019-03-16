@@ -3,6 +3,7 @@
 #include "Question2Sphere.h"
 #include "CollideManager.h"
 
+#include "Random.h"
 #include "Drawer.h"
 
 const char* TEXTURE[ QuestionManager::QUESTION_2_MAX_SUIT_NUM ][ 5 ] = {
@@ -16,11 +17,22 @@ Question2FloorHint::Question2FloorHint( QuestionManagerConstPtr question_manager
 _question_manager( question_manager ),
 _collide_manager( collide_manager ),
 _floor( floor ) {
-	double y = ( int )_floor * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT;
+	
+	const int GENERATE_RANGE = ( int )( FLOOR_WIDTH - SPHERE_OBJECT_RADIUS * 2 );
+	const int SPHERE_NUM = 3;
 
-	generateSphere( OBJECT_TAG_Q2SPHERE_1, Vector(    0, y, 1000 ) );
-	generateSphere( OBJECT_TAG_Q2SPHERE_2, Vector( 1000, y,    0 ) );
-	generateSphere( OBJECT_TAG_Q2SPHERE_3, Vector( 1000, y, 1000 ) );
+	RandomPtr random = Random::getTask( );
+	std::vector< Vector > rand_pos;
+	for ( int i = 0; i < SPHERE_NUM; i++ ) {
+		Vector pos = Vector( );
+		pos.x = ( -GENERATE_RANGE / 2 ) + ( random->getRand( ) % GENERATE_RANGE );
+		pos.z = i * GENERATE_RANGE / SPHERE_NUM;
+		pos.y = FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * _floor * -1 + SPHERE_OBJECT_RADIUS;
+		rand_pos.push_back( pos );
+	}
+	generateSphere( OBJECT_TAG_Q2SPHERE_1, rand_pos[ 0 ] );
+	generateSphere( OBJECT_TAG_Q2SPHERE_2, rand_pos[ 1 ] );
+	generateSphere( OBJECT_TAG_Q2SPHERE_3, rand_pos[ 2 ] );
 
 
 	std::map< OBJECT_TAG, Question2SpherePtr >::iterator ite = _spheres.begin( );
@@ -59,7 +71,7 @@ void Question2FloorHint::dockingSphere( OBJECT_TAG tag1, OBJECT_TAG tag2 ) {
 
 		// ¶¬
 		Vector pos = _spheres[ OBJECT_TAG_Q2SPHERE_1 ]->getPos( );
-		pos.y = ( int )_floor * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT;
+		pos.y = ( int )_floor * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT + SPHERE_OBJECT_RADIUS;
 
 		generateSphere( OBJECT_TAG_Q2SPHERE_4, pos );
 		_collide_manager->addDynamicCollider( _spheres.at( OBJECT_TAG_Q2SPHERE_4 ) );
@@ -76,7 +88,7 @@ void Question2FloorHint::dockingSphere( OBJECT_TAG tag1, OBJECT_TAG tag2 ) {
 
 		// ¶¬
 		Vector pos = _spheres[ OBJECT_TAG_Q2SPHERE_3 ]->getPos( );
-		pos.y = ( int )_floor * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT;
+		pos.y = ( int )_floor * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT + SPHERE_OBJECT_RADIUS;
 
 		generateSphere( OBJECT_TAG_Q2SPHERE_5, pos );
 		_collide_manager->addDynamicCollider( _spheres.at( OBJECT_TAG_Q2SPHERE_5 ) );
