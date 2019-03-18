@@ -26,6 +26,11 @@ bool QuestionManager::answerQuestion1( unsigned char num1, unsigned char num2, u
 }
 
 bool QuestionManager::answerQuestion2( unsigned char mark1, unsigned char mark2, unsigned char mark3 ) const {
+	if ( mark1 == _question2.floor2_num &&
+	     mark2 == _question2.floor3_num &&
+	     mark3 == _question2.floor4_num ) {
+		return true;
+	}
 	return false;
 }
 
@@ -119,7 +124,7 @@ void QuestionManager::generateQuestion2( ) {
 	RandomPtr random = Random::getTask( );
 
 	while ( nums.size( ) < 3 ) {
-		int num = random->getRand( ) % QUESTION_2_MAX_SUIT_NUM;
+		int num = random->getRand( ) % QUESTION_2_MAX_MARK_NUM;
 		
 		bool insert = true;
 		for ( int i = 0; i < nums.size( ); i++ ) {

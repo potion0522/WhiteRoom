@@ -19,7 +19,7 @@ _func_button_push( func_button_push ) {
 	switch ( _page_num ) {
 		case Console::PAGE_NUM_1:
 			_y = CONSOLE_HEIGHT * 0;
-			_content = ConsoleQuestion2Ptr( new ConsoleQuestion2( [ & ] { callbackPushButton( ); }, question_manager ) );
+			_content = ConsoleQuestion2Ptr( new ConsoleQuestion2( [ & ] { callbackAnswer( ); }, question_manager ) );
 			break;
 		case Console::PAGE_NUM_2:
 			_y = CONSOLE_HEIGHT * 1;

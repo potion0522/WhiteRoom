@@ -17,7 +17,8 @@ private:
 	enum STATE {
 		STATE_NONE,
 		STATE_PUSH,
-		STATE_PUSH_UP
+		STATE_PUSH_UP,
+		STATE_ANSWER
 	};
 
 public:
@@ -32,13 +33,15 @@ private:
 	void actOnNone( );
 	void actOnPush( );
 	void actOnPushUp( );
+	void actOnAnswer( );
+	bool isMouseOnButton( ) const;
 
 private:
 	static const int ANSWER_NUM = 3;
 
 private:
 	STATE _state;
-	std::array< unsigned char, ANSWER_NUM > _suits_state;
-	ImagePtr _suits;
+	std::array< unsigned char, ANSWER_NUM > _mark_state;
+	ImagePtr _mark_image;
 };
 

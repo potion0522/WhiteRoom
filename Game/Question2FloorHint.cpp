@@ -6,7 +6,7 @@
 #include "Random.h"
 #include "Drawer.h"
 
-const char* TEXTURE[ QuestionManager::QUESTION_2_MAX_SUIT_NUM ][ 5 ] = {
+const char* TEXTURE[ QuestionManager::QUESTION_2_MAX_MARK_NUM ][ 5 ] = {
 	{ "Game/Texture/ClubTexture1.png"   , "Game/Texture/ClubTexture2.png"   , "Game/Texture/ClubTexture3.png"   , "Game/Texture/ClubTexture4.png"   , "Game/Texture/ClubTexture5.png"    },
 	{ "Game/Texture/HeartTexture1.png"  , "Game/Texture/HeartTexture2.png"  , "Game/Texture/HeartTexture3.png"  , "Game/Texture/HeartTexture4.png"  , "Game/Texture/HeartTexture5.png"   },
 	{ "Game/Texture/DiamondTexture1.png", "Game/Texture/DiamondTexture2.png", "Game/Texture/DiamondTexture3.png", "Game/Texture/DiamondTexture4.png", "Game/Texture/DiamondTexture5.png" },
