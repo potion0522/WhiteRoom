@@ -16,7 +16,6 @@ const char* ELEVATOR_WALL_TEXTURE = "Game/Texture/WallTexture.png";
 const int ELEVATOR_MOVE_TIME = 2000; // ミリ秒
 const int DOOR_ANIM_TIME = 1000; // ミリ秒
 const int MAX_DOOR_MOVE_LENGTH = ELEVATOR_WIDTH / 2;
-const double ELEVATOR_WALL_OVER_SIZE = 300; // エレベーターの部屋の大きさよりすこし大きくするための値
 
 Elevator::Elevator( const Vector& init_pos, CollideManagerPtr collide_manager ) :
 SphereCollider( _sphere_collider_pos, ELEVATOR_WIDTH / 2, OBJECT_TAG_ELEVATOR ),

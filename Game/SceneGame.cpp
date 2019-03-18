@@ -17,12 +17,7 @@ SceneGame::SceneGame( ) {
 	_question_manager       = QuestionManagerPtr( new QuestionManager );
 	_collide_manager        = CollideManagerPtr( new CollideManager );
 
-	_elevator  = ElevatorPtr( new Elevator( 
-		Vector( 
-		FLOOR_WIDTH / 2 + ELEVATOR_WIDTH / 2, 
-		ELEVATOR_INIT_FLOOR * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT,
-		0 ), 
-		_collide_manager ) );
+	_elevator  = ElevatorPtr( new Elevator( Vector( ELEVATOR_INIT_X, ELEVATOR_INIT_Y, ELEVATOR_INIT_Z ), _collide_manager ) );
 
 	_floors[ FLOOR_GF ]     = FloorPtr( new Floor( _collide_manager, _elevator->getAnnounceObservable( ),FLOOR_GF ) );
 	_floors[ FLOOR_1  ]     = Floor1Ptr( new Floor1( _collide_manager, _elevator->getAnnounceObservable( ), _question_manager, FLOOR_1 ) );

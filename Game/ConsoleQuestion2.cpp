@@ -6,7 +6,7 @@
 #include "Image.h"
 
 // 1.club 2.heart 3.diamont 4.spade
-const char* IMAGE_FILE = "Game/Console/Question/suits.png";
+const char* IMAGE_FILE = "Game/Console/suits.png";
 
 const int SUIT_SIZE = 256;
 const int SPACE = ( SCREEN_WIDTH - SUIT_SIZE * 2 ) / QuestionManager::QUESTION_2_MAX_MARK_NUM;

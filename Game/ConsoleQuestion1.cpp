@@ -8,7 +8,7 @@
 
 #include <vector>
 
-const char* QUESTION1_CONSOLE_HINT_FILEPATH = "Game/Console/Question/Question1.png";
+const char* QUESTION1_CONSOLE_HINT_FILEPATH = "Game/Console/Question1.png";
 
 ConsoleQuestion1::ConsoleQuestion1( std::function< void( ) > callback, QuestionManagerConstPtr question_manager ) :
 ConsoleQuestion( callback, question_manager ),

@@ -35,6 +35,24 @@ bool QuestionManager::answerQuestion2( unsigned char mark1, unsigned char mark2,
 }
 
 bool QuestionManager::answerQuestion3( unsigned char num1, unsigned char num2, unsigned char num3 ) const {
+	bool result = false;
+
+	// â∫äKëwÇ©ÇÁè„äKëw
+	if ( _question3.arrow_dir > 0 ) {
+		if ( num1 == _question3.floor4_num &&
+			 num2 == _question3.floor2_num &&
+			 num3 == _question3.floor1_num ) {
+			result = true;
+		}
+	} else {
+	// è„äKëwÇ©ÇÁâ∫äKëw
+		if ( num1 == _question3.floor1_num &&
+			 num2 == _question3.floor2_num &&
+			 num3 == _question3.floor4_num ) {
+			result = true;
+		}
+	}
+
 	return false;
 }
 
@@ -93,7 +111,7 @@ const std::array< unsigned char, 9 >& QuestionManager::getHintQuestion5( ) const
 }
 
 void QuestionManager::generateQuestion1( ) {
-	const int MAX_IDX = 9;
+	const int MAX_IDX = 10;
 	std::unordered_map< unsigned char, unsigned char > nums;
 	for ( int i = 0; i < MAX_IDX; i++ ) {
 		nums[ i ] = i;
@@ -145,6 +163,31 @@ void QuestionManager::generateQuestion2( ) {
 }
 
 void QuestionManager::generateQuestion3( ) {
+	const int MAX_IDX = 3;
+	const int MAX_ANSWER_NUM = 9;
+	std::vector< unsigned char > nums;
+	RandomPtr random = Random::getTask( );
+
+	while ( nums.size( ) < 3 ) {
+		int num = random->getRand( ) % MAX_ANSWER_NUM;
+		
+		bool insert = true;
+		for ( int i = 0; i < nums.size( ); i++ ) {
+			if ( num == nums[ i ] ) {
+				insert = false;
+				break;
+			}
+		}
+
+		if ( insert ) {
+			nums.push_back( num );
+		}
+	}
+
+	_question3.floor1_num = nums[ 0 ];
+	_question3.floor2_num = nums[ 1 ];
+	_question3.floor4_num = nums[ 2 ];
+	_question3.arrow_dir = ( random->getRand( 0, 1 ) == 0 ? -1 : 1 );
 }
 
 void QuestionManager::generateQuestion4( ) {
