@@ -65,6 +65,7 @@ private:
 	ModelPtr _elevator_room;
 	ModelPtr _elevator_door_left;
 	ModelPtr _elevator_door_right;
+	ModelPtr _elevator_wall;
 	ElevatorAnnouncePtr _announce;
 	ElevatorButtonPtr _elevator_button;
 	ElevatorBoxPtr _elevator_box;
