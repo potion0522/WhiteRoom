@@ -13,8 +13,7 @@ const int SPACE = ( SCREEN_WIDTH - SUIT_SIZE * 2 ) / QuestionManager::QUESTION_2
 const float CIRCLE_RADIUS = SUIT_SIZE * 0.8f; 
 
 ConsoleQuestion2::ConsoleQuestion2( std::function< void( ) > callback, QuestionManagerConstPtr question_manager ) :
-ConsoleQuestion( callback, question_manager ),
-_state( STATE_NONE ) {
+ConsoleQuestion( callback, question_manager ) {
 	DrawerPtr drawer = Drawer::getTask( );
 	_mark_image = drawer->getImage( IMAGE_FILE );
 	_mark_image->setCentral( true );
@@ -26,27 +25,6 @@ _state( STATE_NONE ) {
 
 ConsoleQuestion2::~ConsoleQuestion2( ) {
 }
-
-void ConsoleQuestion2::update( ) {
-	switch ( _state ) {
-		case STATE_NONE:
-			actOnNone( );
-			break;
-
-		case STATE_PUSH:
-			actOnPush( );
-			break;
-
-		case STATE_PUSH_UP:
-			actOnPushUp( );
-			break;
-
-		case STATE_ANSWER:
-			actOnAnswer( );
-			break;
-	}
-}
-
 
 void ConsoleQuestion2::draw( int x, int y ) const {
 	// ‰~

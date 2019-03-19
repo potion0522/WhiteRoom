@@ -22,8 +22,7 @@ const int NUMS_START_Y = ( ( SCREEN_HEIGHT / 2 - NUMS_SIZE * NUMS_ROW ) / 2 )   
 
 ConsoleQuestion3::ConsoleQuestion3( std::function< void( ) > callback, QuestionManagerConstPtr question_manager ) :
 ConsoleQuestion( callback, question_manager ),
-_selecting_num( 0x00 ),
-_state( STATE_NONE ) {
+_selecting_num( 0x00 ) {
 	bool arrow_up = ( question_manager->getHintQuestion3Arrow( ) > 0 ? true : false );
 	std::string hint_image_path = HINT_IMAGE;
 	if ( arrow_up ) {
@@ -42,26 +41,6 @@ _state( STATE_NONE ) {
 }
 
 ConsoleQuestion3::~ConsoleQuestion3( ) {
-}
-
-void ConsoleQuestion3::update( ) {
-	switch ( _state ) {
-		case STATE_NONE:
-			actOnNone( );
-			break;
-
-		case STATE_PUSH:
-			actOnPush( );
-			break;
-
-		case STATE_PUSH_UP:
-			actOnPushUp( );
-			break;
-
-		case STATE_ANSWER:
-			actOnAnswer( );
-			break;
-	}
 }
 
 void ConsoleQuestion3::draw( int x, int y ) const {

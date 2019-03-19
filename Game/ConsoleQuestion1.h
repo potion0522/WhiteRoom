@@ -17,23 +17,26 @@ public:
 	virtual ~ConsoleQuestion1( );
 
 public:
-	void update( );
 	void draw( int x, int y ) const;
 
 private:
-	bool updateState( );
-	void checkAnswer( );
-	bool isClicked( ) const;
-	int getClickIdx( ) const;
+	void actOnNone( );
+	void actOnPush( );
+	void actOnPushUp( );
+	void actOnAnswer( );
+	int getMouseOnSquareIdx( ) const;
+	int getBlackSquareNum( ) const;
 
 private:
 	static const int _SQUARE_NUM = 9;
-	static const unsigned int _BLACK = 1;
-	static const unsigned int _WHITE = 0;
+	const unsigned int BLACK = 1;
+	const unsigned int WHITE = 0;
+	const unsigned int ERROR = 0xff;
 
 private:
-	ImagePtr _square;
-	std::array< unsigned char, _SQUARE_NUM > _square_state;
+	int _selecting_idx;
 	int _square_width;
+	std::array< unsigned char, _SQUARE_NUM > _square_state;
+	ImagePtr _square;
 };
 

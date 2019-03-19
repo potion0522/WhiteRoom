@@ -16,7 +16,12 @@ public:
 	virtual ~ConsoleQuestion5( );
 
 public:
-	void update( );
 	void draw( int x, int y ) const;
+
+private:
+	void actOnNone( );
+	void actOnPush( );
+	void actOnPushUp( );
+	void actOnAnswer( );
 };
 

@@ -27,7 +27,6 @@ const int DAY_SQUARE_START_Y = ( MONTH_Y + ( SCREEN_HEIGHT - MONTH_Y ) / DAY_ROW
 
 ConsoleQuestion4::ConsoleQuestion4( std::function< void( ) > callback, QuestionManagerConstPtr question_manager ) :
 ConsoleQuestion( callback, question_manager ),
-_state( STATE_NONE ),
 _click_target( CLICK_TARGET_MONTH ),
 _selecting_num( ERROR ),
 _select_month( 0x00 ),
@@ -43,26 +42,6 @@ _select_day( ERROR ) {
 }
 
 ConsoleQuestion4::~ConsoleQuestion4( ) {
-}
-
-void ConsoleQuestion4::update( ) {
-	switch ( _state ) {
-		case STATE_NONE:
-			actOnNone( );
-			break;
-
-		case STATE_PUSH:
-			actOnPush( );
-			break;
-
-		case STATE_PUSH_UP:
-			actOnPushUp( );
-			break;
-
-		case STATE_ANSWER:
-			actOnAnswer( );
-			break;
-	}
 }
 
 void ConsoleQuestion4::draw( int x, int y ) const {
@@ -241,8 +220,4 @@ int ConsoleQuestion4::getMouseOnDay( ) const {
 	}
 
 	return ERROR;
-}
-
-int ConsoleQuestion4::getNowCount( ) const {
-	return Manager::getInstance( )->getNowCount( );
 }

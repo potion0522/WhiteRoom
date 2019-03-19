@@ -13,20 +13,11 @@ PTR( ConsoleQuestion3 );
 PTR( Image );
 
 class ConsoleQuestion3 : public ConsoleQuestion {
-private:
-	enum STATE {
-		STATE_NONE,
-		STATE_PUSH,
-		STATE_PUSH_UP,
-		STATE_ANSWER
-	};
-
 public:
 	ConsoleQuestion3( std::function< void( ) > callback, QuestionManagerConstPtr question_manager );
 	virtual ~ConsoleQuestion3( );
 
 public:
-	void update( );
 	void draw( int x, int y ) const;
 
 private:
@@ -41,7 +32,6 @@ private:
 	static const unsigned char ERROR_NUM = 0xff;
 
 private:
-	STATE _state;
 	unsigned char _selecting_num;
 	std::vector< unsigned char > _select_nums;
 	ImagePtr _nums_image;
