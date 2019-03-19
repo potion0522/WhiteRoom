@@ -57,6 +57,9 @@ bool QuestionManager::answerQuestion3( unsigned char num1, unsigned char num2, u
 }
 
 bool QuestionManager::answerQuestion4( unsigned char month, unsigned char day ) const {
+	if ( _question4.month == month && _question4.day == day ) {
+		return true;
+	}
 	return false;
 }
 
@@ -195,6 +198,9 @@ void QuestionManager::generateQuestion3( ) {
 }
 
 void QuestionManager::generateQuestion4( ) {
+	RandomPtr random = Random::getTask( );
+	_question4.month = ( unsigned char )random->getRand( 1, 12 );
+	_question4.day   = ( unsigned char )random->getRand( 1, DAY_IN_MONTH[ _question4.month - 1 ] );
 }
 
 void QuestionManager::generateQuestion5( ) {

@@ -52,3 +52,19 @@ const double MIRI_TO_METER_UNIT = 0.001;
 
 const int CONSOLE_WIDTH = 1920;
 const int CONSOLE_HEIGHT = 1080;
+
+// Œ‚²‚Æ‚Ì“ú”
+const int DAY_IN_MONTH[ 12 ] = {
+	31, //  1Œ
+	28, //  2Œ
+	31, //  3Œ
+	30, //  4Œ
+	31, //  5Œ
+	30, //  6Œ
+	31, //  7Œ
+	31, //  8Œ
+	30, //  9Œ
+	31, // 10Œ
+	30, // 11Œ
+	31, // 12Œ
+};
