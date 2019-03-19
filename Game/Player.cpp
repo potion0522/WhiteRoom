@@ -73,34 +73,34 @@ void Player::update( ) {
 
 void Player::onColliderEnter( ColliderConstPtr collider ) {
 
-	OBJECT_TAG tag = collider->getTag( );
+	//OBJECT_TAG tag = collider->getTag( );
 
-	// フロアの壁との接触
-	if ( tag == OBJECT_TAG_WALL ) {
-		adjustPosHitWall( collider );
-	}
+	//// フロアの壁との接触
+	//if ( tag == OBJECT_TAG_WALL ) {
+	//	adjustPosHitWall( collider );
+	//}
 
-	// フロアのエレベーターのある壁との接触
-	if ( tag == OBJECT_TAG_ELEVATOR_SIDE_WALL ) {
-		adjustPosHitWall( collider );
-	}
+	//// フロアのエレベーターのある壁との接触
+	//if ( tag == OBJECT_TAG_ELEVATOR_SIDE_WALL ) {
+	//	adjustPosHitWall( collider );
+	//}
 
-	// エレベーターの壁
-	if ( tag == OBJECT_TAG_ELEVATOR_DOOR ) {
-		adjustPosHitWall( collider );
-	}
+	//// エレベーターの壁
+	//if ( tag == OBJECT_TAG_ELEVATOR_DOOR ) {
+	//	adjustPosHitWall( collider );
+	//}
 
-	// エレベーターに乗っている
-	if ( tag == OBJECT_TAG_ELEVATOR ) {
-		SphereColliderConstPtr sphere = std::dynamic_pointer_cast< const SphereCollider >( collider );
-		double len = ( sphere->getPos( ) - _head_pos ).getLength2( );
-		double c = sphere->getRadius( );
-		if ( len > c * c ) {
-			return;
-		}
+	//// エレベーターに乗っている
+	//if ( tag == OBJECT_TAG_ELEVATOR ) {
+	//	SphereColliderConstPtr sphere = std::dynamic_pointer_cast< const SphereCollider >( collider );
+	//	double len = ( sphere->getPos( ) - _head_pos ).getLength2( );
+	//	double c = sphere->getRadius( );
+	//	if ( len > c * c ) {
+	//		return;
+	//	}
 
-		_elevator_box->requestRideOnElevator( &_ground_pos );
-	}
+	//	_elevator_box->requestRideOnElevator( &_ground_pos );
+	//}
 }
 
 FLOOR Player::getFloor( ) const {

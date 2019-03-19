@@ -118,7 +118,7 @@ const std::array< unsigned char, 9 >& QuestionManager::getHintQuestion5( ) const
 }
 
 void QuestionManager::generateQuestion1( ) {
-	const int MAX_IDX = 10;
+	const int MAX_IDX = 9;
 	std::unordered_map< unsigned char, unsigned char > nums;
 	for ( int i = 0; i < MAX_IDX; i++ ) {
 		nums[ i ] = i;
@@ -128,7 +128,7 @@ void QuestionManager::generateQuestion1( ) {
 	RandomPtr random = Random::getTask( );
 	// 3個選出するまでループ
 	while ( nums.size( ) > MAX_IDX - 3 ) {
-		int idx = random->getRand( ) % MAX_IDX;
+		int idx = random->getRand( 0, MAX_IDX );
 		if ( nums.count( idx ) == 0 ) {
 			continue;
 		}
