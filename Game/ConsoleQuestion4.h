@@ -51,6 +51,7 @@ private:
 	unsigned char _select_day;
 	ImagePtr _frame_image;
 	ImagePtr _nums_image;
-	ImagePtr _arrow;
+	ImagePtr _arrow_image;
+	ImagePtr _monday_image;
 };
 

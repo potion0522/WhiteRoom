@@ -9,10 +9,12 @@
 const char* DAY_FRAME_IMAGE = "Game/Console/DayFrame.png";
 const char* MONTH_NUM_IMAGE = "Game/Console/Number.png";
 const char* CHANGE_MONTH_ARROW_IMAGE = "Game/Console/Question4Arrow.png";
+const char* MONDAY_IMAGE = "Game/Console/Mon.png";
 
 const int MONTH_NUM_SIZE = 128;
 const int DAY_SQUARE_SIZE = 128;
 const int CHANGE_ARROW_SIZE = 256;
+const int MONDAY_IMAGE_SIZE = 128;
 const int DAY_FRAME_SIZE = 5;
 const int DAY_COL = 7;
 const int DAY_ROW = 5;
@@ -23,7 +25,7 @@ const int LEFT_ARROW_X  = SCREEN_WIDTH / 2 - ( int )( CHANGE_ARROW_SIZE * 1.5 );
 const int RIGHT_ARROW_X = SCREEN_WIDTH / 2 + ( int )( CHANGE_ARROW_SIZE * 1.5 );
 const int ARROW_Y = MONTH_Y;
 const int DAY_SQUARE_START_X = ( SCREEN_WIDTH  - DAY_COL * ( DAY_SQUARE_SIZE - DAY_FRAME_SIZE ) ) / 2 + DAY_SQUARE_SIZE / 2;
-const int DAY_SQUARE_START_Y = ( MONTH_Y + ( SCREEN_HEIGHT - MONTH_Y ) / DAY_ROW ) + DAY_SQUARE_SIZE / 2;
+const int DAY_SQUARE_START_Y = ( MONTH_Y + ( SCREEN_HEIGHT - MONTH_Y ) / DAY_ROW ) + DAY_SQUARE_SIZE;
 
 ConsoleQuestion4::ConsoleQuestion4( std::function< void( ) > callback, QuestionManagerConstPtr question_manager ) :
 ConsoleQuestion( callback, question_manager ),
@@ -32,13 +34,15 @@ _selecting_num( ERROR ),
 _select_month( 0x00 ),
 _select_day( ERROR ) {
 	DrawerPtr drawer = Drawer::getTask( );
-	_frame_image = drawer->getImage( DAY_FRAME_IMAGE );
-	_nums_image  = drawer->getImage( MONTH_NUM_IMAGE );
-	_arrow       = drawer->getImage( CHANGE_MONTH_ARROW_IMAGE );
+	_frame_image  = drawer->getImage( DAY_FRAME_IMAGE );
+	_nums_image   = drawer->getImage( MONTH_NUM_IMAGE );
+	_arrow_image  = drawer->getImage( CHANGE_MONTH_ARROW_IMAGE );
+	_monday_image = drawer->getImage( MONDAY_IMAGE );
 
-	_frame_image->setCentral( true );
-	_nums_image ->setCentral( true );
-	_arrow      ->setCentral( true );
+	_frame_image ->setCentral( true );
+	_nums_image  ->setCentral( true );
+	_arrow_image ->setCentral( true );
+	_monday_image->setCentral( true );
 }
 
 ConsoleQuestion4::~ConsoleQuestion4( ) {
@@ -48,14 +52,14 @@ void ConsoleQuestion4::draw( int x, int y ) const {
 	// –îˆó
 	{
 		// ¶
-		_arrow->setFlipX( true );
-		_arrow->setPos( LEFT_ARROW_X + x, ARROW_Y + y );
-		_arrow->draw( );
+		_arrow_image->setFlipX( true );
+		_arrow_image->setPos( LEFT_ARROW_X + x, ARROW_Y + y );
+		_arrow_image->draw( );
 
 		// ‰E
-		_arrow->setFlipX( false );
-		_arrow->setPos( RIGHT_ARROW_X + x, ARROW_Y + y );
-		_arrow->draw( );
+		_arrow_image->setFlipX( false );
+		_arrow_image->setPos( RIGHT_ARROW_X + x, ARROW_Y + y );
+		_arrow_image->draw( );
 	}
 
 	// ŒŽ
@@ -85,6 +89,14 @@ void ConsoleQuestion4::draw( int x, int y ) const {
 		int draw_y = DAY_SQUARE_START_Y + row * ( DAY_SQUARE_SIZE - DAY_FRAME_SIZE );
 		_frame_image->setPos( draw_x + x, draw_y + y );
 		_frame_image->draw( );
+	}
+
+	// —j“ú(ŒŽ)
+	{
+		int draw_x = DAY_SQUARE_START_X;
+		int draw_y = DAY_SQUARE_START_Y - MONDAY_IMAGE_SIZE;
+		_monday_image->setPos( draw_x + x, draw_y + y );
+		_monday_image->draw( );
 	}
 
 	// ‘I‘ð’†‚Ì“ú

@@ -1,8 +1,8 @@
 #include "Floor3.h"
 #include "CollideManager.h"
 #include "ElevatorAnnounceObservable.h"
-#include "Question1FloorHint.h"
 #include "Question2FloorHint.h"
+#include "Question4FloorHint.h"
 #include "Sphere.h"
 
 #include "Manager.h"
@@ -30,6 +30,10 @@ Floor( collide_manager, observable, floor  ) {
 			collide_manager->addDynamicCollider( _dummy_spheres[ i ] );
 		}
 	}
+
+	{ // question4
+		_question4_hint = Question4FloorHintPtr( new Question4FloorHint( question_manager ) );
+	}
 }
 
 Floor3::~Floor3( ) {
@@ -51,4 +55,7 @@ void Floor3::draw( ) const {
 	for ( SpherePtr sphere : _dummy_spheres ) {
 		sphere->draw( );
 	}
+
+	// question4
+	_question4_hint->draw( );
 }

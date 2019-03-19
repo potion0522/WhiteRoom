@@ -114,6 +114,9 @@
     <ClCompile Include="ConsoleQuestion5.cpp">
       <Filter>Game\Console\PageContent\Question</Filter>
     </ClCompile>
+    <ClCompile Include="Question4FloorHint.cpp">
+      <Filter>Game\Floor\Hint</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -302,6 +305,9 @@
     </ClInclude>
     <ClInclude Include="ConsoleQuestion5.h">
       <Filter>Game\Console\PageContent\Question</Filter>
+    </ClInclude>
+    <ClInclude Include="Question4FloorHint.h">
+      <Filter>Game\Floor\Hint</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
