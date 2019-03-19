@@ -163,6 +163,9 @@
     <ClCompile Include="ConsoleQuestion.cpp" />
     <ClCompile Include="ConsoleQuestion1.cpp" />
     <ClCompile Include="ConsoleQuestion2.cpp" />
+    <ClCompile Include="ConsoleQuestion3.cpp" />
+    <ClCompile Include="ConsoleQuestion4.cpp" />
+    <ClCompile Include="ConsoleQuestion5.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Elevator.cpp" />
@@ -208,6 +211,9 @@
     <ClInclude Include="ConsoleQuestion.h" />
     <ClInclude Include="ConsoleQuestion1.h" />
     <ClInclude Include="ConsoleQuestion2.h" />
+    <ClInclude Include="ConsoleQuestion3.h" />
+    <ClInclude Include="ConsoleQuestion4.h" />
+    <ClInclude Include="ConsoleQuestion5.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="Door.h" />

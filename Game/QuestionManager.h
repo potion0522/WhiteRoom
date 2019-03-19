@@ -56,6 +56,7 @@ public:
 	const std::array< unsigned char, 3 >& getHintQuestion1( ) const;
 	const unsigned char getHintQuestion2( FLOOR floor ) const;
 	const unsigned char getHintQuestion3( FLOOR floor ) const;
+	const char getHintQuestion3Arrow( ) const;
 	const unsigned char getHintQuestion4Month( ) const;
 	const unsigned char getHintQuestion4Day( ) const;
 	const std::array< unsigned char, 9 >& getHintQuestion5( ) const;

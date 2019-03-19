@@ -3,6 +3,9 @@
 #include "ConsoleButton.h"
 #include "ConsoleQuestion1.h"
 #include "ConsoleQuestion2.h"
+#include "ConsoleQuestion3.h"
+#include "ConsoleQuestion4.h"
+#include "ConsoleQuestion5.h"
 
 #include "Drawer.h"
 
@@ -31,16 +34,16 @@ _func_button_push( func_button_push ) {
 			break;
 		case Console::PAGE_NUM_4:
 			_y = CONSOLE_HEIGHT * 3;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleQuestion4Ptr( new ConsoleQuestion4( [ & ] { callbackAnswer( ); }, question_manager ) );
 			break;
 		case Console::PAGE_NUM_5:
 			_y = CONSOLE_HEIGHT * 4;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleQuestion3Ptr( new ConsoleQuestion3( [ & ] { callbackAnswer( ); }, question_manager ) );
 			break;
 		case Console::PAGE_NUM_6:
 			_x = CONSOLE_WIDTH;
 			_y = CONSOLE_HEIGHT * 3;
-			_content = ConsoleButtonPtr( new ConsoleButton( _page_num, [ & ] { callbackPushButton( ); } ) );
+			_content = ConsoleQuestion5Ptr( new ConsoleQuestion5( [ & ] { callbackAnswer( ); }, question_manager ) );
 			break;
 	}
 

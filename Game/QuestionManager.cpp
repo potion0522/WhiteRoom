@@ -53,7 +53,7 @@ bool QuestionManager::answerQuestion3( unsigned char num1, unsigned char num2, u
 		}
 	}
 
-	return false;
+	return result;
 }
 
 bool QuestionManager::answerQuestion4( unsigned char month, unsigned char day ) const {
@@ -96,6 +96,10 @@ const unsigned char QuestionManager::getHintQuestion3( FLOOR floor ) const {
 
 	// ƒGƒ‰[
 	return 0xff;
+}
+
+const char QuestionManager::getHintQuestion3Arrow( ) const {
+	return _question3.arrow_dir;
 }
 
 const unsigned char QuestionManager::getHintQuestion4Month( ) const {

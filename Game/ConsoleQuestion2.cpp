@@ -120,10 +120,11 @@ void ConsoleQuestion2::actOnPushUp( ) {
 
 void ConsoleQuestion2::actOnAnswer( ) {
 	bool answer = _question_manager->answerQuestion2( _mark_state[ 0 ], _mark_state[ 1 ], _mark_state[ 2 ] );
+	_state = STATE_NONE;
+
 	if ( answer ) {
 		_callback( );
 	} 
-	_state = STATE_NONE;
 }
 
 bool ConsoleQuestion2::isMouseOnButton( ) const {

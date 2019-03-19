@@ -105,6 +105,15 @@
     <ClCompile Include="Question3FloorHint.cpp">
       <Filter>Game\Floor\Hint</Filter>
     </ClCompile>
+    <ClCompile Include="ConsoleQuestion3.cpp">
+      <Filter>Game\Console\PageContent\Question</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleQuestion4.cpp">
+      <Filter>Game\Console\PageContent\Question</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleQuestion5.cpp">
+      <Filter>Game\Console\PageContent\Question</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -284,6 +293,15 @@
     </ClInclude>
     <ClInclude Include="Question3FloorHint.h">
       <Filter>Game\Floor\Hint</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleQuestion3.h">
+      <Filter>Game\Console\PageContent\Question</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleQuestion4.h">
+      <Filter>Game\Console\PageContent\Question</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleQuestion5.h">
+      <Filter>Game\Console\PageContent\Question</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
