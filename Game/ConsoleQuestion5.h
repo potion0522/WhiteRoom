@@ -1,6 +1,8 @@
 #pragma once
 #include "ConsoleQuestion.h"
 
+#include <vector>
+
 /*********************************************
 
 ÉRÉìÉ\Å[ÉãÇÃ6PÇÃñ‚ëË(Question5)
@@ -23,5 +25,16 @@ private:
 	void actOnPush( );
 	void actOnPushUp( );
 	void actOnAnswer( );
+	int getMouseOnNum( ) const;
+
+private:
+	const int ERROR = 0xff;
+
+private:
+	unsigned char _selecting_num;
+	std::vector< unsigned char > _select_nums;
+	ImagePtr _nums_image;
+	ImagePtr _arrow_image;
+	ImagePtr _frame_image;
 };
 

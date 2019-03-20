@@ -64,6 +64,30 @@ bool QuestionManager::answerQuestion4( unsigned char month, unsigned char day ) 
 }
 
 bool QuestionManager::answerQuestion5( unsigned char num1, unsigned char num2, unsigned char num3 ) const {
+	std::array< unsigned char, 3 > answer = {
+		_question1.nums[ 0 ],	
+		_question1.nums[ 1 ],	
+		_question1.nums[ 2 ],	
+	};
+
+	// ソート
+	const int MAX = 3;
+	for ( int i = 0; i < MAX; i++ ) {
+		for ( int j = 0; j < MAX - i - 1; j++ ) {
+			int a = answer[ j ];
+			int b = answer[ j + 1 ];
+			if ( a > b ) {
+				answer[ j ] = b;
+				answer[ j + 1 ] = a;
+			}
+		}
+	}
+
+	if ( num1 == answer[ 0 ] &&
+		 num2 == answer[ 1 ] &&
+		 num3 == answer[ 2 ] ) {
+		return true;
+	}
 	return false;
 }
 
@@ -204,4 +228,10 @@ void QuestionManager::generateQuestion4( ) {
 }
 
 void QuestionManager::generateQuestion5( ) {
+	RandomPtr random = Random::getTask( );
+
+	// ランダムで値を入れる
+	for ( int i = 0; i < QUESTION_4_MAX_NUM; i++ ) {
+		_question5.num[ i ] = ( unsigned char )random->getRand( 1, QUESTION_4_MAX_NUM );
+	}
 }

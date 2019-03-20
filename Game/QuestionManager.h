@@ -17,6 +17,7 @@ class QuestionManager {
 public:
 	// 1.club 2.heart 3.diamont 4.spade
 	static const int QUESTION_2_MAX_MARK_NUM = 4;
+	static const int QUESTION_4_MAX_NUM = 9; // 1 - 9
 
 private:
 	struct Question1 {
