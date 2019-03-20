@@ -17,12 +17,15 @@ PTR( Sphere );
 
 class Floor4 : public Floor {
 public:
-	Floor4( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr observable, QuestionManagerConstPtr question_manager, FLOOR floor  );
+	Floor4( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr observable, QuestionManagerConstPtr question_manager );
 	virtual ~Floor4( );
 
 public:
 	void update( );
 	void draw( ) const;
+
+private:
+	const FLOOR MY_FLOOR;
 
 private:
 	Question2FloorHintPtr _question2_hint;

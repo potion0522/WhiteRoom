@@ -176,6 +176,7 @@
     <ClCompile Include="Floor2.cpp" />
     <ClCompile Include="Floor3.cpp" />
     <ClCompile Include="Floor4.cpp" />
+    <ClCompile Include="Floor5.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Page.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="Question2Sphere.cpp" />
     <ClCompile Include="Question3FloorHint.cpp" />
     <ClCompile Include="Question4FloorHint.cpp" />
+    <ClCompile Include="Question5FloorHint.cpp" />
     <ClCompile Include="QuestionManager.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
@@ -229,6 +231,7 @@
     <ClInclude Include="Floor2.h" />
     <ClInclude Include="Floor3.h" />
     <ClInclude Include="Floor4.h" />
+    <ClInclude Include="Floor5.h" />
     <ClInclude Include="Page.h" />
     <ClInclude Include="PageContent.h" />
     <ClInclude Include="Player.h" />
@@ -237,6 +240,7 @@
     <ClInclude Include="Question2Sphere.h" />
     <ClInclude Include="Question3FloorHint.h" />
     <ClInclude Include="Question4FloorHint.h" />
+    <ClInclude Include="Question5FloorHint.h" />
     <ClInclude Include="QuestionManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneGame.h" />

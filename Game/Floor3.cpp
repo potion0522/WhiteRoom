@@ -5,14 +5,14 @@
 #include "Question4FloorHint.h"
 #include "Sphere.h"
 
-#include "Manager.h"
 #include "Random.h"
 
-Floor3::Floor3( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr observable, QuestionManagerConstPtr question_manager, FLOOR floor ) : 
-Floor( collide_manager, observable, floor  ) {
+Floor3::Floor3( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr observable, QuestionManagerConstPtr question_manager ) :
+MY_FLOOR( FLOOR_3 ),
+Floor( collide_manager, observable, FLOOR_3 ) {
 
 	{ // Question2
-		_question2_hint = Question2FloorHintPtr( new Question2FloorHint( question_manager, collide_manager, FLOOR_3 ) );
+		_question2_hint = Question2FloorHintPtr( new Question2FloorHint( question_manager, collide_manager, MY_FLOOR ) );
 
 		const int MAX_SPHERE = 4;
 		const int MIN_SPHERE = 1;
@@ -25,7 +25,7 @@ Floor( collide_manager, observable, floor  ) {
 			Vector pos = Vector( );
 			pos.x = ( -GENERATE_RANGE / 2 ) + ( random->getRand( ) % GENERATE_RANGE );
 			pos.z = ( -GENERATE_RANGE / 2 ) + ( random->getRand( ) % GENERATE_RANGE );
-			pos.y = FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * FLOOR_3 * -1 + SPHERE_OBJECT_RADIUS;
+			pos.y = FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * MY_FLOOR * -1 + SPHERE_OBJECT_RADIUS;
 			_dummy_spheres.push_back( SpherePtr( new Sphere( pos, SPHERE_OBJECT_RADIUS ) ) );
 			collide_manager->addDynamicCollider( _dummy_spheres[ i ] );
 		}

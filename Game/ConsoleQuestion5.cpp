@@ -10,7 +10,7 @@ const char* Q4_NUMBER_IMAGE   = "Game/Console/Number.png";
 const char* Q4_FRAME_IMAGE    = "Game/Console/Frame.png";
 
 const int NUMBERS_FONT_SIZE = 128;
-const int NUMBERS_X = SCREEN_WIDTH  / 2 - QuestionManager::QUESTION_4_MAX_NUM / 2 * NUMBERS_FONT_SIZE;
+const int NUMBERS_X = SCREEN_WIDTH  / 2 - QuestionManager::QUESTION_5_MAX_NUM / 2 * NUMBERS_FONT_SIZE;
 const int NUMBERS_Y = SCREEN_HEIGHT / 4;
 
 const int ORDER_ARROW_X = SCREEN_WIDTH  / 2;
@@ -40,7 +40,7 @@ ConsoleQuestion5::~ConsoleQuestion5( ) {
 
 void ConsoleQuestion5::draw( int x, int y ) const {
 	// êîéö
-	for ( int i = 0; i < QuestionManager::QUESTION_4_MAX_NUM; i++ ) {
+	for ( int i = 0; i < QuestionManager::QUESTION_5_MAX_NUM; i++ ) {
 		int draw_x = NUMBERS_X + i * NUMBERS_FONT_SIZE;
 		int draw_y = NUMBERS_Y;
 

@@ -65,9 +65,9 @@ bool QuestionManager::answerQuestion4( unsigned char month, unsigned char day ) 
 
 bool QuestionManager::answerQuestion5( unsigned char num1, unsigned char num2, unsigned char num3 ) const {
 	std::array< unsigned char, 3 > answer = {
-		_question1.nums[ 0 ],	
-		_question1.nums[ 1 ],	
-		_question1.nums[ 2 ],	
+		_question5.nums[ _question1.nums[ 0 ] ],	
+		_question5.nums[ _question1.nums[ 1 ] ],	
+		_question5.nums[ _question1.nums[ 2 ] ],	
 	};
 
 	// ソート
@@ -138,7 +138,7 @@ const unsigned char QuestionManager::getHintQuestion4Day( ) const {
 }
 
 const std::array< unsigned char, 9 >& QuestionManager::getHintQuestion5( ) const {
-	return _question5.num;
+	return _question5.nums;
 }
 
 void QuestionManager::generateQuestion1( ) {
@@ -228,10 +228,26 @@ void QuestionManager::generateQuestion4( ) {
 }
 
 void QuestionManager::generateQuestion5( ) {
-	RandomPtr random = Random::getTask( );
 
-	// ランダムで値を入れる
-	for ( int i = 0; i < QUESTION_4_MAX_NUM; i++ ) {
-		_question5.num[ i ] = ( unsigned char )random->getRand( 1, QUESTION_4_MAX_NUM );
+	// 要素を用意しておく
+	std::unordered_map< unsigned char, unsigned char > nums;
+	for ( int i = 0; i < QUESTION_5_MAX_NUM; i++ ) {
+		nums[ i + 1 ] = i + 1;
+	}
+
+	// ランダムで要素番号を選択し、抜いていく
+	RandomPtr random = Random::getTask( );
+	while ( nums.size( ) > 0 ) {
+		int idx = random->getRand( 1, ( long )nums.size( ) );
+
+		// イテレーターで番号まで回す
+		std::unordered_map< unsigned char, unsigned char >::iterator ite;
+		ite = nums.begin( );
+		for ( int i = 0; i < idx - 1; i++ ) {
+			ite++;
+		}
+
+		_question5.nums[ QUESTION_5_MAX_NUM - ( int )nums.size( ) ] = ite->second;
+		nums.erase( ite );
 	}
 }

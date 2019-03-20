@@ -17,7 +17,7 @@ class QuestionManager {
 public:
 	// 1.club 2.heart 3.diamont 4.spade
 	static const int QUESTION_2_MAX_MARK_NUM = 4;
-	static const int QUESTION_4_MAX_NUM = 9; // 1 - 9
+	static const int QUESTION_5_MAX_NUM = 9; // 1 - 9
 
 private:
 	struct Question1 {
@@ -39,7 +39,7 @@ private:
 		unsigned char day;
 	};
 	struct Question5 {
-		std::array< unsigned char, 9 > num;
+		std::array< unsigned char, QUESTION_5_MAX_NUM > nums;
 	};
 
 public:
