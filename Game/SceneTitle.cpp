@@ -13,8 +13,9 @@
 #include "Image.h"
 #include "Mathematics.h"
 
-const char* TITLE_LOGO_FILEPATH     = "Title/TitleLogo.png";
-const char* CLICK_TO_START_FILEPATH = "Title/ClickToStart.png";
+const char* TITLE_LOGO_FILEPATH      = "Title/TitleLogo.png";
+const char* CLICK_TO_START_FILEPATH  = "Title/ClickToStart.png";
+const char* TITLE_WHITE_OUT_FILEPATH = "White.png";
 
 const char* START_BUTTON_TAG = "StartButton";
 
@@ -22,13 +23,12 @@ const Vector CAMERA_POS = Vector( FLOOR_WIDTH / 5, FLOOR_HEIGHT / 2, -FLOOR_WIDT
 const Vector CAMERA_TAEGET = Matrix::makeTransformRotation( Vector( 0, 1 ), PI * 0.15 ).multiply( Vector( ELEVATOR_INIT_X, FLOOR_HEIGHT / 2 ) );
 
 SceneTitle::SceneTitle( ) :
-FONT_FLASHING_RATIO( 720.0 ),
-FONT_FLASHING_ALPHA( 150 ),
-ELEVATOR_MOVE_TIME( 5000 ),
 _font_count( 0 ),
 _elevator_time( 0 ),
 _elevator_floor( FLOOR_1 ),
-_elevator_count( false ) {
+_elevator_count( false ),
+_white_out_start_time( 0 ),
+_phase( PHASE_TITLE ) {
 	CollideManagerPtr collide( new CollideManager );
 
 	{// Elevator
@@ -62,6 +62,10 @@ _elevator_count( false ) {
 		_click_to_start->setCentral( true );
 	}
 
+	// whiteout
+	_white_out = drawer->getImage( TITLE_WHITE_OUT_FILEPATH );
+	_white_out->setBlendMode( 0 );
+
 	// camera
 	initializeCamera( );
 }
@@ -70,6 +74,32 @@ SceneTitle::~SceneTitle( ) {
 }
 
 void SceneTitle::update( ) {
+	switch ( _phase ) {
+	case PHASE_TITLE:
+		actOnTitle( );
+		break;
+
+	case PHASE_WHITEOUT:
+		actOnWhiteOut( );
+		break;
+	}
+}
+
+void SceneTitle::draw( ) const {
+	_floor->draw( );
+	_elevator->draw( );
+	_click_to_start->draw( );
+	_logo->draw( );
+	if ( _phase == PHASE_WHITEOUT ) {
+		_white_out->draw( );
+	}
+
+	DrawerPtr drawer = Drawer::getTask( );
+	drawer->waitForSync( );
+	drawer->flip( );
+}
+
+void SceneTitle::actOnTitle( ) {
 	// ƒNƒŠƒbƒN”»’è
 	updateMouse( );
 
@@ -80,16 +110,17 @@ void SceneTitle::update( ) {
 	updateElevator( );
 }
 
-void SceneTitle::draw( ) const {
-	_floor->draw( );
-	_elevator->draw( );
-	_click_to_start->draw( );
-	_logo->draw( );
-
-	DrawerPtr drawer = Drawer::getTask( );
-	drawer->waitForSync( );
-	drawer->drawFPS( );
-	drawer->flip( );
+void SceneTitle::actOnWhiteOut( ) {
+	// ‘JˆÚ
+	int now = getNowCount( );
+	if ( now - _white_out_start_time > WHITE_OUT_TIME ) {
+		Controller::getTask( )->setNextScene( Controller::SCENE_GAME );
+	} else {
+		// alphaŒvŽZ
+		double ratio = ( now - _white_out_start_time ) / ( double )WHITE_OUT_TIME;
+		int alpha = ( int )( 255 * ratio );
+		_white_out->setBlendMode( alpha );
+	}
 }
 
 void SceneTitle::initializeCamera( ) {
@@ -104,7 +135,8 @@ void SceneTitle::initializeCamera( ) {
 void SceneTitle::updateMouse( ) {
 	MousePtr mouse = Mouse::getTask( );
 	if ( mouse->isClickUpLeft( ) ) {
-		Controller::getTask( )->setNextScene( Controller::SCENE_GAME );
+		_phase = PHASE_WHITEOUT;
+		_white_out_start_time = getNowCount( );
 	}
 }
 
