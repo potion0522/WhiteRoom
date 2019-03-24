@@ -18,11 +18,11 @@ Question5FloorHint::Question5FloorHint( QuestionManagerConstPtr question_manager
 	DrawerPtr drawer = Drawer::getTask( );
 
 	_frame_model = ModelPtr( new Model );
-	_frame_model->alloc( SQUARE_SIZE * 2 );
+	_frame_model->alloc( SQUARE_NUM * 2 );
 	_frame_model->setTexture( drawer->getImage( Q5_FRAME_TEXTURE ) );
 
 	_nums_model  = ModelPtr( new Model );
-	_nums_model->alloc( SQUARE_SIZE * 2 );
+	_nums_model->alloc( SQUARE_NUM * 2 );
 	_nums_model->setTexture( drawer->getImage( Q5_NUMS_TEXTURE ) );
 	std::array< unsigned char, QuestionManager::QUESTION_5_MAX_NUM > nums = question_manager->getHintQuestion5( );
 	
