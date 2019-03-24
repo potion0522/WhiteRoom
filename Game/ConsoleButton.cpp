@@ -9,6 +9,8 @@
 const char* DEFAULT_BUTTON_FILEPATH = "Game/Console/Button";
 const char* PUSH_BUTTON_FILEPATH    = "Game/Console/ButtonPush";
 
+const char* BUTTON_TAG = "FloorChange";
+
 ConsoleButton::ConsoleButton( Console::PAGE_NUM page_num, std::function< void( ) > callback ) :
 PageContent( callback ) {
 
@@ -38,7 +40,7 @@ PageContent( callback ) {
 	std::string push_button_filepath    = PUSH_BUTTON_FILEPATH + floor_num;
 
 	// ボタンの生成
-	_button = ButtonPtr( new Button );
+	_button = ButtonPtr( new Button( BUTTON_TAG, [ & ]( const char* tag ) { _callback( ); } ) );
 	_button->setDefaultImage( default_button_filepath.c_str( ) );
 	_button->setPushImage( push_button_filepath.c_str( ) );
 }
@@ -49,10 +51,6 @@ ConsoleButton::~ConsoleButton( ) {
 void ConsoleButton::update( ) {
 	// ボタンのアップデート
 	_button->update( );
-
-	if ( _button->isClicked( ) ) {
-		_callback( );
-	}
 }
 
 void ConsoleButton::draw( int x, int y ) const {

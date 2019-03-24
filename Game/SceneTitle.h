@@ -16,7 +16,6 @@ public:
 	void draw( ) const;
 
 private:
-	void updateButton( );
 	void updateFontFlash( );
 
 private:

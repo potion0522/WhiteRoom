@@ -10,6 +10,8 @@
 const char* TITLE_BG_FILEPATH   = "Title/TitleBG.png";
 const char* START_FONT_FILEPATH = "Title/ClickToStart.png";
 
+const char* START_BUTTON_TAG = "StartButton";
+
 SceneTitle::SceneTitle( ) :
 FONT_FLASHING_RATIO( 720.0 ),
 FONT_FLASHING_ALPHA( 120 ),
@@ -21,7 +23,12 @@ _count( 0 ) {
 	int scr_w = manager->getScreenWidth( );
 	int scr_h = manager->getScreenHeight( );
 
-	_click_to_start_font = ButtonPtr( new Button );
+	_click_to_start_font = 
+		ButtonPtr( new Button( 
+		START_BUTTON_TAG, 
+		[ ]( const char* tag ) { Controller::getTask( )->setNextScene( Controller::SCENE_GAME ); }
+	) );
+
 	_click_to_start_font->setDefaultImage( START_FONT_FILEPATH );
 	_click_to_start_font->setPushImage( START_FONT_FILEPATH );
 	_click_to_start_font->setPos( Vector( scr_w * 0.5, scr_h * 0.75 ) );
@@ -34,8 +41,8 @@ void SceneTitle::update( ) {
 	// 点滅計算
 	updateFontFlash( );
 
-	// ボタンアクション
-	updateButton( );
+	// ボタン状態の更新
+	_click_to_start_font->update( );
 }
 
 void SceneTitle::updateFontFlash( ) {
@@ -49,14 +56,6 @@ void SceneTitle::updateFontFlash( ) {
 	_click_to_start_font->setAlpha( alpha );
 }
 
-void SceneTitle::updateButton( ) {
-	_click_to_start_font->update( );
-
-	// クリックされたらシーンを変える
-	if ( _click_to_start_font->isClicked( ) ) {
-		Controller::getTask( )->setNextScene( Controller::SCENE_GAME );
-	}
-}
 
 void SceneTitle::draw( ) const {
 	_bg->draw( );
