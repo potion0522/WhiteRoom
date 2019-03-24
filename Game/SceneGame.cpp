@@ -99,9 +99,11 @@ void SceneGame::draw( ) const {
 	_floors[ player_floor ]->draw( );
 
 	// phase毎描画
+	DrawerPtr drawer = Drawer::getTask( );
 	switch ( _phase ) {
 		case PHASE_WAIT: {
 			_fade_img->draw( );
+			drawer->drawFormatStringCenter( SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0x000000, 50, "マウスクリックでゲームが始まります" );
 		} break;
 
 		case PHASE_PLAY: {
@@ -123,7 +125,6 @@ void SceneGame::draw( ) const {
 		} break;
 	}
 
-	DrawerPtr drawer = Drawer::getTask( );
 	drawer->waitForSync( ); // 30fpsにする
 	drawer->flip( );
 }

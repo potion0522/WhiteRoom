@@ -36,6 +36,8 @@ _slide_end_pos( ) {
 }
 
 Console::~Console( ) {
+	MousePtr mouse = Mouse::getTask( );
+	mouse->setMouseDraw( true );
 }
 
 void Console::update( ) {
