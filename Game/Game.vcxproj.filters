@@ -123,6 +123,7 @@
     <ClCompile Include="Floor5.cpp">
       <Filter>Game\Floor</Filter>
     </ClCompile>
+    <ClCompile Include="FloorGF.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -321,5 +322,6 @@
     <ClInclude Include="Floor5.h">
       <Filter>Game\Floor</Filter>
     </ClInclude>
+    <ClInclude Include="FloorGF.h" />
   </ItemGroup>
 </Project>

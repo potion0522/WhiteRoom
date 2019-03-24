@@ -38,9 +38,9 @@ const int FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT = FLOOR_HEIGHT + FLOOR_TO_FLOOR_
 
 const int ELEVATOR_HEIGHT = FLOOR_HEIGHT; // 部屋のサイズと同じ
 const int ELEVATOR_WIDTH  = 2000; // エレベーターの幅( 全体 )
-const int ELEVATOR_TO_FLOOR_SPACE = 100; // エレベーターとフロアとの間隔
+const int ELEVATOR_TO_FLOOR_SPACE = 20; // エレベーターとフロアとの間隔
 const double ELEVATOR_WALL_OVER_SIZE = 300; // エレベーターを覆う壁がエレベーターの部屋の大きさよりすこし大きくするための値
-const double ELEVATOR_INIT_X = FLOOR_WIDTH / 2 + ELEVATOR_WIDTH / 2;
+const double ELEVATOR_INIT_X = FLOOR_WIDTH / 2 + ELEVATOR_WIDTH / 2 + ELEVATOR_TO_FLOOR_SPACE;
 const double ELEVATOR_INIT_Y = ELEVATOR_INIT_FLOOR * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT;
 const double ELEVATOR_INIT_Z = 0;
 

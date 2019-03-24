@@ -87,7 +87,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)../../Framework</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -103,7 +103,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DEBUG</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\DxLib_VC\プロジェクトに追加すべきファイル_VC用;$(SolutionDir)../../Framework</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -177,6 +177,7 @@
     <ClCompile Include="Floor3.cpp" />
     <ClCompile Include="Floor4.cpp" />
     <ClCompile Include="Floor5.cpp" />
+    <ClCompile Include="FloorGF.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Page.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="Floor3.h" />
     <ClInclude Include="Floor4.h" />
     <ClInclude Include="Floor5.h" />
+    <ClInclude Include="FloorGF.h" />
     <ClInclude Include="Page.h" />
     <ClInclude Include="PageContent.h" />
     <ClInclude Include="Player.h" />

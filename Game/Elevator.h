@@ -27,7 +27,7 @@ private:
 	};
 
 public:
-	Elevator( const Vector& init_pos, CollideManagerPtr collide_manager );
+	Elevator( const Vector& init_pos, CollideManagerPtr collide_manager, FLOOR init_floor = ELEVATOR_INIT_FLOOR );
 	virtual ~Elevator( );
 
 public:

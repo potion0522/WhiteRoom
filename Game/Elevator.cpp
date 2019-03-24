@@ -17,12 +17,12 @@ const int ELEVATOR_MOVE_TIME = 2000; // ミリ秒
 const int DOOR_ANIM_TIME = 1000; // ミリ秒
 const int MAX_DOOR_MOVE_LENGTH = ELEVATOR_WIDTH / 2;
 
-Elevator::Elevator( const Vector& init_pos, CollideManagerPtr collide_manager ) :
+Elevator::Elevator( const Vector& init_pos, CollideManagerPtr collide_manager, FLOOR init_floor ) :
 SphereCollider( _sphere_collider_pos, ELEVATOR_WIDTH / 2, OBJECT_TAG_ELEVATOR ),
 _pos( init_pos ),
 _sphere_collider_pos( _pos + Vector( 0, ELEVATOR_HEIGHT / 2, 0 ) ),
 _door_open_length( MAX_DOOR_MOVE_LENGTH ),
-_floor( ELEVATOR_INIT_FLOOR ),
+_floor( init_floor ),
 _state( ELEVATOR_STATE_IDLE ),
 _starting_time( 0 ) {
 	// 通知機構のインスタンス

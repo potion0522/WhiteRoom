@@ -12,7 +12,9 @@ int main( ) {
 	// Setting
 	Manager* manager = Manager::getInstance( );
 	manager->setScreenSize( SCREEN_WIDTH, SCREEN_HEIGHT );
-	manager->setWindowSize( 1280, 720 );
+	#ifdef DEBUG
+		manager->setWindowSize( 1280, 720 );
+	#endif
 	manager->setUseZBaffur( true );
 	manager->setWriteZBaffur( true );
 
