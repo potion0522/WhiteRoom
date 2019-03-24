@@ -17,6 +17,9 @@ _state( CONSOLE_STATE_NONE ),
 _page_num( _INIT_PAGE_NUM ),
 _slide_start_pos( ),
 _slide_end_pos( ) {
+	MousePtr mouse = Mouse::getTask( );
+	mouse->setMouseDraw( false );
+
 	// Observer
 	_observer = ConsoleObserverPtr( new ConsoleObserver );
 
@@ -100,12 +103,16 @@ void Console::actOnNone( ) {
 	if ( isChangeActivate( ) ) {
 		changeState( CONSOLE_STATE_OPENING );
 		_observer->onActive( true );
+		MousePtr mouse = Mouse::getTask( );
+		mouse->setMouseDraw( true );
 	}
 }
 
 void Console::actOnIdle( ) {
 	if ( isChangeActivate( ) ) {
 		changeState( CONSOLE_STATE_CLOSING );
+		MousePtr mouse = Mouse::getTask( );
+		mouse->setMouseDraw( false );
 	}
 	_pages[ _page_num ]->update( );
 

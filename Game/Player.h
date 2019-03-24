@@ -4,21 +4,37 @@
 #include "ElevatorBox.h"
 #include "smart_ptr.h"
 
+/************************************************
+
+Playerクラス
+主にカメラの制御を行う
+
+************************************************/
+
 PTR( Player );
 PTR( ElevatorBox );
 PTR( ConsoleActiveObservable );
 
 class Player : public SphereCollider {
 public:
+	enum UPDATE_TYPE {
+		UPDATE_TYPE_EYEONLY,
+		UPDATE_TYPE_ALL
+	};
+
+public:
 	Player( ElevatorBoxPtr elevator_box, ConsoleActiveObservablePtr console_observable );
 	virtual ~Player( );
 
 public:
 	void update( );
+	void setUpdateType( UPDATE_TYPE type );
 	void onColliderEnter( ColliderConstPtr collider );
 	FLOOR getFloor( ) const;
 
 private:
+	void actOnEyeOnly( );
+	void actOnPlayerAll( );
 	void updateDir( );
 	void updatePos( );
 	void updateEye( );
@@ -30,6 +46,7 @@ private:
 	const double _HEIGHT;
 
 private:
+	UPDATE_TYPE _update_type;
 	bool _console_active;
 	Vector _ground_pos; // 計算用(足元)
 	Vector _head_pos;  // カメラ用

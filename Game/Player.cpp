@@ -31,7 +31,8 @@ _ground_pos( 0, PLAYER_INIT_FLOOR * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT, 0 ),
 _head_pos( 0, _ground_pos.y + _HEIGHT, 0 ),
 _dir( 0, 0, 1 ),
 _floor( PLAYER_INIT_FLOOR ),
-_elevator_box( elevator_box ) {
+_elevator_box( elevator_box ),
+_update_type( UPDATE_TYPE_ALL ) {
 	// コンソールのアクティブ通知を受け取る
 	console_observable->subscribeOnActive( [ & ]( bool active ) { 
 		_console_active = active;
@@ -44,7 +45,7 @@ _elevator_box( elevator_box ) {
 
 	// カメラ初期設定
 	CameraPtr camera = Camera::getTask( );
-	camera->setCamera( _head_pos, _dir );
+	camera->setCamera( _head_pos * MIRI_TO_METER_UNIT, ( _head_pos + _dir ) * MIRI_TO_METER_UNIT );
 	camera->setCameraUp( Vector( 0, 1, 0 ) );
 	camera->setNearFar( 100.0f * ( float )MIRI_TO_METER_UNIT, ( float )( FLOOR_WIDTH * 2 * MIRI_TO_METER_UNIT ) );
 }
@@ -53,22 +54,19 @@ Player::~Player( ) {
 }
 
 void Player::update( ) {
-	// 移動前座標の保存
-	_past_pos = _ground_pos;
+	switch ( _update_type ) {
+	case UPDATE_TYPE_EYEONLY:
+		actOnEyeOnly( );
+		break;
 
-	// 視線更新(コンソール非表示時)
-	if ( !_console_active ) {
-		updateDir( );
+	case UPDATE_TYPE_ALL:
+		actOnPlayerAll( );
+		break;
 	}
+}
 
-	// 移動
-	updatePos( );
-
-	// カメラの更新
-	updateEye( );
-
-	// フロア更新
-	updateFloor( );
+void Player::setUpdateType( Player::UPDATE_TYPE type ) {
+	_update_type = type;
 }
 
 void Player::onColliderEnter( ColliderConstPtr collider ) {
@@ -121,6 +119,33 @@ void Player::updatePos( ) {
 	if ( keyboard->getKeyState( "D" ) ) {
 		_ground_pos += _dir.cross( Vector( _dir.x, _dir.y + 100, _dir.z ) ).normalize( ) * -MOVE_SPEED;
 	}
+}
+
+void Player::actOnEyeOnly( ) {
+	// 視線更新(コンソール非表示時)
+	if ( !_console_active ) {
+		updateDir( );
+	}
+	updateEye( );
+}
+
+void Player::actOnPlayerAll( ) {
+	// 移動前座標の保存
+	_past_pos = _ground_pos;
+
+	// 視線更新(コンソール非表示時)
+	if ( !_console_active ) {
+		updateDir( );
+	}
+
+	// 移動
+	updatePos( );
+
+	// カメラの更新
+	updateEye( );
+
+	// フロア更新
+	updateFloor( );
 }
 
 void Player::updateDir( ) {
