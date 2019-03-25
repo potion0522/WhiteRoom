@@ -3,6 +3,7 @@
 
 #include "SceneTitle.h"
 #include "SceneGame.h"
+#include "SoundManager.h"
 
 ControllerPtr Controller::getTask( ) {
 	return std::dynamic_pointer_cast< Controller >( Manager::getInstance( )->getTask( getTag( ) ) );
@@ -15,6 +16,11 @@ _next_scene( SCENE_TITLE ) {
 Controller::~Controller( ) {
 }
 
+void Controller::finalize( ) {
+	SoundManager* sound = SoundManager::getInstance( );
+	sound->finalize( );
+}
+
 void Controller::initialize( ) {
 	loadScene( );
 }
@@ -22,6 +28,9 @@ void Controller::initialize( ) {
 void Controller::update( ) {
 	_scene->update( );
 	_scene->draw( );
+
+	SoundManager* sound = SoundManager::getInstance( );
+	sound->update( );
 
 	if ( _next_scene != SCENE_CONTINUE ) {
 		loadScene( );

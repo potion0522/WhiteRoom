@@ -172,6 +172,9 @@ void ConsoleQuestion4::actOnPushDay( ) {
 }
 
 void ConsoleQuestion4::actOnPushUp( ) {
+	// ‰¹
+	playClickSE( );
+
 	if ( _click_target == CLICK_TARGET_MONTH ) {
 		actOnPushUpArrow( );
 	} else {

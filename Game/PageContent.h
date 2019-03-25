@@ -15,6 +15,7 @@ public:
 public:
 	virtual void update( ) = 0;
 	virtual void draw( int x, int y ) const = 0;
+	void playClickSE( );
 
 protected:
 	std::function< void( ) > _callback;

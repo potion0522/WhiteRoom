@@ -109,6 +109,9 @@ void ConsoleQuestion5::actOnPush( ) {
 }
 
 void ConsoleQuestion5::actOnPushUp( ) {
+	// ‰¹
+	playClickSE( );
+
 	_select_nums.push_back( _selecting_num );
 
 	if ( _select_nums.size( ) == ANSWER_NUM ) {

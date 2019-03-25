@@ -4,6 +4,7 @@
 #include "Mouse.h"
 #include "Camera.h"
 #include "Random.h"
+#include "Sound.h"
 
 #include "Controller.h"
 #include "define.h"
@@ -24,6 +25,7 @@ int main( ) {
 	MousePtr mouse( new Mouse );
 	CameraPtr camera( new Camera );
 	RandomPtr rand( new Random );
+	SoundPtr sound( new Sound( "Resources/Sound" ) );
 
 	// WhiteRoom
 	ControllerPtr controller( new Controller );
@@ -35,5 +37,6 @@ int main( ) {
 	manager->add( Mouse     ::getTag( ), mouse      );
 	manager->add( Camera    ::getTag( ), camera     );
 	manager->add( Random    ::getTag( ), rand       );
+	manager->add( Sound     ::getTag( ), sound      );
 	return 0;
 }

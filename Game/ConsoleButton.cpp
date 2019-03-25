@@ -1,5 +1,6 @@
 #include "ConsoleButton.h"
 #include "define.h"
+#include "SoundManager.h"
 
 #include "Button.h"
 #include "Drawer.h"
@@ -40,7 +41,10 @@ PageContent( callback ) {
 	std::string push_button_filepath    = PUSH_BUTTON_FILEPATH + floor_num;
 
 	// ƒ{ƒ^ƒ“‚Ì¶¬
-	_button = ButtonPtr( new Button( BUTTON_TAG, [ & ]( const char* tag ) { _callback( ); } ) );
+	_button = ButtonPtr( new Button( BUTTON_TAG, [ & ]( const char* tag ) { 
+		_callback( );
+		playClickSE( );
+	} ) );
 	_button->setDefaultImage( default_button_filepath.c_str( ) );
 	_button->setPushImage( push_button_filepath.c_str( ) );
 }

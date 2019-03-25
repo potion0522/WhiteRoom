@@ -84,6 +84,9 @@ void ConsoleQuestion1::actOnPush( ) {
 }
 
 void ConsoleQuestion1::actOnPushUp( ) {
+	// ‰¹
+	playClickSE( );
+
 	if ( getBlackSquareNum( ) < 3 ) {
 		_state = STATE_NONE;
 	} else {

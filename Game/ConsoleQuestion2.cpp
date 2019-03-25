@@ -92,6 +92,9 @@ void ConsoleQuestion2::actOnPushUp( ) {
 			break;
 		}
 	}
+	// ‰¹
+	playClickSE( );
+
 
 	_state = STATE_ANSWER;
 	_start_time = getNowCount( );

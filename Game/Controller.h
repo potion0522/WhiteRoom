@@ -23,6 +23,7 @@ public:
 
 public:
 	void initialize( );
+	void finalize( );
 	void update( );
 
 	void setNextScene( SCENE next );

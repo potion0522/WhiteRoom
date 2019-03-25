@@ -106,6 +106,9 @@ void ConsoleQuestion3::actOnPush( ) {
 }
 
 void ConsoleQuestion3::actOnPushUp( ) {
+	// ‰¹
+	playClickSE( );
+
 	_select_nums.push_back( _selecting_num );
 	if ( _select_nums.size( ) == MAX_SELECT_NUM ) {
 		_state = STATE_ANSWER;
