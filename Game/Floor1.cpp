@@ -2,6 +2,7 @@
 #include "CollideManager.h"
 #include "ElevatorAnnounceObservable.h"
 #include "Question3FloorHint.h"
+#include "Question5FloorHint.h"
 
 #include "Manager.h"
 
@@ -9,6 +10,7 @@ Floor1::Floor1( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr
 MY_FLOOR( FLOOR_1 ),
 Floor( collide_manager, observable, FLOOR_1 ) {
 	_question3_hint = Question3FloorHintPtr( new Question3FloorHint( question_manager, MY_FLOOR ) );
+	_question5_hint = Question5FloorHintPtr( new Question5FloorHint( question_manager, MY_FLOOR ) );
 }
 
 Floor1::~Floor1( ) {
@@ -17,4 +19,5 @@ Floor1::~Floor1( ) {
 void Floor1::draw( ) const {
 	drawFloor( );
 	_question3_hint->draw( );
+	_question5_hint->draw( );
 }

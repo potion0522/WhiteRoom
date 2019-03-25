@@ -9,7 +9,7 @@
 #include "Drawer.h"
 #include "Manager.h"
 
-const char* ROOM_TEXTURE = "Game/Texture/WallTexture.png";
+const char* FLOOR_TEXTURE = "Game/Texture/WallTexture.png";
 
 Floor::Floor( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr observable, FLOOR floor ) :
 _floor( floor ) {
@@ -48,19 +48,19 @@ void Floor::draw( ) const {
 
 void Floor::drawFloor( ) const {
 	_floor_model->draw( );
+	_wall_model->draw( );
 }
 
 void Floor::generateFloor( ) {
-	_floor_model = ModelPtr( new Model );
 
 	const int NORMAL_WALL   = 3;
 	const int ELEVATOR_WALL = 2;
-	const int FLOOR_PLANE   = 2;
-	_floor_model->alloc( ( NORMAL_WALL + ELEVATOR_WALL + FLOOR_PLANE ) * 2 );
 
-	_floor_model->setTexture( Drawer::getTask( )->getImage( ROOM_TEXTURE ) );
-
+	_wall_model = ModelPtr( new Model );
+	_wall_model->setTexture( Drawer::getTask( )->getImage( FLOOR_TEXTURE ) );
+	_wall_model->alloc( ( NORMAL_WALL + ELEVATOR_WALL ) * 2 );
 	{ // 壁3枚
+
 		Vector vertex_pos[ 4 ] = {
 			Vector( -FLOOR_WIDTH / 2, _y + FLOOR_HEIGHT, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 左上
 			Vector(  FLOOR_WIDTH / 2, _y + FLOOR_HEIGHT, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右上
@@ -80,17 +80,15 @@ void Floor::generateFloor( ) {
 			};
 
 			int vertex_idx = i * 6;
-			_floor_model->setVertex( vertex_idx + 0, vertex[ 0 ] );
-			_floor_model->setVertex( vertex_idx + 1, vertex[ 1 ] );
-			_floor_model->setVertex( vertex_idx + 2, vertex[ 2 ] );
+			_wall_model->setVertex( vertex_idx + 0, vertex[ 0 ] );
+			_wall_model->setVertex( vertex_idx + 1, vertex[ 1 ] );
+			_wall_model->setVertex( vertex_idx + 2, vertex[ 2 ] );
 
-			_floor_model->setVertex( vertex_idx + 3, vertex[ 1 ] );
-			_floor_model->setVertex( vertex_idx + 4, vertex[ 3 ] );
-			_floor_model->setVertex( vertex_idx + 5, vertex[ 2 ] );
+			_wall_model->setVertex( vertex_idx + 3, vertex[ 1 ] );
+			_wall_model->setVertex( vertex_idx + 4, vertex[ 3 ] );
+			_wall_model->setVertex( vertex_idx + 5, vertex[ 2 ] );
 		}
 	}
-
-
 
 	{ // エレベーターのある壁
 		const double WALL_WIDTH = ( FLOOR_WIDTH / 2 - ELEVATOR_WIDTH / 2 );
@@ -113,13 +111,13 @@ void Floor::generateFloor( ) {
 		};
 
 		int vertex_idx = NORMAL_WALL * 6;
-		_floor_model->setVertex( vertex_idx + 0, left_side_vertex[ 0 ] );
-		_floor_model->setVertex( vertex_idx + 1, left_side_vertex[ 1 ] );
-		_floor_model->setVertex( vertex_idx + 2, left_side_vertex[ 2 ] );
+		_wall_model->setVertex( vertex_idx + 0, left_side_vertex[ 0 ] );
+		_wall_model->setVertex( vertex_idx + 1, left_side_vertex[ 1 ] );
+		_wall_model->setVertex( vertex_idx + 2, left_side_vertex[ 2 ] );
 
-		_floor_model->setVertex( vertex_idx + 3, left_side_vertex[ 1 ] );
-		_floor_model->setVertex( vertex_idx + 4, left_side_vertex[ 3 ] );
-		_floor_model->setVertex( vertex_idx + 5, left_side_vertex[ 2 ] );
+		_wall_model->setVertex( vertex_idx + 3, left_side_vertex[ 1 ] );
+		_wall_model->setVertex( vertex_idx + 4, left_side_vertex[ 3 ] );
+		_wall_model->setVertex( vertex_idx + 5, left_side_vertex[ 2 ] );
 
 
 		// 右側
@@ -137,18 +135,22 @@ void Floor::generateFloor( ) {
 		};
 
 		vertex_idx = ( NORMAL_WALL + 1 ) * 6;
-		_floor_model->setVertex( vertex_idx + 0, right_side_vertex[ 0 ] );
-		_floor_model->setVertex( vertex_idx + 1, right_side_vertex[ 1 ] );
-		_floor_model->setVertex( vertex_idx + 2, right_side_vertex[ 2 ] );
+		_wall_model->setVertex( vertex_idx + 0, right_side_vertex[ 0 ] );
+		_wall_model->setVertex( vertex_idx + 1, right_side_vertex[ 1 ] );
+		_wall_model->setVertex( vertex_idx + 2, right_side_vertex[ 2 ] );
 
-		_floor_model->setVertex( vertex_idx + 3, right_side_vertex[ 1 ] );
-		_floor_model->setVertex( vertex_idx + 4, right_side_vertex[ 3 ] );
-		_floor_model->setVertex( vertex_idx + 5, right_side_vertex[ 2 ] );
+		_wall_model->setVertex( vertex_idx + 3, right_side_vertex[ 1 ] );
+		_wall_model->setVertex( vertex_idx + 4, right_side_vertex[ 3 ] );
+		_wall_model->setVertex( vertex_idx + 5, right_side_vertex[ 2 ] );
 	}
 
 
 
 
+	const int FLOOR_PLANE   = 2;
+	_floor_model = ModelPtr( new Model );
+	_floor_model->alloc( FLOOR_PLANE * 2 );
+	_floor_model->setTexture( Drawer::getTask( )->getImage( FLOOR_TEXTURE ) );
 	{ // 床 天井
 
 		Model::Vertex vertex[ 4 ] = {
@@ -159,7 +161,7 @@ void Floor::generateFloor( ) {
 		};
 
 		// 床
-		int vertex_idx = ( NORMAL_WALL + ELEVATOR_WALL ) * 6;
+		int vertex_idx = 0;
 		_floor_model->setVertex( vertex_idx + 0, vertex[ 0 ] );
 		_floor_model->setVertex( vertex_idx + 1, vertex[ 1 ] );
 		_floor_model->setVertex( vertex_idx + 2, vertex[ 2 ] );
@@ -173,7 +175,7 @@ void Floor::generateFloor( ) {
 			vertex[ i ].pos += Vector( 0, FLOOR_HEIGHT, 0 ) * MIRI_TO_METER_UNIT;
 		}
 
-		vertex_idx = ( NORMAL_WALL + ELEVATOR_WALL + 1 ) * 6;
+		vertex_idx = 6;
 		_floor_model->setVertex( vertex_idx + 0, vertex[ 1 ] );
 		_floor_model->setVertex( vertex_idx + 1, vertex[ 0 ] );
 		_floor_model->setVertex( vertex_idx + 2, vertex[ 2 ] );

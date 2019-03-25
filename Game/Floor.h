@@ -45,6 +45,7 @@ protected:
 
 private:
 	ModelPtr _floor_model;
+	ModelPtr _wall_model;
 	std::array< WallPtr, NORMAL_WALL_NUM + ELEVATOR_SIDE_WALL_NUM > _wall_colliders;
 	WallPtr _elevator_side_wall;
 };

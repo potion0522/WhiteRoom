@@ -1,5 +1,6 @@
 #pragma once
 #include "smart_ptr.h"
+#include "define.h"
 
 /***********************************************
 
@@ -13,7 +14,7 @@ PTR( Model );
 
 class Question5FloorHint {
 public:
-	Question5FloorHint( QuestionManagerConstPtr question_manager );
+	Question5FloorHint( QuestionManagerConstPtr question_manager, FLOOR floor );
 	virtual ~Question5FloorHint( );
 
 public:
@@ -22,5 +23,6 @@ public:
 private:
 	ModelPtr _frame_model;
 	ModelPtr _nums_model;
+	ModelPtr _floor_num_model;
 };
 

@@ -14,6 +14,7 @@ PTR( QuestionManager );
 PTR( Question1FloorHint );
 PTR( Question2FloorHint );
 PTR( Question3FloorHint );
+PTR( Question5FloorHint );
 PTR( Sphere );
 
 class Floor2 : public Floor {
@@ -32,6 +33,7 @@ private:
 	Question1FloorHintPtr _question1_hint;
 	Question2FloorHintPtr _question2_hint;
 	Question3FloorHintPtr _question3_hint;
+	Question5FloorHintPtr _question5_hint;
 	std::vector< SpherePtr > _dummy_spheres;
 };
 

@@ -3,6 +3,7 @@
 #include "ElevatorAnnounceObservable.h"
 #include "Question2FloorHint.h"
 #include "Question4FloorHint.h"
+#include "Question5FloorHint.h"
 #include "Sphere.h"
 
 #include "Random.h"
@@ -31,9 +32,11 @@ Floor( collide_manager, observable, FLOOR_3 ) {
 		}
 	}
 
-	{ // question4
-		_question4_hint = Question4FloorHintPtr( new Question4FloorHint( question_manager ) );
-	}
+	// Question4
+	_question4_hint = Question4FloorHintPtr( new Question4FloorHint( question_manager ) );
+
+	// Question5
+	_question5_hint = Question5FloorHintPtr( new Question5FloorHint( question_manager, MY_FLOOR ) );
 }
 
 Floor3::~Floor3( ) {
@@ -58,4 +61,7 @@ void Floor3::draw( ) const {
 
 	// question4
 	_question4_hint->draw( );
+
+	// question5
+	_question5_hint->draw( );
 }

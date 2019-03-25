@@ -4,6 +4,7 @@
 #include "Question1FloorHint.h"
 #include "Question2FloorHint.h"
 #include "Question3FloorHint.h"
+#include "Question5FloorHint.h"
 #include "Sphere.h"
 
 #include "Random.h"
@@ -11,9 +12,8 @@
 Floor2::Floor2( CollideManagerPtr collide_manager, ElevatorAnnounceObservablePtr observable, QuestionManagerConstPtr question_manager ) :
 MY_FLOOR( FLOOR_2 ),
 Floor( collide_manager, observable, FLOOR_2 ) {
-	{ // Question1
-		_question1_hint = Question1FloorHintPtr( new Question1FloorHint( question_manager ) );
-	}
+	// Question1
+	_question1_hint = Question1FloorHintPtr( new Question1FloorHint( question_manager ) );
 
 	{ // Question2
 		_question2_hint = Question2FloorHintPtr( new Question2FloorHint( question_manager, collide_manager, MY_FLOOR ) );
@@ -34,9 +34,13 @@ Floor( collide_manager, observable, FLOOR_2 ) {
 			collide_manager->addDynamicCollider( _dummy_spheres[ i ] );
 		}
 	}
-	{ // Question3
-		_question3_hint = Question3FloorHintPtr( new Question3FloorHint( question_manager, MY_FLOOR ) );
-	}
+
+	// Question3
+	_question3_hint = Question3FloorHintPtr( new Question3FloorHint( question_manager, MY_FLOOR ) );
+
+	// Question5
+	_question5_hint = Question5FloorHintPtr( new Question5FloorHint( question_manager, MY_FLOOR ) );
+
 }
 
 Floor2::~Floor2( ) {
@@ -64,4 +68,7 @@ void Floor2::draw( ) const {
 
 	// question3
 	_question3_hint->draw( );
+
+	// question5
+	_question5_hint->draw( );
 }

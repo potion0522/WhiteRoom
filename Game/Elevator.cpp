@@ -219,10 +219,10 @@ void Elevator::generateElevator( ) {
 			Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), -PI * 0.5 * i );
 
 			Model::Vertex vertex[ 4 ] = {
-				Model::Vertex( rot.multiply( vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
-				Model::Vertex( rot.multiply( vertex_pos[ 1 ] ), 1, 0, Vector( 0, 1, 0 ) ), // 右上
-				Model::Vertex( rot.multiply( vertex_pos[ 2 ] ), 0, 1, Vector( 0, 1, 0 ) ), // 左下
-				Model::Vertex( rot.multiply( vertex_pos[ 3 ] ), 1, 1, Vector( 0, 1, 0 ) ), // 右下
+				Model::Vertex( rot.multiply( vertex_pos[ 0 ] ), 0, 0, rot.multiply( Vector( 0, 0, 1 ) ) ), // 左上
+				Model::Vertex( rot.multiply( vertex_pos[ 1 ] ), 1, 0, rot.multiply( Vector( 0, 0, 1 ) ) ), // 右上
+				Model::Vertex( rot.multiply( vertex_pos[ 2 ] ), 0, 1, rot.multiply( Vector( 0, 0, 1 ) ) ), // 左下
+				Model::Vertex( rot.multiply( vertex_pos[ 3 ] ), 1, 1, rot.multiply( Vector( 0, 0, 1 ) ) ), // 右下
 			};
 
 			int vertex_idx = i * 6;
