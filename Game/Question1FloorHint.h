@@ -1,5 +1,6 @@
 #pragma once
 #include "smart_ptr.h"
+#include "Mathematics.h"
 
 /***********************************************
 
@@ -21,5 +22,6 @@ public:
 
 private:
 	ModelPtr _hint;
+	Matrix _rot;
 };
 

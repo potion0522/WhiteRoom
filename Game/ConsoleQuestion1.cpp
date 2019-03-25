@@ -15,7 +15,8 @@ ConsoleQuestion( callback, question_manager ),
 _square_state( ),
 _selecting_idx( ERROR ) {
 	_square = Drawer::getTask( )->getImage( QUESTION1_CONSOLE_HINT_FILEPATH );
-	_square_width = _square->getImageWidth( ) / 2;
+	_square_width  = _square->getImageWidth ( ) / 2;
+	_square_height = _square->getImageHeight( ) / 2;
 }
 
 ConsoleQuestion1::~ConsoleQuestion1( ) {
@@ -30,18 +31,26 @@ void ConsoleQuestion1::draw( int x, int y ) const {
 
 	for ( int i = 0; i < ROW; i++ ) {
 		for ( int j = 0; j < COL; j++ ) {
-			int idx = i * COL + j;
-
-			// •”’‚ðØ‚è‘Ö‚¦‚é
-			if ( _square_state[ idx ] == BLACK ) {
-				_square->setRect( _square_width, 0, _square_width, _square_width );
-			}
-			if ( _square_state[ idx ] == WHITE ) {
-				_square->setRect( 0, 0, _square_width, _square_width );
-			}
 
 			int draw_x = SX + j * _square_width;
 			int draw_y = SY + i * _square_width;
+
+			int rect_x = 0;
+			int rect_y = _square_height;
+
+			// •”’‚ðØ‚è‘Ö‚¦‚é
+			int idx = i * COL + j;
+			if ( _square_state[ idx ] == BLACK ) {
+				rect_x = _square_width;
+			} else {
+				rect_x = 0;
+			}
+			// ‰Eã‚È‚ç‚©‚¯‚½‚à‚Ì‚ð•\Ž¦
+			if ( i == 0 && j == COL -1 ) {
+				rect_y = 0;
+			}
+
+			_square->setRect( rect_x, rect_y, _square_width, _square_height );
 			_square->setPos( x + draw_x, y + draw_y );
 			_square->draw( );
 		}

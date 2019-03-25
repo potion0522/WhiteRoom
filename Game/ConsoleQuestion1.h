@@ -36,6 +36,7 @@ private:
 private:
 	int _selecting_idx;
 	int _square_width;
+	int _square_height;
 	std::array< unsigned char, _SQUARE_NUM > _square_state;
 	ImagePtr _square;
 };

@@ -32,7 +32,7 @@ Question1FloorHint::Question1FloorHint( QuestionManagerConstPtr question_manager
 
 	// ランダムで回転させる
 	RandomPtr random = Random::getTask( );
-	Matrix rot = Matrix::makeTransformRotation( Vector( 0, 0, 1 ), PI * 0.5 * random->getRand( 1, 3 ) );
+	_rot = Matrix::makeTransformRotation( Vector( 0, 0, 1 ), PI * 0.5 * random->getRand( 1, 3 ) );
 
 	for ( int i = 0; i < ROW; i++ ) {
 		for ( int j = 0; j < COL; j++ ) {
@@ -42,10 +42,10 @@ Question1FloorHint::Question1FloorHint( QuestionManagerConstPtr question_manager
 			double y2 = y1 - SQUARE_SIZE;
 
 			Vector vert_pos[ 4 ] = {
-				rot.multiply( Vector( x1, y1 ) ) * MIRI_TO_METER_UNIT, // 左上
-				rot.multiply( Vector( x2, y1 ) ) * MIRI_TO_METER_UNIT, // 右上
-				rot.multiply( Vector( x1, y2 ) ) * MIRI_TO_METER_UNIT, // 左下
-				rot.multiply( Vector( x2, y2 ) ) * MIRI_TO_METER_UNIT, // 右下
+				Vector( x1, y1 ) * MIRI_TO_METER_UNIT, // 左上
+				Vector( x2, y1 ) * MIRI_TO_METER_UNIT, // 右上
+				Vector( x1, y2 ) * MIRI_TO_METER_UNIT, // 左下
+				Vector( x2, y2 ) * MIRI_TO_METER_UNIT, // 右下
 			};
 
 			// 答えの部分は黒にする
@@ -54,12 +54,17 @@ Question1FloorHint::Question1FloorHint( QuestionManagerConstPtr question_manager
 			if ( square_idx == answer[ 0 ] || square_idx == answer[ 1 ] || square_idx == answer[ 2 ] ) {
 				u = 0.5f;
 			}
+			float v = 0.5f;
+			// 右上だけ欠けたやつにする
+			if ( i == 0 && j == COL - 1 ) {
+				v = 0.0f;
+			}
 
 			Model::Vertex vert[ 4 ] = {
-				Model::Vertex( vert_pos[ 0 ], 0.0f + u, 0.0f, norm ),
-				Model::Vertex( vert_pos[ 1 ], 0.5f + u, 0.0f, norm ),
-				Model::Vertex( vert_pos[ 2 ], 0.0f + u, 1.0f, norm ),
-				Model::Vertex( vert_pos[ 3 ], 0.5f + u, 1.0f, norm ),
+				Model::Vertex( vert_pos[ 0 ], 0.0f + u, v, norm ),
+				Model::Vertex( vert_pos[ 1 ], 0.5f + u, v, norm ),
+				Model::Vertex( vert_pos[ 2 ], 0.0f + u, v + 0.5f, norm ),
+				Model::Vertex( vert_pos[ 3 ], 0.5f + u, v + 0.5f, norm ),
 			};
 
 			int idx = ( i * COL + j ) * 6;
@@ -80,5 +85,5 @@ Question1FloorHint::~Question1FloorHint( ) {
 
 void Question1FloorHint::draw( ) const {
 	const Vector POS = Vector( 0, FLOOR_2 * FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * -1 + FLOOR_HEIGHT / 2, FLOOR_WIDTH / 2 - 200 );
-	_hint->draw( POS * MIRI_TO_METER_UNIT );
+	_hint->draw( POS * MIRI_TO_METER_UNIT, _rot );
 }
