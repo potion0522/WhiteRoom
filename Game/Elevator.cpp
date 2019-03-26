@@ -171,9 +171,6 @@ void Elevator::actOnOpening( ) {
 	// ドアの開閉距離を設定
 	_door_open_length = move;
 
-	// 音
-	SoundManager::getInstance( )->play( SoundManager::SE_ELEVATOR_OPEN );
-
 	// 開け切ったら待機
 	if ( DOOR_ANIM_TIME < moving_count ) {
 		_state = ELEVATOR_STATE_IDLE;
@@ -197,6 +194,9 @@ void Elevator::actOnClosing( ) {
 	if ( DOOR_ANIM_TIME < moving_count ) {
 		_state = ELEVATOR_STATE_MOVING;
 		_starting_time = getNowCount( );
+
+		// 音
+		SoundManager::getInstance( )->play( SoundManager::SE_ELEVATOR_MOVE );
 	}
 }
 

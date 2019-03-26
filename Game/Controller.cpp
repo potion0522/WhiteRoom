@@ -38,6 +38,9 @@ void Controller::update( ) {
 }
 
 void Controller::loadScene( ) {
+	// ƒ~ƒ…[ƒg‚Ì‰ðœ
+	SoundManager::getInstance( )->clearMute( );
+
 	switch ( _next_scene ) {
 	case SCENE_TITLE:
 		_scene = SceneTitlePtr( new SceneTitle );

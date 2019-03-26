@@ -17,7 +17,6 @@ public:
 		SE_WALK,
 		SE_ELEVATOR_MOVE,
 		SE_ELEVATOR_ARRIVE,
-		SE_ELEVATOR_OPEN,
 		SE_GAMESTART,
 		SE_GAMECLEAR,
 		MAX_SE
@@ -34,11 +33,17 @@ public:
 	void finalize( );
 	void update( );
 	void play( SE se );
+	void mute( SE se );
+	void clearMute( );
+
+private:
+	bool isMute( SE se ) const;
 
 private:
 	static SoundManager* _instance;
 
 private:
 	std::array< std::list< SpeakerPtr >, MAX_SE > _speakers;
+	std::array< bool, MAX_SE > _mute_se;
 };
 

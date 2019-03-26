@@ -5,6 +5,7 @@
 #include "Elevator.h"
 #include "ElevatorButton.h"
 #include "ElevatorAnnounce.h"
+#include "SoundManager.h"
 
 #include "Manager.h"
 #include "Camera.h"
@@ -68,6 +69,11 @@ _phase( PHASE_TITLE ) {
 
 	// camera
 	initializeCamera( );
+
+	// mute
+	SoundManager* sound = SoundManager::getInstance( );
+	sound->mute( SoundManager::SE_ELEVATOR_ARRIVE );
+	sound->mute( SoundManager::SE_ELEVATOR_MOVE );
 }
 
 SceneTitle::~SceneTitle( ) {
