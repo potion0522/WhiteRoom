@@ -7,12 +7,12 @@ SoundManager* SoundManager::_instance;
 const char* SE_CONSOLE_OPEN     = "ConsoleOpen.mp3";
 const char* SE_CONSOLE_CLOSE    = "ConsoleClose.mp3";
 const char* SE_CONSOLE_CLICK    = "ConsoleClick.mp3";
+const char* SE_CONSOLE_SLIDE    = "ConsoleSlide.mp3";
 const char* SE_QUESTION_CLEAR   = "QuestionClear.mp3";
 const char* SE_QUESTION_UNCLEAR = "QuestionUnClear.mp3";
 const char* SE_WALK             = "Walk.mp3";
 const char* SE_ELEVATOR_MOVE    = "ElevatorMove.mp3";
 const char* SE_ELEVATOR_ARRIVE  = "ElevatorArrive.mp3";
-const char* SE_ELEVATOR_START   = "ElevatorStart.mp3";
 const char* SE_ELEVATOR_OPEN    = "ElevatorOpen.mp3";
 const char* SE_GAMESTART        = "GameStart.mp3";
 const char* SE_GAMECLEAR        = "GameClear.mp3";
@@ -26,7 +26,7 @@ const char* SE_FILE[ SoundManager::MAX_SE ] = {
 	SE_WALK            ,
 	SE_ELEVATOR_MOVE   ,
 	SE_ELEVATOR_ARRIVE ,
-	SE_ELEVATOR_START  ,
+	SE_CONSOLE_SLIDE   ,
 	SE_ELEVATOR_OPEN   ,
 	SE_GAMESTART       ,
 	SE_GAMECLEAR       ,

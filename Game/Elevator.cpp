@@ -6,6 +6,7 @@
 #include "CollideManager.h"
 #include "ElevatorButton.h"
 #include "ElevatorBox.h"
+#include "SoundManager.h"
 
 #include "Drawer.h"
 #include "Model.h"
@@ -155,6 +156,8 @@ void Elevator::actOnMoving( ) {
 		_pos.y = _floor * FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * -1;
 		_state = ELEVATOR_STATE_OPENING;
 		_starting_time = getNowCount( );
+		
+		SoundManager::getInstance( )->play( SoundManager::SE_ELEVATOR_ARRIVE );
 	}
 }
 
@@ -167,6 +170,9 @@ void Elevator::actOnOpening( ) {
 
 	// ドアの開閉距離を設定
 	_door_open_length = move;
+
+	// 音
+	SoundManager::getInstance( )->play( SoundManager::SE_ELEVATOR_OPEN );
 
 	// 開け切ったら待機
 	if ( DOOR_ANIM_TIME < moving_count ) {
