@@ -1,6 +1,7 @@
 #include "SoundManager.h"
 #include "Sound.h"
-#include "Speaker.h"
+#include "Speaker2D.h"
+#include "Speaker3D.h"
 
 SoundManager* SoundManager::_instance;
 
@@ -54,17 +55,44 @@ SoundManager* SoundManager::getInstance( ) {
 }
 
 void SoundManager::update( ) {
-	for ( int i = 0; i < MAX_SE; i++ ) {
-
-		std::list< SpeakerPtr >::iterator ite = _speakers[ i ].begin( );
-		for ( ite; ite != _speakers[ i ].end( ); ite ) {
+	{ // 2D
+		std::list< Speaker2DPtr >::iterator ite = _speakers2D.begin( );
+		for ( ite; ite != _speakers2D.end( ); ite ) {
 			if ( !( *ite )->isPlaying( ) ) {
-				ite = _speakers[ i ].erase( ite );
+				ite = _speakers2D.erase( ite );
 				continue;
 			}
 			ite++;
 		}
 	}
+
+
+	// 3D
+	for ( int i = 0; i < MAX_SE; i++ ) {
+		std::list< Speaker3DPtr >::iterator ite = _speakers3D[ i ].begin( );
+		for ( ite; ite != _speakers3D[ i ].end( ); ite ) {
+			if ( !( *ite )->isPlaying( ) ) {
+				ite = _speakers3D[ i ].erase( ite );
+				continue;
+			}
+			ite++;
+		}
+	}
+}
+
+void SoundManager::play( SE se, const Vector& pos, float range ) {
+	if ( isMute( se ) ) {
+		return;
+	}
+
+	std::string file = SE_FILE[ se ];
+	SoundPtr sound = Sound::getTask( );
+	Speaker3DPtr speaker = sound->loadSound3D( file.c_str( ) );
+	speaker->setPosition( pos );
+	speaker->setRange( range );
+	speaker->play( );
+
+	_speakers3D[ se ].push_back( speaker );
 }
 
 void SoundManager::play( SE se ) {
@@ -74,10 +102,10 @@ void SoundManager::play( SE se ) {
 
 	std::string file = SE_FILE[ se ];
 	SoundPtr sound = Sound::getTask( );
-	SpeakerPtr speaker = sound->load( file.c_str( ) );
+	Speaker2DPtr speaker = sound->loadSound2D( file.c_str( ) );
 	speaker->play( );
 
-	_speakers[ se ].push_back( speaker );
+	_speakers2D.push_back( speaker );
 }
 
 void SoundManager::mute( SE se ) {
@@ -87,6 +115,18 @@ void SoundManager::mute( SE se ) {
 void SoundManager::clearMute( ) {
 	for ( bool& flag : _mute_se ) {
 		flag = false;
+	}
+}
+
+void SoundManager::set3DSoundPosition( SE se, const Vector& pos ) {
+	if ( _speakers3D[ se ].empty( ) ) {
+		return;
+	}
+
+	// ÅŒã‚Ìhandle‚Ì‚İ“K—p
+	Speaker3DPtr speaker = _speakers3D[ se ].back( );
+	if ( speaker ) {
+		speaker->setPosition( pos );
 	}
 }
 

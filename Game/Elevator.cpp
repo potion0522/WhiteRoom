@@ -17,6 +17,7 @@ const char* ELEVATOR_WALL_TEXTURE = "Game/Texture/WallTexture.png";
 const int ELEVATOR_MOVE_TIME = 2000; // ミリ秒
 const int DOOR_ANIM_TIME = 1000; // ミリ秒
 const int MAX_DOOR_MOVE_LENGTH = ELEVATOR_WIDTH / 2;
+const float MAX_SOUND_RANGE = 5000.0f;
 
 Elevator::Elevator( const Vector& init_pos, CollideManagerPtr collide_manager, FLOOR init_floor ) :
 SphereCollider( _sphere_collider_pos, ELEVATOR_WIDTH / 2, OBJECT_TAG_ELEVATOR ),
@@ -146,6 +147,9 @@ void Elevator::actOnMoving( ) {
 	// 数字が低いほうがyが上なので符号を反転
 	_pos.y = ( _past_floor * FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT + move ) * -1;
 
+	// サウンドを動かす
+	SoundManager::getInstance( )->set3DSoundPosition( SoundManager::SE_ELEVATOR_MOVE, _pos * MIRI_TO_METER_UNIT );
+
 	// 乗っているオブジェクトのyを変更
 	for ( int i = 0; i < _ride_obj.size( ); i++ ) {
 		_ride_obj[ i ]->y = _pos.y;
@@ -157,7 +161,7 @@ void Elevator::actOnMoving( ) {
 		_state = ELEVATOR_STATE_OPENING;
 		_starting_time = getNowCount( );
 		
-		SoundManager::getInstance( )->play( SoundManager::SE_ELEVATOR_ARRIVE );
+		SoundManager::getInstance( )->play( SoundManager::SE_ELEVATOR_ARRIVE, _pos * MIRI_TO_METER_UNIT, MAX_SOUND_RANGE * MIRI_TO_METER_UNIT );
 	}
 }
 
@@ -196,7 +200,7 @@ void Elevator::actOnClosing( ) {
 		_starting_time = getNowCount( );
 
 		// 音
-		SoundManager::getInstance( )->play( SoundManager::SE_ELEVATOR_MOVE );
+		SoundManager::getInstance( )->play( SoundManager::SE_ELEVATOR_MOVE, _pos * MIRI_TO_METER_UNIT, MAX_SOUND_RANGE * MIRI_TO_METER_UNIT );
 	}
 }
 

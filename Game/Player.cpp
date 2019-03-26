@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "Mouse.h"
 #include "Keyboard.h"
+#include "Sound.h"
 
 // ラジアン = 度 * 円周率 / 180
 const double MAX_H_RADIAN = 45 * PI / 180; // 横
@@ -146,6 +147,9 @@ void Player::actOnPlayerAll( ) {
 
 	// フロア更新
 	updateFloor( );
+
+	// Listenerの更新
+	updateEar( );
 }
 
 void Player::updateDir( ) {
@@ -181,6 +185,11 @@ void Player::updateEye( ) {
 
 	CameraPtr camera = Camera::getTask( );
 	camera->setCamera( _head_pos * MIRI_TO_METER_UNIT, ( _head_pos + _dir ) * MIRI_TO_METER_UNIT );
+}
+
+void Player::updateEar( ) {
+	SoundPtr sound = Sound::getTask( );
+	sound->set3DSoundListener( _head_pos * MIRI_TO_METER_UNIT, ( _head_pos + _dir ) * MIRI_TO_METER_UNIT );
 }
 
 void Player::updateFloor( ) {

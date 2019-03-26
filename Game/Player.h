@@ -38,6 +38,7 @@ private:
 	void updateDir( );
 	void updatePos( );
 	void updateEye( );
+	void updateEar( );
 	void updateFloor( );
 	void adjustPosHitWall( ColliderConstPtr collider );
 
