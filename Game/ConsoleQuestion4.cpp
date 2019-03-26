@@ -157,6 +157,7 @@ void ConsoleQuestion4::actOnPushArrow( ) {
 		int next = ( num == ARROW_DIR_LEFT ? MONTH - 1 : 1 );
 		_select_month = ( _select_month + next ) % MONTH;
 		_state = STATE_PUSH_UP;
+		playClickSE( );
 	}
 }
 
@@ -168,13 +169,11 @@ void ConsoleQuestion4::actOnPushDay( ) {
 		_select_day = num;
 		_start_time = getNowCount( );
 		_state = STATE_PUSH_UP;
+		playClickSE( );
 	}
 }
 
 void ConsoleQuestion4::actOnPushUp( ) {
-	// ‰¹
-	playClickSE( );
-
 	if ( _click_target == CLICK_TARGET_MONTH ) {
 		actOnPushUpArrow( );
 	} else {
@@ -198,7 +197,10 @@ void ConsoleQuestion4::actOnAnswer( ) {
 	_select_day = ERROR;
 
 	if ( answer ) {
+		playClearSE( );
 		_callback( );
+	} else {
+		playUnClearSE( );
 	}
 }
 

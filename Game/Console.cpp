@@ -2,6 +2,7 @@
 #include "ElevatorButton.h"
 #include "Page.h"
 #include "ConsoleObserver.h"
+#include "SoundManager.h"
 
 #include "Image.h"
 #include "Keyboard.h"
@@ -107,6 +108,7 @@ void Console::actOnNone( ) {
 		_observer->onActive( true );
 		MousePtr mouse = Mouse::getTask( );
 		mouse->setMouseDraw( true );
+		SoundManager::getInstance( )->play( SoundManager::SE_CONSOLE_OPEN );
 	}
 }
 
@@ -115,6 +117,8 @@ void Console::actOnIdle( ) {
 		changeState( CONSOLE_STATE_CLOSING );
 		MousePtr mouse = Mouse::getTask( );
 		mouse->setMouseDraw( false );
+		SoundManager::getInstance( )->play( SoundManager::SE_CONSOLE_OPEN );
+		return;
 	}
 	_pages[ _page_num ]->update( );
 
@@ -144,19 +148,23 @@ void Console::actOnIdle( ) {
 		// 左から右にスライド
 		if ( horizontal && slide.x > 0 && _page_num == PAGE_NUM_6 ) {
 			changeState( CONSOLE_STATE_SLIDE_RIGHT );
+			SoundManager::getInstance( )->play( SoundManager::SE_CONSOLE_SLIDE );
 		} 
 		// 右から左にスライド
 		if ( horizontal && slide.x < 0 && _page_num == PAGE_NUM_4 ) {
 			changeState( CONSOLE_STATE_SLIDE_LEFT );
+			SoundManager::getInstance( )->play( SoundManager::SE_CONSOLE_SLIDE );
 		} 
 
 		// 上から下にスライド
 		if ( !horizontal && slide.y > 0 && _page_num != PAGE_NUM_6 && _page_num != PAGE_NUM_1 ) {
 			changeState( CONSOLE_STATE_SLIDE_DOWN );
+			SoundManager::getInstance( )->play( SoundManager::SE_CONSOLE_SLIDE );
 		} 
 		// 下から上にスライド
 		if ( !horizontal && slide.y < 0 && _page_num != PAGE_NUM_6 && _page_num != PAGE_NUM_5 ) {
 			changeState( CONSOLE_STATE_SLIDE_UP );
+			SoundManager::getInstance( )->play( SoundManager::SE_CONSOLE_SLIDE );
 		}
 	}
 }

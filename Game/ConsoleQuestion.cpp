@@ -1,4 +1,5 @@
 #include "ConsoleQuestion.h"
+#include "SoundManager.h"
 
 #include "Manager.h"
 
@@ -34,4 +35,12 @@ void ConsoleQuestion::update( ) {
 
 int ConsoleQuestion::getNowCount( ) const {
 	return Manager::getInstance( )->getNowCount( );
+}
+
+void ConsoleQuestion::playClearSE( ) {
+	SoundManager::getInstance( )->play( SoundManager::SE_QUESTION_CLEAR );
+}
+
+void ConsoleQuestion::playUnClearSE( ) {
+	SoundManager::getInstance( )->play( SoundManager::SE_QUESTION_UNCLEAR );
 }

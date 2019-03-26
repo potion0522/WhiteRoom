@@ -3,6 +3,7 @@
 #include "ElevatorBox.h"
 #include "SquareCollider.h"
 #include "ConsoleActiveObservable.h"
+#include "SoundManager.h"
 
 #include "Camera.h"
 #include "Mouse.h"
@@ -13,23 +14,20 @@
 const double MAX_H_RADIAN = 45 * PI / 180; // 横
 const double MAX_V_RADIAN = 15 * PI / 180; // 縦
 
-const double MOVE_SPEED = 150.0;
-
-
-// あとで外部ファイルにする
-const double HEIGHT = 1500.0;
-const double COLLIDER_SIZE = 500.0;
+const double PLAYER_MOVE_SPEED = 150.0;
+const double PLAYER_HEIGHT = 1500.0;
+const double PLAYER_COLLIDER_RADIUS = 500.0;
+const double WALK_SOUND_DISTANCE = PLAYER_MOVE_SPEED * 5; // この距離歩いたら音を鳴らす
 
 PTR( SphereCollider );
 PTR( SquareCollider );
 
 Player::Player( ElevatorBoxPtr elevator_box, ConsoleActiveObservablePtr console_observable ) :
-SphereCollider( _head_pos, COLLIDER_SIZE, OBJECT_TAG_PLAYER ),
-_HEIGHT( HEIGHT ),
-_PLAYER_COLLIDER_RADIUS( COLLIDER_SIZE ),
+SphereCollider( _head_pos, PLAYER_COLLIDER_RADIUS, OBJECT_TAG_PLAYER ),
 _console_active( false ),
 _ground_pos( 0, PLAYER_INIT_FLOOR * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT, 0 ),
-_head_pos( 0, _ground_pos.y + _HEIGHT, 0 ),
+_head_pos( 0, _ground_pos.y + PLAYER_HEIGHT, 0 ),
+_past_sound_pos( _ground_pos ),
 _dir( 0, 0, 1 ),
 _floor( PLAYER_INIT_FLOOR ),
 _elevator_box( elevator_box ),
@@ -109,16 +107,21 @@ FLOOR Player::getFloor( ) const {
 void Player::updatePos( ) {
 	KeyboardPtr keyboard = Keyboard::getTask( );
 	if ( keyboard->getKeyState( "W" ) ) {
-		_ground_pos += Vector( _dir.x, 0, _dir.z ) *  MOVE_SPEED;
+		_ground_pos += Vector( _dir.x, 0, _dir.z ) *  PLAYER_MOVE_SPEED;
 	}
 	if ( keyboard->getKeyState( "S" ) ) {
-		_ground_pos += Vector( _dir.x, 0, _dir.z ) * -MOVE_SPEED;
+		_ground_pos += Vector( _dir.x, 0, _dir.z ) * -PLAYER_MOVE_SPEED;
 	}
 	if ( keyboard->getKeyState( "A" ) ) {
-		_ground_pos += _dir.cross( Vector( _dir.x, _dir.y + 100, _dir.z ) ).normalize( ) *  MOVE_SPEED;
+		_ground_pos += _dir.cross( Vector( _dir.x, _dir.y + 100, _dir.z ) ).normalize( ) *  PLAYER_MOVE_SPEED;
 	}
 	if ( keyboard->getKeyState( "D" ) ) {
-		_ground_pos += _dir.cross( Vector( _dir.x, _dir.y + 100, _dir.z ) ).normalize( ) * -MOVE_SPEED;
+		_ground_pos += _dir.cross( Vector( _dir.x, _dir.y + 100, _dir.z ) ).normalize( ) * -PLAYER_MOVE_SPEED;
+	}
+
+	if ( ( _past_sound_pos - _ground_pos ).getLength2( ) > WALK_SOUND_DISTANCE * WALK_SOUND_DISTANCE ) {
+		SoundManager::getInstance( )->play( SoundManager::SE_WALK );
+		_past_sound_pos = _ground_pos;
 	}
 }
 
@@ -137,13 +140,10 @@ void Player::actOnPlayerAll( ) {
 	// 視線更新(コンソール非表示時)
 	if ( !_console_active ) {
 		updateDir( );
+		updatePos( );
+		updateEye( );
 	}
 
-	// 移動
-	updatePos( );
-
-	// カメラの更新
-	updateEye( );
 
 	// フロア更新
 	updateFloor( );
@@ -181,7 +181,7 @@ void Player::updateDir( ) {
 }
 
 void Player::updateEye( ) {
-	_head_pos = _ground_pos + Vector( 0, _HEIGHT, 0 );
+	_head_pos = _ground_pos + Vector( 0, PLAYER_HEIGHT, 0 );
 
 	CameraPtr camera = Camera::getTask( );
 	camera->setCamera( _head_pos * MIRI_TO_METER_UNIT, ( _head_pos + _dir ) * MIRI_TO_METER_UNIT );
@@ -206,7 +206,7 @@ void Player::adjustPosHitWall( ColliderConstPtr collider ) {
 	int dir = ( dot > 0 ? 1 : -1 );
 
 	// 超過した距離(半径を足した数)
-	double dist = ( norm * dir * -1 ).dot( ( _ground_pos + ( norm * dir * -1 ) * _PLAYER_COLLIDER_RADIUS ) - wall_center );
+	double dist = ( norm * dir * -1 ).dot( ( _ground_pos + ( norm * dir * -1 ) * PLAYER_COLLIDER_RADIUS ) - wall_center );
 
 	_ground_pos = _ground_pos + ( norm * dir * dist );
 }

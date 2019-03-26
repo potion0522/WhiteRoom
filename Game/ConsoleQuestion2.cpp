@@ -106,6 +106,7 @@ void ConsoleQuestion2::actOnAnswer( ) {
 	if ( answer ) {
 		// ƒNƒŠƒAŒãˆê’èŽžŠÔ‘Ò‹@
 		if ( getNowCount( ) - _start_time > ANSWER_WAIT_TIME ) {
+			playClearSE( );
 			_callback( );
 		}
 	} else {

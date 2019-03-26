@@ -99,6 +99,7 @@ void ConsoleQuestion3::actOnPush( ) {
 		// ó£ÇµÇΩÇ∆Ç´ÇÃêîéöÇ™âüâ∫éûÇ∆ìØÇ∂Ç©Ç«Ç§Ç©
 		if ( select_num == _selecting_num ) {
 			_state = STATE_PUSH_UP;
+			playClickSE( );
 		} else {
 			_state = STATE_NONE;
 		}
@@ -106,9 +107,6 @@ void ConsoleQuestion3::actOnPush( ) {
 }
 
 void ConsoleQuestion3::actOnPushUp( ) {
-	// âπ
-	playClickSE( );
-
 	_select_nums.push_back( _selecting_num );
 	if ( _select_nums.size( ) == MAX_SELECT_NUM ) {
 		_state = STATE_ANSWER;
@@ -119,15 +117,18 @@ void ConsoleQuestion3::actOnPushUp( ) {
 }
 
 void ConsoleQuestion3::actOnAnswer( ) {
+	if ( getNowCount( ) - _start_time < ANSWER_WAIT_TIME ) {
+		return;
+	}
+
 	bool answer = _question_manager->answerQuestion3( _select_nums[ 0 ], _select_nums[ 1 ], _select_nums[ 2 ] );
 
 	if ( answer ) {
-		// ÉNÉäÉAå„àÍíËéûä‘ë“ã@
-		if ( getNowCount( ) - _start_time > ANSWER_WAIT_TIME ) {
-			_callback( );
-		}
+		playClearSE( );
+		_callback( );
 	} else {
 		_state = STATE_NONE;
+		playUnClearSE( );
 		_select_nums.clear( );
 	}
 }

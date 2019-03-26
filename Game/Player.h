@@ -43,15 +43,12 @@ private:
 	void adjustPosHitWall( ColliderConstPtr collider );
 
 private:
-	const double _PLAYER_COLLIDER_RADIUS;
-	const double _HEIGHT;
-
-private:
 	UPDATE_TYPE _update_type;
 	bool _console_active;
 	Vector _ground_pos; // 計算用(足元)
 	Vector _head_pos;  // カメラ用
 	Vector _past_pos;  // 前回座標(足元)
+	Vector _past_sound_pos;
 	Vector _dir;
 	FLOOR _floor;
 	FLOOR _elevator_floor;

@@ -112,6 +112,7 @@ void ConsoleQuestion1::actOnAnswer( ) {
 	if ( answer ) {
 		// 一定時間後にコールバック
 		if ( getNowCount( ) - _start_time > ANSWER_WAIT_TIME ) {
+			playClearSE( );
 			_callback( );
 		}
 	} else {

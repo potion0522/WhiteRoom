@@ -33,6 +33,8 @@ protected:
 	virtual void actOnPushUp( ) = 0;
 	virtual void actOnAnswer( ) = 0;
 	int getNowCount( ) const;
+	void playClearSE( );
+	void playUnClearSE( );
 
 protected:
 	static const int ANSWER_WAIT_TIME = 2000; // ƒ~ƒŠ

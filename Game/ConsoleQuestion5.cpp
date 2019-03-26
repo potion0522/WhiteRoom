@@ -112,6 +112,7 @@ void ConsoleQuestion5::actOnPushUp( ) {
 	// ‰¹
 	playClickSE( );
 
+
 	_select_nums.push_back( _selecting_num );
 
 	if ( _select_nums.size( ) == ANSWER_NUM ) {
@@ -130,9 +131,11 @@ void ConsoleQuestion5::actOnAnswer( ) {
 	bool answer = _question_manager->answerQuestion5( _select_nums[ 0 ], _select_nums[ 1 ], _select_nums[ 2 ] );
 
 	if ( answer ) {
+		playClearSE( );
 		_callback( );
 	} else {
 		_state = STATE_NONE;
+		playUnClearSE( );
 		_select_nums.clear( );
 	}
 }
