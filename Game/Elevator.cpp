@@ -105,6 +105,9 @@ void Elevator::requestMoveElevatorButtonToElevator( FLOOR order ) {
 	if ( !isItPossibleToOrderElevator( ) ) {
 		return;
 	}
+	if ( order == _floor ) {
+		return;
+	}
 
 	// 現在フロアとオーダーフロアを記録
 	_past_floor = _floor;
