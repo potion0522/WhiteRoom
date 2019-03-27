@@ -17,14 +17,12 @@ Question1FloorHint::Question1FloorHint( QuestionManagerConstPtr question_manager
 	const int COL = 3;
 	const int ROW = 3;
 	const int SQUARE_NUM = COL * ROW;
-	_hint->alloc( SQUARE_NUM * 6 );
+	_hint->alloc( SQUARE_NUM * 2 );
 	_hint->setTexture( drawer->getImage( TEXTURE_FILE ) );
 
 	// 全体のサイズ
 	const double MODEL_SIZE  = FLOOR_HEIGHT;
 	const double SQUARE_SIZE = MODEL_SIZE / COL;
-
-	// 左上基準
 
 	std::array< unsigned char, 3 > answer = question_manager->getHintQuestion1( );
 	Vector norm = Vector( 0, 1, 0 );
