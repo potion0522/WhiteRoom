@@ -5,17 +5,20 @@
 
 SoundManager* SoundManager::_instance;
 
-const char* SE_CONSOLE_OPEN     = "ConsoleOpen.mp3";
-const char* SE_CONSOLE_CLOSE    = "ConsoleClose.mp3";
-const char* SE_CONSOLE_CLICK    = "ConsoleClick.mp3";
-const char* SE_CONSOLE_SLIDE    = "ConsoleSlide.mp3";
-const char* SE_QUESTION_CLEAR   = "QuestionClear.mp3";
-const char* SE_QUESTION_UNCLEAR = "QuestionUnClear.mp3";
-const char* SE_WALK             = "Walk.mp3";
-const char* SE_ELEVATOR_MOVE    = "ElevatorMove.mp3";
-const char* SE_ELEVATOR_ARRIVE  = "ElevatorArrive.mp3";
-const char* SE_GAMESTART        = "GameStart.mp3";
-const char* SE_GAMECLEAR        = "GameClear.mp3";
+const char* SE_CONSOLE_OPEN     = "SE/ConsoleOpen.mp3";
+const char* SE_CONSOLE_CLOSE    = "SE/ConsoleClose.mp3";
+const char* SE_CONSOLE_CLICK    = "SE/ConsoleClick.mp3";
+const char* SE_CONSOLE_SLIDE    = "SE/ConsoleSlide.mp3";
+const char* SE_QUESTION_CLEAR   = "SE/QuestionClear.mp3";
+const char* SE_QUESTION_UNCLEAR = "SE/QuestionUnClear.mp3";
+const char* SE_WALK             = "SE/Walk.mp3";
+const char* SE_ELEVATOR_MOVE    = "SE/ElevatorMove.mp3";
+const char* SE_ELEVATOR_ARRIVE  = "SE/ElevatorArrive.mp3";
+const char* SE_GAMESTART        = "SE/GameStart.mp3";
+const char* SE_GAMECLEAR        = "SE/GameClear.mp3";
+
+const char* BGM_TITLE = "BGM/Title.mp3";
+const char* BGM_GAME  = "BGM/Game.mp3";
 
 const char* SE_FILE[ SoundManager::MAX_SE ] = {
 	SE_CONSOLE_OPEN    ,
@@ -29,6 +32,11 @@ const char* SE_FILE[ SoundManager::MAX_SE ] = {
 	SE_ELEVATOR_ARRIVE ,
 	SE_GAMESTART       ,
 	SE_GAMECLEAR       ,
+};
+
+const char* BGM_FILE[ SoundManager::MAX_BGM ] = {
+	BGM_TITLE,
+	BGM_GAME
 };
 
 SoundManager::SoundManager( ) {
@@ -90,6 +98,7 @@ void SoundManager::play( SE se, const Vector& pos, float range ) {
 	Speaker3DPtr speaker = sound->loadSound3D( file.c_str( ) );
 	speaker->setPosition( pos );
 	speaker->setRange( range );
+	speaker->setVolume( getVolume( se ) );
 	speaker->play( );
 
 	_speakers3D[ se ].push_back( speaker );
@@ -104,8 +113,27 @@ void SoundManager::play( SE se ) {
 	SoundPtr sound = Sound::getTask( );
 	Speaker2DPtr speaker = sound->loadSound2D( file.c_str( ) );
 	speaker->play( );
+	speaker->setVolume( getVolume( se ) );
 
 	_speakers2D.push_back( speaker );
+}
+
+void SoundManager::play( BGM bgm ) {
+	std::string file = BGM_FILE[ bgm ];
+
+	SoundPtr sound = Sound::getTask( );
+	Speaker2DPtr speaker = sound->loadSound2D( file.c_str( ) );
+	speaker->setVolume( getVolume( bgm ) );
+	speaker->setLoop( true );
+
+	_bgm = speaker;
+	_bgm->play( );
+}
+
+void SoundManager::stopBGM( ) {
+	if ( _bgm ) {
+		_bgm->stop( );
+	}
 }
 
 void SoundManager::mute( SE se ) {
@@ -132,4 +160,70 @@ void SoundManager::set3DSoundPosition( SE se, const Vector& pos ) {
 
 bool SoundManager::isMute( SE se ) const {
 	return _mute_se[ se ];
+}
+
+float SoundManager::getVolume( SE se ) const {
+	float volume = 1.0f;
+	switch ( se ) {
+	case SE_CONSOLE_OPEN :
+		volume = 1.0f;
+		break;
+
+	case SE_CONSOLE_CLOSE :
+		volume = 1.0f;
+		break;
+	 
+	case SE_CONSOLE_CLICK :
+		volume = 0.75f;
+		break;
+	 
+	case SE_CONSOLE_SLIDE :
+		volume = 1.0f;
+		break;
+	 
+	case SE_QUESTION_CLEAR :
+		volume = 0.5f;
+		break;
+	 
+	case SE_QUESTION_UNCLEAR :
+		volume = 0.5f;
+		break;
+	 
+	case SE_WALK :
+		volume = 1.0f;
+		break;
+	 
+	case SE_ELEVATOR_MOVE :
+		volume = 1.0f;
+		break;
+	 
+	case SE_ELEVATOR_ARRIVE :
+		volume = 0.65f;
+		break;
+	 
+	case SE_GAMESTART :
+		volume = 0.65f;
+		break;
+	 
+	case SE_GAMECLEAR :
+		volume = 1.0f;
+		break;
+	}
+
+	return volume;
+}
+
+float SoundManager::getVolume( BGM bgm ) const {
+	float volume = 1.0f;
+	switch ( bgm ) {
+	case BGM_TITLE :
+		volume = 0.8f;
+		break;
+
+	case BGM_GAME :
+		volume = 0.3f;
+		break;
+	}
+
+	return volume;
 }

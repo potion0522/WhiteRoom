@@ -30,6 +30,12 @@ public:
 		MAX_SE
 	};
 
+	enum BGM {
+		BGM_TITLE,
+		BGM_GAME,
+		MAX_BGM
+	};
+
 private:
 	SoundManager( );
 	virtual ~SoundManager( );
@@ -45,14 +51,19 @@ public:
 	void set3DSoundPosition( SE se, const Vector& pos );
 	void play( SE se, const Vector& pos, float range ); // 3D
 	void play( SE se ); // 2D
+	void play( BGM bgm );
+	void stopBGM( );
 
 private:
 	bool isMute( SE se ) const;
+	float getVolume( SE se ) const;
+	float getVolume( BGM bgm ) const;
 
 private:
 	static SoundManager* _instance;
 
 private:
+	Speaker2DPtr _bgm;
 	std::list< Speaker2DPtr > _speakers2D;
 	std::array< std::list< Speaker3DPtr >, MAX_SE > _speakers3D;
 

@@ -143,6 +143,8 @@ void SceneGame::updateWait( ) {
 
 void SceneGame::updatePlay( ) {
 	if ( _phase_count == PHASE_INIT ) {
+		// BGM
+		SoundManager::getInstance( )->play( SoundManager::BGM_GAME );
 		_player->setUpdateType( Player::UPDATE_TYPE_ALL );
 	}
 	_console->update( );

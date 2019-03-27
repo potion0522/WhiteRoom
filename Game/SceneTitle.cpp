@@ -74,6 +74,7 @@ _phase( PHASE_TITLE ) {
 	SoundManager* sound = SoundManager::getInstance( );
 	sound->mute( SoundManager::SE_ELEVATOR_ARRIVE );
 	sound->mute( SoundManager::SE_ELEVATOR_MOVE );
+	sound->play( SoundManager::BGM_TITLE );
 }
 
 SceneTitle::~SceneTitle( ) {

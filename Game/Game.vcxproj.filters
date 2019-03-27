@@ -33,12 +33,6 @@
     <ClCompile Include="Collider.cpp">
       <Filter>Game\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="TestObject.cpp">
-      <Filter>Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="TestSquare.cpp">
-      <Filter>Debug</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Game\Player</Filter>
     </ClCompile>
@@ -155,9 +149,6 @@
     <Filter Include="SceneInterface">
       <UniqueIdentifier>{9c5fed17-bba3-48f8-80c7-6c11008701af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Debug">
-      <UniqueIdentifier>{081684e2-0e5b-4257-868d-15e4e36977ed}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Player">
       <UniqueIdentifier>{e12a181e-1776-470e-8e27-c349ae8253f7}</UniqueIdentifier>
     </Filter>
@@ -227,12 +218,6 @@
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>Game\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="TestObject.h">
-      <Filter>Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="TestSquare.h">
-      <Filter>Debug</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Game\Player</Filter>

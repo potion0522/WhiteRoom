@@ -196,8 +196,6 @@
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="SquareCollider.cpp" />
-    <ClCompile Include="TestObject.cpp" />
-    <ClCompile Include="TestSquare.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -252,8 +250,6 @@
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="SquareCollider.h" />
-    <ClInclude Include="TestObject.h" />
-    <ClInclude Include="TestSquare.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
