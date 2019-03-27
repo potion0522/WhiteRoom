@@ -19,7 +19,8 @@ class Player : public SphereCollider {
 public:
 	enum UPDATE_TYPE {
 		UPDATE_TYPE_EYEONLY,
-		UPDATE_TYPE_ALL
+		UPDATE_TYPE_ALL,
+		UPDATE_TYPE_GAMECLEAR
 	};
 
 public:
@@ -34,7 +35,12 @@ public:
 
 private:
 	void actOnEyeOnly( );
-	void actOnPlayerAll( );
+	void actOnAllControll( );
+	void actOnGameClearControll( );
+	void initEyeOnly( );
+	void initAllControll( );
+	void initGameClearControll( );
+
 	void updateDir( );
 	void updatePos( );
 	void walk( );

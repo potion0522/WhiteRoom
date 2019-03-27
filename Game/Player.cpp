@@ -59,13 +59,30 @@ void Player::update( ) {
 		break;
 
 	case UPDATE_TYPE_ALL:
-		actOnPlayerAll( );
+		actOnAllControll( );
+		break;
+
+	case UPDATE_TYPE_GAMECLEAR:
+		actOnGameClearControll( );
 		break;
 	}
 }
 
 void Player::setUpdateType( Player::UPDATE_TYPE type ) {
 	_update_type = type;
+	switch ( _update_type ) {
+	case UPDATE_TYPE_EYEONLY:
+		initEyeOnly( );
+		break;
+		
+	case UPDATE_TYPE_ALL:
+		initAllControll( );
+		break;
+		
+	case UPDATE_TYPE_GAMECLEAR:
+		initGameClearControll( );
+		break;
+	}
 }
 
 void Player::onColliderEnter( ColliderConstPtr collider ) {
@@ -143,7 +160,7 @@ void Player::actOnEyeOnly( ) {
 	updateEye( );
 }
 
-void Player::actOnPlayerAll( ) {
+void Player::actOnAllControll( ) {
 	// 視線更新(コンソール非表示時)
 	if ( !_console_active ) {
 		updateDir( );
@@ -159,6 +176,38 @@ void Player::actOnPlayerAll( ) {
 
 	// Listenerの更新
 	updateEar( );
+}
+
+void Player::actOnGameClearControll( ) {
+	Vector goal = Vector( );
+	Vector dir = ( goal - _ground_pos ).normalize( );
+	const double SPEED = PLAYER_MOVE_SPEED * 0.1;
+
+	_ground_pos += dir * SPEED;
+	updatePos( );
+	updateDir( );
+	updateEye( );
+	updateEar( );
+}
+
+void Player::initEyeOnly( ) {
+	// 特になし
+}
+
+void Player::initAllControll( ) {
+	// 特になし
+}
+
+void Player::initGameClearControll( ) {
+	// エレベーターの真ん中端に移動させる
+	_ground_pos.x = ELEVATOR_INIT_X + ELEVATOR_WIDTH / 2;
+	_ground_pos.y = 0;
+	_ground_pos.z = ELEVATOR_INIT_Z;
+
+	// 中央を向かせる
+	Vector goal = Vector( );
+	Vector dir = ( goal - _ground_pos ).normalize( );
+	_dir = dir;
 }
 
 void Player::updateDir( ) {

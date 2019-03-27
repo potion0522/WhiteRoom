@@ -155,6 +155,9 @@ void SceneGame::updatePlay( ) {
 }
 
 void SceneGame::updateGameClear( ) {
+	if ( _phase_count == PHASE_INIT ) {
+		_player->setUpdateType( Player::UPDATE_TYPE_GAMECLEAR );
+	}
 	setPhase( PHASE_FADE_OUT );
 }
 
