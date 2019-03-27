@@ -126,7 +126,6 @@ void SceneGame::draw( ) const {
 	}
 
 	drawer->waitForSync( ); // 30fps‚É‚·‚é
-	drawer->drawFPS( );
 	drawer->flip( );
 }
 

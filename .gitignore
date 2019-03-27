@@ -35,7 +35,6 @@ x64/
 *.db
 *.opendb
 *.suo
-*.txt
 *.ini
 *.rej
 *.lastbuildstate
@@ -55,6 +54,7 @@ x64/
 *.wav
 *.res
 *.aps
+Log.txt
 .vs/Color/v15/ipch/AutoPCH/677e9aa6b31062a5/MAIN.ipch
 *.db-shm
 *.ipch
