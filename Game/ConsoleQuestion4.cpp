@@ -186,12 +186,14 @@ void ConsoleQuestion4::actOnPushUpArrow( ) {
 }
 
 void ConsoleQuestion4::actOnPushUpDay( ) {
-	if ( getNowCount( ) - _start_time > ANSWER_WAIT_TIME ) {
-		_state = STATE_ANSWER;
-	}
+	_state = STATE_ANSWER;
 }
 
 void ConsoleQuestion4::actOnAnswer( ) {
+	if ( getNowCount( ) - _start_time < ANSWER_WAIT_TIME ) {
+		return;
+	}
+
 	bool answer = _question_manager->answerQuestion4( _select_month + 1, _select_day + 1 );
 	_state = STATE_NONE;
 	_select_day = ERROR;

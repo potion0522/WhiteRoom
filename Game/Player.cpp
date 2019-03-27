@@ -17,7 +17,7 @@ const double MAX_V_RADIAN = 15 * PI / 180; // 縦
 const double PLAYER_MOVE_SPEED = 150.0;
 const double PLAYER_HEIGHT = 1500.0;
 const double PLAYER_COLLIDER_RADIUS = 500.0;
-const double WALK_SOUND_DISTANCE = PLAYER_MOVE_SPEED * 5; // この距離歩いたら音を鳴らす
+const double WALK_SOUND_DISTANCE = 1500.0; // この距離歩いたら音を鳴らす
 
 PTR( SphereCollider );
 PTR( SquareCollider );
@@ -89,13 +89,6 @@ void Player::onColliderEnter( ColliderConstPtr collider ) {
 
 	// エレベーターに乗っている
 	if ( tag == OBJECT_TAG_ELEVATOR ) {
-		SphereColliderConstPtr sphere = std::dynamic_pointer_cast< const SphereCollider >( collider );
-		double len = ( sphere->getPos( ) - _head_pos ).getLength2( );
-		double c = sphere->getRadius( );
-		if ( len > c * c ) {
-			return;
-		}
-
 		_elevator_box->requestRideOnElevator( &_ground_pos );
 	}
 }
@@ -105,6 +98,13 @@ FLOOR Player::getFloor( ) const {
 }
 
 void Player::updatePos( ) {
+	// 移動前座標の保存
+	_past_pos = _ground_pos;
+	
+	_head_pos = _ground_pos + Vector( 0, PLAYER_HEIGHT, 0 );
+}
+
+void Player::walk( ) {
 	KeyboardPtr keyboard = Keyboard::getTask( );
 	if ( keyboard->getKeyState( "W" ) ) {
 		_ground_pos += Vector( _dir.x, 0, _dir.z ) *  PLAYER_MOVE_SPEED;
@@ -119,7 +119,12 @@ void Player::updatePos( ) {
 		_ground_pos += _dir.cross( Vector( _dir.x, _dir.y + 100, _dir.z ) ).normalize( ) * -PLAYER_MOVE_SPEED;
 	}
 
-	if ( ( _past_sound_pos - _ground_pos ).getLength2( ) > WALK_SOUND_DISTANCE * WALK_SOUND_DISTANCE ) {
+	// 前回サウンドを鳴らした距離から一定値で鳴らす
+	Vector pos1 = _past_sound_pos;
+	Vector pos2 = _ground_pos;
+	pos1.y = 0;
+	pos2.y = 0;
+	if ( ( pos1 - pos2 ).getLength2( ) > WALK_SOUND_DISTANCE * WALK_SOUND_DISTANCE ) {
 		SoundManager::getInstance( )->play( SoundManager::SE_WALK );
 		_past_sound_pos = _ground_pos;
 	}
@@ -134,16 +139,15 @@ void Player::actOnEyeOnly( ) {
 }
 
 void Player::actOnPlayerAll( ) {
-	// 移動前座標の保存
-	_past_pos = _ground_pos;
-
 	// 視線更新(コンソール非表示時)
 	if ( !_console_active ) {
 		updateDir( );
-		updatePos( );
+		walk( );
 		updateEye( );
 	}
 
+	// 計算後の座標更新
+	updatePos( );
 
 	// フロア更新
 	updateFloor( );
@@ -181,8 +185,6 @@ void Player::updateDir( ) {
 }
 
 void Player::updateEye( ) {
-	_head_pos = _ground_pos + Vector( 0, PLAYER_HEIGHT, 0 );
-
 	CameraPtr camera = Camera::getTask( );
 	camera->setCamera( _head_pos * MIRI_TO_METER_UNIT, ( _head_pos + _dir ) * MIRI_TO_METER_UNIT );
 }
@@ -206,7 +208,9 @@ void Player::adjustPosHitWall( ColliderConstPtr collider ) {
 	int dir = ( dot > 0 ? 1 : -1 );
 
 	// 超過した距離(半径を足した数)
+	const double SPACE = 10.0;
 	double dist = ( norm * dir * -1 ).dot( ( _ground_pos + ( norm * dir * -1 ) * PLAYER_COLLIDER_RADIUS ) - wall_center );
+	dist += SPACE;
 
 	_ground_pos = _ground_pos + ( norm * dir * dist );
 }

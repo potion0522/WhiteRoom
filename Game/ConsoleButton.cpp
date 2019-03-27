@@ -62,3 +62,7 @@ void ConsoleButton::draw( int x, int y ) const {
 	_button->setPos( Vector( SCREEN_WIDTH / 2 + x, SCREEN_HEIGHT / 2 + y ) );
 	_button->draw( );
 }
+
+void ConsoleButton::refresh( ) {
+	_button->refreshState( );
+}

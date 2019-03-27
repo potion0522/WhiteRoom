@@ -26,6 +26,7 @@ public:
 public:
 	void update( );
 	virtual void draw( int x, int y ) const = 0;
+	void refresh( );
 
 protected:
 	virtual void actOnNone( ) = 0;

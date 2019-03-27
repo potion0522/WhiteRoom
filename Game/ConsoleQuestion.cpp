@@ -33,6 +33,14 @@ void ConsoleQuestion::update( ) {
 	}
 }
 
+void ConsoleQuestion::refresh( ) {
+	// “š‚¦‡‚í‚¹‚È‚çƒŠƒtƒŒƒbƒVƒ…‚µ‚È‚¢
+	if ( _state == STATE_ANSWER ) {
+		return;
+	}
+	_state = STATE_NONE;
+}
+
 int ConsoleQuestion::getNowCount( ) const {
 	return Manager::getInstance( )->getNowCount( );
 }

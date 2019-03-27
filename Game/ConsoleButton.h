@@ -20,6 +20,7 @@ public:
 public:
 	void update( );
 	void draw( int x, int y ) const;
+	void refresh( );
 
 private:
 	int _button_width;

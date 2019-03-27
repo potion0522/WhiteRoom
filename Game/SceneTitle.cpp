@@ -143,6 +143,7 @@ void SceneTitle::updateMouse( ) {
 	if ( mouse->isClickUpLeft( ) ) {
 		_phase = PHASE_WHITEOUT;
 		_white_out_start_time = getNowCount( );
+		SoundManager::getInstance( )->play( SoundManager::SE_GAMESTART );
 	}
 }
 

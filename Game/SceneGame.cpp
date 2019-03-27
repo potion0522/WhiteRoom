@@ -11,6 +11,7 @@
 #include "Floor3.h"
 #include "Floor4.h"
 #include "Floor5.h"
+#include "SoundManager.h"
 
 #include "Manager.h"
 #include "Drawer.h"
@@ -87,7 +88,6 @@ void SceneGame::update( ) {
 		updateFadeOut( );
 		break;
 	}
-
 	_phase_count++;
 
 }
@@ -150,6 +150,7 @@ void SceneGame::updatePlay( ) {
 	// clear
 	if ( _player->getFloor( ) == FLOOR_GF ) {
 		setPhase( PHASE_GAMECLEAR );
+		SoundManager::getInstance( )->play( SoundManager::SE_GAMECLEAR );
 	}
 }
 

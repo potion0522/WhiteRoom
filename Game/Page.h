@@ -26,6 +26,7 @@ public:
 	void draw( ) const;
 
 	void slide( int add_x, int add_y );
+	void refreshExceptForAnswer( );
 
 private:
 	void callbackPushButton( );

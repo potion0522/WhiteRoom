@@ -67,6 +67,10 @@ void Page::slide( int add_x, int add_y ) {
 	_view_y = _y + _slide_y;
 }
 
+void Page::refreshExceptForAnswer( ) {
+	_content->refresh( );
+}
+
 void Page::callbackPushButton( ) {
 	// ボタンが押されたとき、そのフロア番号を渡す
 	if ( _page_num == Console::PAGE_NUM_6 ) {

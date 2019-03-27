@@ -100,8 +100,6 @@ void Console::slidePage( int add_x, int add_y ) {
 	}
 }
 
-
-
 void Console::actOnNone( ) {
 	if ( isChangeActivate( ) ) {
 		changeState( CONSOLE_STATE_OPENING );
@@ -113,15 +111,18 @@ void Console::actOnNone( ) {
 }
 
 void Console::actOnIdle( ) {
+	_pages[ _page_num ]->update( );
+
+	// コンソールを閉じる
 	if ( isChangeActivate( ) ) {
 		changeState( CONSOLE_STATE_CLOSING );
 		MousePtr mouse = Mouse::getTask( );
 		mouse->setMouseDraw( false );
-		SoundManager::getInstance( )->play( SoundManager::SE_CONSOLE_OPEN );
+		// 解答、または答え合わせ状態以外ならリフレッシュ
+		_pages[ _page_num ]->refreshExceptForAnswer( );
+		SoundManager::getInstance( )->play( SoundManager::SE_CONSOLE_CLOSE );
 		return;
 	}
-	_pages[ _page_num ]->update( );
-
 
 	// スライドを検知
 	MousePtr mouse = Mouse::getTask( );

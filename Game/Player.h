@@ -37,6 +37,7 @@ private:
 	void actOnPlayerAll( );
 	void updateDir( );
 	void updatePos( );
+	void walk( );
 	void updateEye( );
 	void updateEar( );
 	void updateFloor( );
