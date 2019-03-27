@@ -49,7 +49,7 @@ private:
 	Vector _ground_pos; // 計算用(足元)
 	Vector _head_pos;  // カメラ用
 	Vector _past_pos;  // 前回座標(足元)
-	Vector _past_sound_pos;
+	double _sound_distance;
 	Vector _dir;
 	FLOOR _floor;
 	FLOOR _elevator_floor;

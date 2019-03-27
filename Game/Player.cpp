@@ -27,7 +27,7 @@ SphereCollider( _head_pos, PLAYER_COLLIDER_RADIUS, OBJECT_TAG_PLAYER ),
 _console_active( false ),
 _ground_pos( 0, PLAYER_INIT_FLOOR * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT, 0 ),
 _head_pos( 0, _ground_pos.y + PLAYER_HEIGHT, 0 ),
-_past_sound_pos( _ground_pos ),
+_sound_distance( 0 ),
 _dir( 0, 0, 1 ),
 _floor( PLAYER_INIT_FLOOR ),
 _elevator_box( elevator_box ),
@@ -106,27 +106,32 @@ void Player::updatePos( ) {
 
 void Player::walk( ) {
 	KeyboardPtr keyboard = Keyboard::getTask( );
+	Vector dir;
+
+	// 前方優先
 	if ( keyboard->getKeyState( "W" ) ) {
-		_ground_pos += Vector( _dir.x, 0, _dir.z ) *  PLAYER_MOVE_SPEED;
+		dir += Vector( _dir.x, 0, _dir.z );
+	} else if ( keyboard->getKeyState( "S" ) ) {
+		dir += Vector( _dir.x, 0, _dir.z ) * -1;
 	}
-	if ( keyboard->getKeyState( "S" ) ) {
-		_ground_pos += Vector( _dir.x, 0, _dir.z ) * -PLAYER_MOVE_SPEED;
-	}
+
+	// 左右同時は止まる
 	if ( keyboard->getKeyState( "A" ) ) {
-		_ground_pos += _dir.cross( Vector( _dir.x, _dir.y + 100, _dir.z ) ).normalize( ) *  PLAYER_MOVE_SPEED;
+		dir += _dir.cross( Vector( _dir.x, _dir.y + 100, _dir.z ) ).normalize( );
 	}
 	if ( keyboard->getKeyState( "D" ) ) {
-		_ground_pos += _dir.cross( Vector( _dir.x, _dir.y + 100, _dir.z ) ).normalize( ) * -PLAYER_MOVE_SPEED;
+		dir += _dir.cross( Vector( _dir.x, _dir.y + 100, _dir.z ) ).normalize( ) * -1;
+	}
+
+	if ( dir != Vector( ) ) {
+		_ground_pos += dir.normalize( ) * PLAYER_MOVE_SPEED;
+		_sound_distance += ( _past_pos - _ground_pos ).getLength( );
 	}
 
 	// 前回サウンドを鳴らした距離から一定値で鳴らす
-	Vector pos1 = _past_sound_pos;
-	Vector pos2 = _ground_pos;
-	pos1.y = 0;
-	pos2.y = 0;
-	if ( ( pos1 - pos2 ).getLength2( ) > WALK_SOUND_DISTANCE * WALK_SOUND_DISTANCE ) {
+	if ( _sound_distance > WALK_SOUND_DISTANCE ) {
 		SoundManager::getInstance( )->play( SoundManager::SE_WALK );
-		_past_sound_pos = _ground_pos;
+		_sound_distance = 0;
 	}
 }
 
