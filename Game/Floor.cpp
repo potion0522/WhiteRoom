@@ -55,6 +55,7 @@ void Floor::generateFloor( ) {
 
 	const int NORMAL_WALL   = 3;
 	const int ELEVATOR_WALL = 2;
+	const Vector NORM = Vector( 0, 1, 0 );
 
 	_wall_model = ModelPtr( new Model );
 	_wall_model->setTexture( Drawer::getTask( )->getImage( FLOOR_TEXTURE ) );
@@ -73,10 +74,10 @@ void Floor::generateFloor( ) {
 			Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI * 0.5 * i );
 
 			Model::Vertex vertex[ 4 ] = {
-				Model::Vertex( rot.multiply( vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
-				Model::Vertex( rot.multiply( vertex_pos[ 1 ] ), 1, 0, Vector( 0, 1, 0 ) ), // 右上
-				Model::Vertex( rot.multiply( vertex_pos[ 2 ] ), 0, 1, Vector( 0, 1, 0 ) ), // 左下
-				Model::Vertex( rot.multiply( vertex_pos[ 3 ] ), 1, 1, Vector( 0, 1, 0 ) ), // 右下
+				Model::Vertex( rot.multiply( vertex_pos[ 0 ] ), 0, 0, NORM ), // 左上
+				Model::Vertex( rot.multiply( vertex_pos[ 1 ] ), 1, 0, NORM ), // 右上
+				Model::Vertex( rot.multiply( vertex_pos[ 2 ] ), 0, 1, NORM ), // 左下
+				Model::Vertex( rot.multiply( vertex_pos[ 3 ] ), 1, 1, NORM ), // 右下
 			};
 
 			int vertex_idx = i * 6;
@@ -104,10 +105,10 @@ void Floor::generateFloor( ) {
 			Vector( -FLOOR_WIDTH / 2 + WALL_WIDTH, _y +               0, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右下
 		};
 		Model::Vertex left_side_vertex[ 4 ] = {
-			Model::Vertex( rot.multiply( left_side_vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
-			Model::Vertex( rot.multiply( left_side_vertex_pos[ 1 ] ), 1, 0, Vector( 0, 1, 0 ) ), // 右上
-			Model::Vertex( rot.multiply( left_side_vertex_pos[ 2 ] ), 0, 1, Vector( 0, 1, 0 ) ), // 左下
-			Model::Vertex( rot.multiply( left_side_vertex_pos[ 3 ] ), 1, 1, Vector( 0, 1, 0 ) ), // 右下
+			Model::Vertex( rot.multiply( left_side_vertex_pos[ 0 ] ), 0, 0, NORM ), // 左上
+			Model::Vertex( rot.multiply( left_side_vertex_pos[ 1 ] ), 1, 0, NORM ), // 右上
+			Model::Vertex( rot.multiply( left_side_vertex_pos[ 2 ] ), 0, 1, NORM ), // 左下
+			Model::Vertex( rot.multiply( left_side_vertex_pos[ 3 ] ), 1, 1, NORM ), // 右下
 		};
 
 		int vertex_idx = NORMAL_WALL * 6;
@@ -128,10 +129,10 @@ void Floor::generateFloor( ) {
 			Vector( FLOOR_WIDTH / 2             , _y +               0, FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右下
 		};
 		Model::Vertex right_side_vertex[ 4 ] = {
-			Model::Vertex( rot.multiply( right_side_vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
-			Model::Vertex( rot.multiply( right_side_vertex_pos[ 1 ] ), 1, 0, Vector( 0, 1, 0 ) ), // 右上
-			Model::Vertex( rot.multiply( right_side_vertex_pos[ 2 ] ), 0, 1, Vector( 0, 1, 0 ) ), // 左下
-			Model::Vertex( rot.multiply( right_side_vertex_pos[ 3 ] ), 1, 1, Vector( 0, 1, 0 ) ), // 右下
+			Model::Vertex( rot.multiply( right_side_vertex_pos[ 0 ] ), 0, 0, NORM ), // 左上
+			Model::Vertex( rot.multiply( right_side_vertex_pos[ 1 ] ), 1, 0, NORM ), // 右上
+			Model::Vertex( rot.multiply( right_side_vertex_pos[ 2 ] ), 0, 1, NORM ), // 左下
+			Model::Vertex( rot.multiply( right_side_vertex_pos[ 3 ] ), 1, 1, NORM ), // 右下
 		};
 
 		vertex_idx = ( NORMAL_WALL + 1 ) * 6;
@@ -154,10 +155,10 @@ void Floor::generateFloor( ) {
 	{ // 床 天井
 
 		Model::Vertex vertex[ 4 ] = {
-			Model::Vertex( Vector( -FLOOR_WIDTH / 2, _y,  FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, 0, 0, Vector( 0, 1, 0 ) ), // 左上
-			Model::Vertex( Vector(  FLOOR_WIDTH / 2, _y,  FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, 1, 0, Vector( 0, 1, 0 ) ), // 右上
-			Model::Vertex( Vector( -FLOOR_WIDTH / 2, _y, -FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, 0, 1, Vector( 0, 1, 0 ) ), // 左下
-			Model::Vertex( Vector(  FLOOR_WIDTH / 2, _y, -FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, 1, 1, Vector( 0, 1, 0 ) ), // 右下
+			Model::Vertex( Vector( -FLOOR_WIDTH / 2, _y,  FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, 0, 0, NORM ), // 左上
+			Model::Vertex( Vector(  FLOOR_WIDTH / 2, _y,  FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, 1, 0, NORM ), // 右上
+			Model::Vertex( Vector( -FLOOR_WIDTH / 2, _y, -FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, 0, 1, NORM ), // 左下
+			Model::Vertex( Vector(  FLOOR_WIDTH / 2, _y, -FLOOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, 1, 1, NORM ), // 右下
 		};
 
 		// 床

@@ -19,6 +19,8 @@ int main( ) {
 	manager->setUseZBaffur( true );
 	manager->setWriteZBaffur( true );
 	manager->setUseLighting( true );
+	manager->setUseLightTypeDir( true );
+	manager->setLightAmbient( 0.3f, 0.3f, 0.3f );
 
 	// Framework
 	DrawerPtr drawer( new Drawer( "Resources/Image" ) );
