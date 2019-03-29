@@ -67,18 +67,6 @@ void Elevator::update( ) {
 	_ride_obj.clear( );
 }
 
-ElevatorAnnounceObservablePtr Elevator::getAnnounceObservable( ) const {
-	return _announce;
-}
-
-ElevatorButtonPtr Elevator::getElevatorButton( ) const {
-	return _elevator_button;
-}
-
-ElevatorBoxPtr Elevator::getElevatorBox( ) const {
-	return _elevator_box;
-}
-
 void Elevator::draw( ) const {
 	{ // バックカリングを切る
 		Manager* manager = Manager::getInstance( );
@@ -99,6 +87,18 @@ void Elevator::draw( ) const {
 
 		manager->setUseBackCulling( true );
 	}
+}
+
+ElevatorAnnounceObservablePtr Elevator::getAnnounceObservable( ) const {
+	return _announce;
+}
+
+ElevatorButtonPtr Elevator::getElevatorButton( ) const {
+	return _elevator_button;
+}
+
+ElevatorBoxPtr Elevator::getElevatorBox( ) const {
+	return _elevator_box;
 }
 
 void Elevator::requestMoveElevatorButtonToElevator( FLOOR order ) {
@@ -211,10 +211,10 @@ void Elevator::generateElevator( ) {
 	DrawerPtr drawer = Drawer::getTask( );
 	_elevator_room = ModelPtr( new Model );
 
+	const Vector NORM = Vector( 0, 1, 0 );
 	const int NORMAL_WALL = 3;
 	const int OTHER_WALL  = 2; // 天井と床
 	_elevator_room->alloc( ( NORMAL_WALL + OTHER_WALL ) * 2 );
-
 	_elevator_room->setTexture( drawer->getImage( ELEVATOR_TEXTURE ) );
 
 	// 部屋の壁
@@ -232,10 +232,10 @@ void Elevator::generateElevator( ) {
 			Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), -PI * 0.5 * i );
 
 			Model::Vertex vertex[ 4 ] = {
-				Model::Vertex( rot.multiply( vertex_pos[ 0 ] ), 0, 0, rot.multiply( Vector( 0, 0, 1 ) ) ), // 左上
-				Model::Vertex( rot.multiply( vertex_pos[ 1 ] ), 1, 0, rot.multiply( Vector( 0, 0, 1 ) ) ), // 右上
-				Model::Vertex( rot.multiply( vertex_pos[ 2 ] ), 0, 1, rot.multiply( Vector( 0, 0, 1 ) ) ), // 左下
-				Model::Vertex( rot.multiply( vertex_pos[ 3 ] ), 1, 1, rot.multiply( Vector( 0, 0, 1 ) ) ), // 右下
+				Model::Vertex( rot.multiply( vertex_pos[ 0 ] ), 0, 0, NORM ), // 左上
+				Model::Vertex( rot.multiply( vertex_pos[ 1 ] ), 1, 0, NORM ), // 右上
+				Model::Vertex( rot.multiply( vertex_pos[ 2 ] ), 0, 1, NORM ), // 左下
+				Model::Vertex( rot.multiply( vertex_pos[ 3 ] ), 1, 1, NORM ), // 右下
 			};
 
 			int vertex_idx = i * 6;
@@ -260,10 +260,10 @@ void Elevator::generateElevator( ) {
 			Vector(  ELEVATOR_WIDTH / 2, 0, -ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右下
 		};
 		Model::Vertex floor_vertex[ 4 ] = {
-			Model::Vertex( floor_vertex_pos[ 0 ], 0, 0, Vector( 0, 1, 0 ) ), // 左上
-			Model::Vertex( floor_vertex_pos[ 1 ], 1, 0, Vector( 0, 1, 0 ) ), // 右上
-			Model::Vertex( floor_vertex_pos[ 2 ], 0, 1, Vector( 0, 1, 0 ) ), // 左下
-			Model::Vertex( floor_vertex_pos[ 3 ], 1, 1, Vector( 0, 1, 0 ) ), // 右下
+			Model::Vertex( floor_vertex_pos[ 0 ], 0, 0, NORM ), // 左上
+			Model::Vertex( floor_vertex_pos[ 1 ], 1, 0, NORM ), // 右上
+			Model::Vertex( floor_vertex_pos[ 2 ], 0, 1, NORM ), // 左下
+			Model::Vertex( floor_vertex_pos[ 3 ], 1, 1, NORM ), // 右下
 		};
 		int vertex_idx = NORMAL_WALL * 6;
 		_elevator_room->setVertex( vertex_idx + 0, floor_vertex[ 0 ] );
@@ -278,10 +278,10 @@ void Elevator::generateElevator( ) {
 		// 天井
 		Vector height = Vector( 0, ELEVATOR_HEIGHT, 0 ) * MIRI_TO_METER_UNIT;
 		Model::Vertex ceiling_vertex[ 4 ] = {
-			Model::Vertex( floor_vertex_pos[ 0 ] + height, 0, 0, Vector( 0, 1, 0 ) ), // 左上
-			Model::Vertex( floor_vertex_pos[ 1 ] + height, 1, 0, Vector( 0, 1, 0 ) ), // 右上
-			Model::Vertex( floor_vertex_pos[ 2 ] + height, 0, 1, Vector( 0, 1, 0 ) ), // 左下
-			Model::Vertex( floor_vertex_pos[ 3 ] + height, 1, 1, Vector( 0, 1, 0 ) ), // 右下
+			Model::Vertex( floor_vertex_pos[ 0 ] + height, 0, 0, NORM ), // 左上
+			Model::Vertex( floor_vertex_pos[ 1 ] + height, 1, 0, NORM ), // 右上
+			Model::Vertex( floor_vertex_pos[ 2 ] + height, 0, 1, NORM ), // 左下
+			Model::Vertex( floor_vertex_pos[ 3 ] + height, 1, 1, NORM ), // 右下
 		};
 		vertex_idx = ( NORMAL_WALL + 1 ) * 6;
 		_elevator_room->setVertex( vertex_idx + 0, ceiling_vertex[ 1 ] );
@@ -315,10 +315,10 @@ void Elevator::generateElevator( ) {
 			Vector(           0,               0, ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右下
 		};
 		Model::Vertex right_door_vertex[ 4 ] = {
-			Model::Vertex( rot.multiply( right_door_vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
-			Model::Vertex( rot.multiply( right_door_vertex_pos[ 1 ] ), 1, 0, Vector( 0, 1, 0 ) ), // 右上
-			Model::Vertex( rot.multiply( right_door_vertex_pos[ 2 ] ), 0, 1, Vector( 0, 1, 0 ) ), // 左下
-			Model::Vertex( rot.multiply( right_door_vertex_pos[ 3 ] ), 1, 1, Vector( 0, 1, 0 ) ), // 右下
+			Model::Vertex( rot.multiply( right_door_vertex_pos[ 0 ] ), 0, 0, NORM ), // 左上
+			Model::Vertex( rot.multiply( right_door_vertex_pos[ 1 ] ), 1, 0, NORM ), // 右上
+			Model::Vertex( rot.multiply( right_door_vertex_pos[ 2 ] ), 0, 1, NORM ), // 左下
+			Model::Vertex( rot.multiply( right_door_vertex_pos[ 3 ] ), 1, 1, NORM ), // 右下
 		};
 		int vertex_idx = 0;
 		_elevator_door_right->setVertex( 0, right_door_vertex[ 0 ] );
@@ -338,10 +338,10 @@ void Elevator::generateElevator( ) {
 			Vector( DOOR_WIDTH,               0, ELEVATOR_WIDTH / 2 ) * MIRI_TO_METER_UNIT, // 右下
 		};
 		Model::Vertex left_door_vertex[ 4 ] = {
-			Model::Vertex( rot.multiply( left_door_vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
-			Model::Vertex( rot.multiply( left_door_vertex_pos[ 1 ] ), 1, 0, Vector( 0, 1, 0 ) ), // 右上
-			Model::Vertex( rot.multiply( left_door_vertex_pos[ 2 ] ), 0, 1, Vector( 0, 1, 0 ) ), // 左下
-			Model::Vertex( rot.multiply( left_door_vertex_pos[ 3 ] ), 1, 1, Vector( 0, 1, 0 ) ), // 右下
+			Model::Vertex( rot.multiply( left_door_vertex_pos[ 0 ] ), 0, 0, NORM ), // 左上
+			Model::Vertex( rot.multiply( left_door_vertex_pos[ 1 ] ), 1, 0, NORM ), // 右上
+			Model::Vertex( rot.multiply( left_door_vertex_pos[ 2 ] ), 0, 1, NORM ), // 左下
+			Model::Vertex( rot.multiply( left_door_vertex_pos[ 3 ] ), 1, 1, NORM ), // 右下
 		};
 		_elevator_door_left->setVertex( 0, left_door_vertex[ 0 ] );
 		_elevator_door_left->setVertex( 1, left_door_vertex[ 1 ] );
@@ -373,10 +373,10 @@ void Elevator::generateElevator( ) {
 				Matrix rot = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), -PI * 0.5 * i );
 
 				Model::Vertex vertex[ 4 ] = {
-					Model::Vertex( rot.multiply( vertex_pos[ 0 ] ), 0, 0, Vector( 0, 1, 0 ) ), // 左上
-					Model::Vertex( rot.multiply( vertex_pos[ 1 ] ), 1, 0, Vector( 0, 1, 0 ) ), // 右上
-					Model::Vertex( rot.multiply( vertex_pos[ 2 ] ), 0, 1, Vector( 0, 1, 0 ) ), // 左下
-					Model::Vertex( rot.multiply( vertex_pos[ 3 ] ), 1, 1, Vector( 0, 1, 0 ) ), // 右下
+					Model::Vertex( rot.multiply( vertex_pos[ 0 ] ), 0, 0, NORM ), // 左上
+					Model::Vertex( rot.multiply( vertex_pos[ 1 ] ), 1, 0, NORM ), // 右上
+					Model::Vertex( rot.multiply( vertex_pos[ 2 ] ), 0, 1, NORM ), // 左下
+					Model::Vertex( rot.multiply( vertex_pos[ 3 ] ), 1, 1, NORM ), // 右下
 				};
 
 				int vertex_idx = i * 6;
@@ -401,10 +401,10 @@ void Elevator::generateElevator( ) {
 
 			// 床
 			Model::Vertex floor_vertex[ 4 ] = {
-				Model::Vertex( vertex_pos[ 0 ] - over_size, 0, 0, Vector( 0, 1, 0 ) ), // 左上
-				Model::Vertex( vertex_pos[ 1 ] - over_size, 1, 0, Vector( 0, 1, 0 ) ), // 右上
-				Model::Vertex( vertex_pos[ 2 ] - over_size, 0, 1, Vector( 0, 1, 0 ) ), // 左下
-				Model::Vertex( vertex_pos[ 3 ] - over_size, 1, 1, Vector( 0, 1, 0 ) ), // 右下
+				Model::Vertex( vertex_pos[ 0 ] - over_size, 0, 0, NORM ), // 左上
+				Model::Vertex( vertex_pos[ 1 ] - over_size, 1, 0, NORM ), // 右上
+				Model::Vertex( vertex_pos[ 2 ] - over_size, 0, 1, NORM ), // 左下
+				Model::Vertex( vertex_pos[ 3 ] - over_size, 1, 1, NORM ), // 右下
 			};
 			int vertex_idx = ( NORMAL_WALL * 6 );
 			_elevator_wall->setVertex( vertex_idx + 0, floor_vertex[ 0 ] );
@@ -423,10 +423,10 @@ void Elevator::generateElevator( ) {
 			}
 
 			Model::Vertex ceiling_vertex[ 4 ] = {
-				Model::Vertex( vertex_pos[ 0 ], 0, 0, Vector( 0, 1, 0 ) ), // 左上
-				Model::Vertex( vertex_pos[ 1 ], 1, 0, Vector( 0, 1, 0 ) ), // 右上
-				Model::Vertex( vertex_pos[ 2 ], 0, 1, Vector( 0, 1, 0 ) ), // 左下
-				Model::Vertex( vertex_pos[ 3 ], 1, 1, Vector( 0, 1, 0 ) ), // 右下
+				Model::Vertex( vertex_pos[ 0 ], 0, 0, NORM ), // 左上
+				Model::Vertex( vertex_pos[ 1 ], 1, 0, NORM ), // 右上
+				Model::Vertex( vertex_pos[ 2 ], 0, 1, NORM ), // 左下
+				Model::Vertex( vertex_pos[ 3 ], 1, 1, NORM ), // 右下
 			};
 			vertex_idx = ( NORMAL_WALL + 1 ) * 6;
 			_elevator_wall->setVertex( vertex_idx + 0, ceiling_vertex[ 1 ] );

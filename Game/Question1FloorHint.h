@@ -22,6 +22,5 @@ public:
 
 private:
 	ModelPtr _hint;
-	Matrix _rot;
 };
 
