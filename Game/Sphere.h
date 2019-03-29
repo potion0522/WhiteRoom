@@ -15,7 +15,7 @@ PTR( Model );
 
 class Sphere : public SphereCollider {
 public:
-	Sphere( Vector pos, double radius, OBJECT_TAG tag = OBJECT_TAG_SPHERE );
+	Sphere( Vector pos, double radius, unsigned char color_idx = SPHERE_COLOR_WHITE, OBJECT_TAG tag = OBJECT_TAG_SPHERE );
 	virtual ~Sphere( );
 
 public:
@@ -24,7 +24,6 @@ public:
 	virtual void onColliderEnter( ColliderConstPtr collider );
 
 private:
-	void generate( );
 	void adjustInFloor( ); // ï«Ç…ñÑÇ‹Ç¡ÇΩéûÇÃã≠êßíEèo
 	void setSpeed( const Vector& speed );
 	void refrection( ); // ï«îΩéÀ

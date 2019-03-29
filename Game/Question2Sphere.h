@@ -10,7 +10,7 @@ PTR( Image );
 
 class Question2Sphere : public Sphere {
 public:
-	Question2Sphere( Vector pos, ImagePtr texture, std::function< void( OBJECT_TAG ) > callback, OBJECT_TAG tag );
+	Question2Sphere( Vector pos, ImagePtr texture, unsigned char charcolor_idx, std::function< void( OBJECT_TAG ) > callback, OBJECT_TAG tag );
 	virtual ~Question2Sphere( );
 
 public:

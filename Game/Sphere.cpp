@@ -12,11 +12,81 @@ const double IDLE_SPEED = 50.0; // 止まっていると判定する速度
 const double OBJECT_REFRECT_SPEED = 200.0; // オブジェクト同士の衝突時の速度
 const double BRAKE = 0.85;
 
-Sphere::Sphere( Vector pos, double radius, OBJECT_TAG tag ) :
+Sphere::Sphere( Vector pos, double radius, unsigned char color_idx, OBJECT_TAG tag ) :
 SphereCollider( _pos, radius, tag ),
 _pos( pos ),
 _radius( radius ) {
-	generate( );
+	// 球を縦横にDIV_NUM(半分)分割して回転を使用して頂点を求める
+
+	_model = ModelPtr( new Model );
+	_model->alloc( DIV_NUM * DIV_NUM * 4 );
+	_model->setTexture( Drawer::getTask( )->getImage( "Game/Texture/TextureWhite.png" ) );
+
+	Model::Color color;
+	switch ( color_idx ) {
+		case SPHERE_COLOR_RED:
+			color = Model::Color( 255, 0, 0, 255 );
+			break;
+		case SPHERE_COLOR_GREEN:
+			color = Model::Color( 0, 255, 0, 255 );
+			break;
+		case SPHERE_COLOR_BLUE:
+			color = Model::Color( 0, 0, 255, 255 );
+			break;
+		case SPHERE_COLOR_WHITE:
+			color = Model::Color( 255, 255, 255, 255 );
+			break;
+		default:
+			color = Model::Color( 255, 255, 255, 255 );
+			break;
+	}
+
+	// 縦
+	for ( int i = 0; i < DIV_NUM; i++ ) {
+		Vector vec1 = Matrix::makeTransformRotation( Vector( 1, 0, 0 ), PI2 / DIV_NUM * ( i + 0 ) ).multiply( Vector( 0, _radius, 0 ) );
+		Vector vec2 = Matrix::makeTransformRotation( Vector( 1, 0, 0 ), PI2 / DIV_NUM * ( i + 1 ) ).multiply( Vector( 0, _radius, 0 ) );
+		double y1 = vec1.y;
+		double y2 = vec2.y;
+		double r1 = fabs( vec1.z );
+		double r2 = fabs( vec2.z );
+
+		// 横
+		for ( int j = 0; j < DIV_NUM * 2; j++ ) {
+			Matrix rot1 = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI2 / ( DIV_NUM * 2 ) * ( ( j + 0 ) % ( DIV_NUM * 2 ) ) );
+			Matrix rot2 = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI2 / ( DIV_NUM * 2 ) * ( ( j + 1 ) % ( DIV_NUM * 2 ) ) );
+
+			Vector ver_pos[ 4 ] = {
+				rot1.multiply( Vector( 0, y1, r1 ) ), // 左上
+				rot2.multiply( Vector( 0, y1, r1 ) ), // 右上
+				rot1.multiply( Vector( 0, y2, r2 ) ), // 左下
+				rot2.multiply( Vector( 0, y2, r2 ) ), // 右下
+			};
+
+
+			float u1 = ( float )( j % DIV_NUM + 0 ) / DIV_NUM;
+			float u2 = ( float )( j % DIV_NUM + 1 ) / DIV_NUM;
+
+			float v1 = ( float )( ( y1 + _radius ) / ( _radius * 2 ) );
+			float v2 = ( float )( ( y2 + _radius ) / ( _radius * 2 ) );
+
+			Model::Vertex ver[ 4 ] = {
+				Model::Vertex( ver_pos[ 0 ], u1, v1, ver_pos[ 0 ], color ),
+				Model::Vertex( ver_pos[ 1 ], u2, v1, ver_pos[ 1 ], color ),
+				Model::Vertex( ver_pos[ 2 ], u1, v2, ver_pos[ 2 ], color ),
+				Model::Vertex( ver_pos[ 3 ], u2, v2, ver_pos[ 3 ], color ),
+			};
+
+			int idx = ( i * DIV_NUM * 2 + j ) * 6;
+			_model->setVertex( idx + 0, ver[ 0 ] );
+			_model->setVertex( idx + 1, ver[ 1 ] );
+			_model->setVertex( idx + 2, ver[ 2 ] );
+
+			_model->setVertex( idx + 3, ver[ 1 ] );
+			_model->setVertex( idx + 4, ver[ 3 ] );
+			_model->setVertex( idx + 5, ver[ 2 ] );
+
+		}
+	}
 }
 
 Sphere::~Sphere( ) {
@@ -64,62 +134,6 @@ void Sphere::onColliderEnter( ColliderConstPtr collider ) {
 			setSpeed( vec * _speed.getLength( ) * BRAKE );
 		} else {
 			setSpeed( dir * OBJECT_REFRECT_SPEED );
-		}
-	}
-}
-
-
-void Sphere::generate( ) {
-	// 球を縦横にDIV_NUM(半分)分割して回転を使用して頂点を求める
-
-	_model = ModelPtr( new Model );
-	_model->alloc( DIV_NUM * DIV_NUM * 4 );
-	_model->setTexture( Drawer::getTask( )->getImage( "Game/Texture/TextureWhite.png" ) );
-
-	// 縦
-	for ( int i = 0; i < DIV_NUM; i++ ) {
-		Vector vec1 = Matrix::makeTransformRotation( Vector( 1, 0, 0 ), PI2 / DIV_NUM * ( i + 0 ) ).multiply( Vector( 0, _radius, 0 ) );
-		Vector vec2 = Matrix::makeTransformRotation( Vector( 1, 0, 0 ), PI2 / DIV_NUM * ( i + 1 ) ).multiply( Vector( 0, _radius, 0 ) );
-		double y1 = vec1.y;
-		double y2 = vec2.y;
-		double r1 = fabs( vec1.z );
-		double r2 = fabs( vec2.z );
-
-		// 横
-		for ( int j = 0; j < DIV_NUM * 2; j++ ) {
-			Matrix rot1 = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI2 / ( DIV_NUM * 2 ) * ( ( j + 0 ) % ( DIV_NUM * 2 ) ) );
-			Matrix rot2 = Matrix::makeTransformRotation( Vector( 0, 1, 0 ), PI2 / ( DIV_NUM * 2 ) * ( ( j + 1 ) % ( DIV_NUM * 2 ) ) );
-
-			Vector ver_pos[ 4 ] = {
-				rot1.multiply( Vector( 0, y1, r1 ) ), // 左上
-				rot2.multiply( Vector( 0, y1, r1 ) ), // 右上
-				rot1.multiply( Vector( 0, y2, r2 ) ), // 左下
-				rot2.multiply( Vector( 0, y2, r2 ) ), // 右下
-			};
-
-
-			float u1 = ( float )( j % DIV_NUM + 0 ) / DIV_NUM;
-			float u2 = ( float )( j % DIV_NUM + 1 ) / DIV_NUM;
-
-			float v1 = ( float )( ( y1 + _radius ) / ( _radius * 2 ) );
-			float v2 = ( float )( ( y2 + _radius ) / ( _radius * 2 ) );
-
-			Model::Vertex ver[ 4 ] = {
-				Model::Vertex( ver_pos[ 0 ], u1, v1, ver_pos[ 0 ] ),
-				Model::Vertex( ver_pos[ 1 ], u2, v1, ver_pos[ 1 ] ),
-				Model::Vertex( ver_pos[ 2 ], u1, v2, ver_pos[ 2 ] ),
-				Model::Vertex( ver_pos[ 3 ], u2, v2, ver_pos[ 3 ] ),
-			};
-
-			int idx = ( i * DIV_NUM * 2 + j ) * 6;
-			_model->setVertex( idx + 0, ver[ 0 ] );
-			_model->setVertex( idx + 1, ver[ 1 ] );
-			_model->setVertex( idx + 2, ver[ 2 ] );
-
-			_model->setVertex( idx + 3, ver[ 1 ] );
-			_model->setVertex( idx + 4, ver[ 3 ] );
-			_model->setVertex( idx + 5, ver[ 2 ] );
-
 		}
 	}
 }

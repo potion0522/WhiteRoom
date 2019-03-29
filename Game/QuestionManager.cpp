@@ -25,12 +25,32 @@ bool QuestionManager::answerQuestion1( unsigned char num1, unsigned char num2, u
 	return true;
 }
 
-bool QuestionManager::answerQuestion2( unsigned char mark1, unsigned char mark2, unsigned char mark3 ) const {
-	if ( mark1 == _question2.floor2_num &&
-	     mark2 == _question2.floor3_num &&
-	     mark3 == _question2.floor4_num ) {
+bool QuestionManager::answerQuestion2( unsigned char red_mark, unsigned char green_mark, unsigned char blue_mark ) const {
+	const int MAX_COLOR = 3;
+	std::array< unsigned char, MAX_COLOR > answer;
+	for ( int i = 0; i < MAX_COLOR; i++ ) {
+		int mark;
+		int color_idx = i + 1;
+
+		if ( _question2.floor2.first == color_idx ) {
+			mark = _question2.floor2.second;
+		}
+		if ( _question2.floor3.first == color_idx ) {
+			mark = _question2.floor3.second;
+		}
+		if ( _question2.floor4.first == color_idx ) {
+			mark = _question2.floor4.second;
+		}
+
+		answer[ i ] = mark;
+	}
+
+	if ( answer[ 0 ] == red_mark &&
+		 answer[ 1 ] == green_mark &&
+		 answer[ 2 ] == blue_mark ) {
 		return true;
 	}
+
 	return false;
 }
 
@@ -95,15 +115,30 @@ const std::array< unsigned char, 3 >& QuestionManager::getHintQuestion1( ) const
 	return _question1.nums;
 }
 
-const unsigned char QuestionManager::getHintQuestion2( FLOOR floor ) const {
+const unsigned char QuestionManager::getHintQuestion2Mark( FLOOR floor ) const {
 	if ( floor == FLOOR_2 ) {
-		return _question2.floor2_num;
+		return _question2.floor2.second;
 	}
 	if ( floor == FLOOR_3 ) {
-		return _question2.floor3_num;
+		return _question2.floor3.second;
 	}
 	if ( floor == FLOOR_4 ) {
-		return _question2.floor4_num;
+		return _question2.floor4.second;
+	}
+
+	// エラー
+	return 0xff;
+}
+
+const unsigned char QuestionManager::getHintQuestion2Color( FLOOR floor ) const {
+	if ( floor == FLOOR_2 ) {
+		return _question2.floor2.first;
+	}
+	if ( floor == FLOOR_3 ) {
+		return _question2.floor3.first;
+	}
+	if ( floor == FLOOR_4 ) {
+		return _question2.floor4.first;
 	}
 
 	// エラー
@@ -169,28 +204,33 @@ void QuestionManager::generateQuestion1( ) {
 
 void QuestionManager::generateQuestion2( ) {
 	const int MAX_IDX = 3;
-	std::vector< unsigned char > nums;
+	const int MAX_COLOR = 3;
+	std::vector< std::pair< unsigned char, unsigned char > > nums;
 	RandomPtr random = Random::getTask( );
 
-	while ( nums.size( ) < 3 ) {
-		int num = random->getRand( ) % QUESTION_2_MAX_MARK_NUM;
+	while ( nums.size( ) < MAX_IDX ) {
+		// 色
+		int color = random->getRand( 0x01, MAX_COLOR );
+		// マーク
+		int num = random->getRand( 0, QUESTION_2_MAX_MARK_NUM - 1 );
 		
+		// 選択された色とマークがなければ追加
 		bool insert = true;
 		for ( int i = 0; i < nums.size( ); i++ ) {
-			if ( num == nums[ i ] ) {
+			if ( color == nums[ i ].first || num == nums[ i ].second ) {
 				insert = false;
 				break;
 			}
 		}
 
 		if ( insert ) {
-			nums.push_back( num );
+			nums.push_back( std::pair< unsigned char, unsigned char >( color, num ) );
 		}
 	}
 
-	_question2.floor2_num = nums[ 0 ];
-	_question2.floor3_num = nums[ 1 ];
-	_question2.floor4_num = nums[ 2 ];
+	_question2.floor2 = nums[ 0 ];
+	_question2.floor3 = nums[ 1 ];
+	_question2.floor4 = nums[ 2 ];
 }
 
 void QuestionManager::generateQuestion3( ) {
@@ -199,8 +239,8 @@ void QuestionManager::generateQuestion3( ) {
 	std::vector< unsigned char > nums;
 	RandomPtr random = Random::getTask( );
 
-	while ( nums.size( ) < 3 ) {
-		int num = random->getRand( ) % MAX_ANSWER_NUM;
+	while ( nums.size( ) < MAX_IDX ) {
+		int num = random->getRand( 0, MAX_ANSWER_NUM );
 		
 		bool insert = true;
 		for ( int i = 0; i < nums.size( ); i++ ) {

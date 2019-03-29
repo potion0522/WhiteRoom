@@ -1,8 +1,8 @@
 #include "Question2Sphere.h"
 #include "Model.h"
 
-Question2Sphere::Question2Sphere( Vector pos, ImagePtr texture, std::function< void( OBJECT_TAG ) > callback, OBJECT_TAG tag  ) :
-Sphere( pos, SPHERE_OBJECT_RADIUS, tag ),
+Question2Sphere::Question2Sphere( Vector pos, ImagePtr texture, unsigned char color_idx, std::function< void( OBJECT_TAG ) > callback, OBJECT_TAG tag  ) :
+Sphere( pos, SPHERE_OBJECT_RADIUS, color_idx, tag ),
 _callback( callback ) {
 	_model->setTexture( texture );
 }

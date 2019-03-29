@@ -33,6 +33,7 @@ private:
 
 private:
 	FLOOR _floor;
+	unsigned char _sphere_color_idx;
 	std::map< OBJECT_TAG, Question2SpherePtr > _spheres;
 	std::vector< OBJECT_TAG > _docking_sphere;
 	CollideManagerPtr _collide_manager;

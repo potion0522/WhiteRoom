@@ -4,6 +4,7 @@
 #include "Mouse.h"
 #include "Drawer.h"
 #include "Image.h"
+#include "Random.h"
 
 // 1.club 2.heart 3.diamont 4.spade
 const char* IMAGE_FILE = "Game/Console/suits.png";
@@ -18,8 +19,27 @@ ConsoleQuestion( callback, question_manager ) {
 	_mark_image = drawer->getImage( IMAGE_FILE );
 	_mark_image->setCentral( true );
 
-	for ( int i = 0; i < ANSWER_NUM; i++ ) {
-		_mark_state[ i ] = 0;
+	RandomPtr random = Random::getTask( );
+	const int MAX_COLOR = 3;
+
+	int init = 0;
+	while ( init < ANSWER_NUM ) {
+		int color_idx = random->getRand( 1, MAX_COLOR );
+
+		bool insert = true;
+		// 色の並び順もランダム
+		for ( int i = 0; i < ANSWER_NUM; i++ ) {
+			if ( _mark_state[ i ].first == color_idx ) {
+				insert = false;
+				break;
+			}
+		}
+
+		if ( insert ) {
+			_mark_state[ init ].first = color_idx;
+			_mark_state[ init ].second = 0x00;
+			init++;
+		}
 	}
 }
 
@@ -28,14 +48,29 @@ ConsoleQuestion2::~ConsoleQuestion2( ) {
 
 void ConsoleQuestion2::draw( int x, int y ) const {
 	// 円
-	const int CIRCLE_COLOR = 0xaaaaaa;
 	DrawerPtr drawer = Drawer::getTask( );
 	for ( int i = 0; i < ANSWER_NUM; i++ ) {
 		// 座標
 		float draw_x = ( SPACE + SUIT_SIZE / 2.0f ) + i * SUIT_SIZE / 2.0f + i * SPACE;
 		float draw_y = SCREEN_HEIGHT / 2;
 
-		drawer->drawCircle( draw_x + x, draw_y + y, CIRCLE_RADIUS, CIRCLE_COLOR, true );
+		int color;
+		switch ( _mark_state[ i ].first ) {
+			case SPHERE_COLOR_RED:
+				color = 0xff0000;
+				break;
+			case SPHERE_COLOR_GREEN:
+				color = 0x00ff00;
+				break;
+			case SPHERE_COLOR_BLUE:
+				color = 0x0000ff;
+				break;
+			default:
+				color = 0xffffff;
+				break;
+		}
+
+		drawer->drawCircle( draw_x + x, draw_y + y, CIRCLE_RADIUS, color, true );
 	}
 
 	// マーク
@@ -45,7 +80,7 @@ void ConsoleQuestion2::draw( int x, int y ) const {
 		int draw_y = SCREEN_HEIGHT / 2;
 
 		// rect
-		int rect_x = _mark_state[ i ] * SUIT_SIZE;
+		int rect_x = _mark_state[ i ].second * SUIT_SIZE;
 		int rect_y = 0;
 		int width  = SUIT_SIZE;
 		int height = SUIT_SIZE;
@@ -88,7 +123,7 @@ void ConsoleQuestion2::actOnPushUp( ) {
 
 		Vector circle_pos = Vector( circle_x, circle_y );
 		if ( ( circle_pos - pos ).getLength2( ) < CIRCLE_RADIUS * CIRCLE_RADIUS ) {
-			_mark_state[ i ] = ( _mark_state[ i ] + 1 ) % QuestionManager::QUESTION_2_MAX_MARK_NUM;
+			_mark_state[ i ].second = ( _mark_state[ i ].second + 1 ) % QuestionManager::QUESTION_2_MAX_MARK_NUM;
 			break;
 		}
 	}
@@ -101,9 +136,29 @@ void ConsoleQuestion2::actOnPushUp( ) {
 }
 
 void ConsoleQuestion2::actOnAnswer( ) {
-	bool answer = _question_manager->answerQuestion2( _mark_state[ 0 ], _mark_state[ 1 ], _mark_state[ 2 ] );
+	const int MAX_COLOR = 3;
+	std::array< unsigned char, MAX_COLOR > answer;
 
-	if ( answer ) {
+	// rgbの順にする
+	for ( int i = 0; i < MAX_COLOR; i++ ) {
+		int mark;
+		int color_idx = i + 1;
+
+		if ( _mark_state[ 0 ].first == color_idx ) {
+			mark = _mark_state[ 0 ].second;
+		}
+		if ( _mark_state[ 1 ].first == color_idx ) {
+			mark = _mark_state[ 1 ].second;
+		}
+		if ( _mark_state[ 2 ].first == color_idx ) {
+			mark = _mark_state[ 2 ].second;
+		}
+
+		answer[ i ] = mark;
+	}
+	bool result = _question_manager->answerQuestion2( answer[ 0 ], answer[ 1 ], answer[ 2 ] );
+
+	if ( result ) {
 		// クリア後一定時間待機
 		if ( getNowCount( ) - _start_time > ANSWER_WAIT_TIME ) {
 			playClearSE( );

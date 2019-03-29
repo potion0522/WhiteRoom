@@ -24,9 +24,9 @@ private:
 		std::array< unsigned char, 3 > nums;
 	};
 	struct Question2 {
-		unsigned char floor2_num;
-		unsigned char floor3_num;
-		unsigned char floor4_num;
+		std::pair< unsigned char, unsigned char > floor2;
+		std::pair< unsigned char, unsigned char > floor3;
+		std::pair< unsigned char, unsigned char > floor4;
 	};
 	struct Question3 {
 		unsigned char floor1_num;
@@ -49,14 +49,15 @@ public:
 public:
 	// “š‚¦‡‚í‚¹
 	bool answerQuestion1( unsigned char num1, unsigned char num2, unsigned char num3 ) const;
-	bool answerQuestion2( unsigned char mark1, unsigned char mark2, unsigned char mark3 ) const;
+	bool answerQuestion2( unsigned char red_mark, unsigned char green_mark, unsigned char blue_mark ) const;
 	bool answerQuestion3( unsigned char num1, unsigned char num2, unsigned char num3 ) const;
 	bool answerQuestion4( unsigned char month, unsigned char day ) const;
 	bool answerQuestion5( unsigned char num1, unsigned char num2, unsigned char num3 ) const;
 
 	// ƒqƒ“ƒg
 	const std::array< unsigned char, 3 >& getHintQuestion1( ) const;
-	const unsigned char getHintQuestion2( FLOOR floor ) const;
+	const unsigned char getHintQuestion2Mark( FLOOR floor ) const;
+	const unsigned char getHintQuestion2Color( FLOOR floor ) const;
 	const unsigned char getHintQuestion3( FLOOR floor ) const;
 	const char getHintQuestion3Arrow( ) const;
 	const unsigned char getHintQuestion4Month( ) const;

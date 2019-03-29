@@ -45,6 +45,10 @@ const double ELEVATOR_INIT_Y = ELEVATOR_INIT_FLOOR * -FLOOR_TO_FLOOR_SPACE_AND_F
 const double ELEVATOR_INIT_Z = 0;
 
 const double SPHERE_OBJECT_RADIUS = 650.0;
+const unsigned char SPHERE_COLOR_RED   = 0x01;
+const unsigned char SPHERE_COLOR_GREEN = 0x02;
+const unsigned char SPHERE_COLOR_BLUE  = 0x03;
+const unsigned char SPHERE_COLOR_WHITE = 0x04;
 
 const int    METER_TO_MIRI_UNIT = 1000;
 const double MIRI_TO_METER_UNIT = 0.001;

@@ -30,10 +30,12 @@ _floor( floor ) {
 		pos.y = FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * _floor * -1 + SPHERE_OBJECT_RADIUS;
 		rand_pos.push_back( pos );
 	}
+
+	_sphere_color_idx = question_manager->getHintQuestion2Color( _floor );
 	generateSphere( OBJECT_TAG_Q2SPHERE_1, rand_pos[ 0 ] );
 	generateSphere( OBJECT_TAG_Q2SPHERE_2, rand_pos[ 1 ] );
 	generateSphere( OBJECT_TAG_Q2SPHERE_3, rand_pos[ 2 ] );
-
+														 
 
 	std::map< OBJECT_TAG, Question2SpherePtr >::iterator ite = _spheres.begin( );
 	for ( ite; ite != _spheres.end( ); ite++ ) {
@@ -101,10 +103,10 @@ void Question2FloorHint::dockingSphere( OBJECT_TAG tag1, OBJECT_TAG tag2 ) {
 }
 
 void Question2FloorHint::generateSphere( OBJECT_TAG tag, const Vector& pos ) {
-	int texture_idx_row = _question_manager->getHintQuestion2( _floor );
+	int texture_idx_row = _question_manager->getHintQuestion2Mark( _floor );
 	int texture_idx_col = tag - OBJECT_TAG_Q2SPHERE_1;
 	DrawerPtr drawer = Drawer::getTask( );
 	ImagePtr image = drawer->getImage( TEXTURE[ texture_idx_row ][ texture_idx_col ] );
 
-	_spheres[ tag ] = Question2SpherePtr( new Question2Sphere( pos, image, [ & ]( OBJECT_TAG tag ) { addDockingSphere( tag ); }, tag ) );
+	_spheres[ tag ] = Question2SpherePtr( new Question2Sphere( pos, image, _sphere_color_idx, [ & ]( OBJECT_TAG tag ) { addDockingSphere( tag ); }, tag ) );
 }

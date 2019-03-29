@@ -31,7 +31,7 @@ private:
 	static const int ANSWER_NUM = 3;
 
 private:
-	std::array< unsigned char, ANSWER_NUM > _mark_state;
+	std::array< std::pair< unsigned char, unsigned char >, ANSWER_NUM > _mark_state;
 	ImagePtr _mark_image;
 };
 
