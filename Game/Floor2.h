@@ -15,6 +15,7 @@ PTR( Question1FloorHint );
 PTR( Question2FloorHint );
 PTR( Question3FloorHint );
 PTR( Question5FloorHint );
+PTR( ConsoleSlideHint );
 PTR( Sphere );
 
 class Floor2 : public Floor {
@@ -34,6 +35,7 @@ private:
 	Question2FloorHintPtr _question2_hint;
 	Question3FloorHintPtr _question3_hint;
 	Question5FloorHintPtr _question5_hint;
+	ConsoleSlideHintPtr _console_slide_hint;
 	std::vector< SpherePtr > _dummy_spheres;
 };
 

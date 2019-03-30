@@ -6,6 +6,7 @@
 #include "Question2FloorHint.h"
 #include "Question3FloorHint.h"
 #include "Question5FloorHint.h"
+#include "ConsoleSlideHint.h"
 #include "Sphere.h"
 
 #include "Random.h"
@@ -42,7 +43,16 @@ Floor( collide_manager, observable, FLOOR_2 ) {
 
 	// Question5
 	_question5_hint = Question5FloorHintPtr( new Question5FloorHint( question_manager, MY_FLOOR ) );
+	
 
+	// コンソールのヒント
+	Vector console_hint_pos;
+	console_hint_pos.x = 0;
+	console_hint_pos.y = FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * MY_FLOOR * -1 + FLOOR_HEIGHT / 2;
+	console_hint_pos.z = -FLOOR_WIDTH / 2 + 20; // 20は壁とのスペース(適当)
+
+	Matrix console_hint_rot = Matrix::makeTransformRotation( Vector( 0, 1 ), PI );
+	_console_slide_hint = ConsoleSlideHintPtr( new ConsoleSlideHint( console_hint_pos, console_hint_rot ) );
 }
 
 Floor2::~Floor2( ) {
@@ -58,6 +68,7 @@ void Floor2::update( ) {
 void Floor2::draw( ) const {
 
 	drawFloor( );
+	_console_slide_hint->draw( );
 
 	// question1
 	_question1_hint->draw( );

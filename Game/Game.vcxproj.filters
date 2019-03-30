@@ -123,6 +123,7 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
+    <ClCompile Include="ConsoleSlideHint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -321,5 +322,6 @@
     <ClInclude Include="SoundManager.h">
       <Filter>Sound</Filter>
     </ClInclude>
+    <ClInclude Include="ConsoleSlideHint.h" />
   </ItemGroup>
 </Project>

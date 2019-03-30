@@ -52,7 +52,7 @@ void Floor3::update( ) {
 }
 
 void Floor3::draw( ) const {
-
+	
 	drawFloor( );
 
 	// question2
