@@ -5,6 +5,7 @@ Question2Sphere::Question2Sphere( Vector pos, ImagePtr texture, unsigned char co
 Sphere( pos, SPHERE_OBJECT_RADIUS, color_idx, tag ),
 _callback( callback ) {
 	_model->setTexture( texture );
+	_model->setTransparent( false );
 }
 
 Question2Sphere::~Question2Sphere( ) {

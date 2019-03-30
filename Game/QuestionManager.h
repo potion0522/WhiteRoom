@@ -15,8 +15,8 @@ PTR( QuestionManager );
 
 class QuestionManager {
 public:
-	// 1.club 2.heart 3.diamont 4.spade
-	static const int QUESTION_2_MAX_MARK_NUM = 4;
+	// 0.club 1.heart 2.diamond 3.spade 4.ÅÙ*3  5.ÅÙ*2  6.arrow*3  7.arrrow
+	static const int QUESTION_2_MAX_MARK_NUM = 8;
 	static const int QUESTION_5_MAX_NUM = 9; // 1 - 9
 
 private:

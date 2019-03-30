@@ -6,12 +6,7 @@
 #include "Random.h"
 #include "Drawer.h"
 
-const char* TEXTURE[ QuestionManager::QUESTION_2_MAX_MARK_NUM ][ 5 ] = {
-	{ "Game/Texture/ClubTexture1.png"   , "Game/Texture/ClubTexture2.png"   , "Game/Texture/ClubTexture3.png"   , "Game/Texture/ClubTexture4.png"   , "Game/Texture/ClubTexture5.png"    },
-	{ "Game/Texture/HeartTexture1.png"  , "Game/Texture/HeartTexture2.png"  , "Game/Texture/HeartTexture3.png"  , "Game/Texture/HeartTexture4.png"  , "Game/Texture/HeartTexture5.png"   },
-	{ "Game/Texture/DiamondTexture1.png", "Game/Texture/DiamondTexture2.png", "Game/Texture/DiamondTexture3.png", "Game/Texture/DiamondTexture4.png", "Game/Texture/DiamondTexture5.png" },
-	{ "Game/Texture/SpadeTexture1.png"  , "Game/Texture/SpadeTexture2.png"  , "Game/Texture/SpadeTexture3.png"  , "Game/Texture/SpadeTexture4.png"  , "Game/Texture/SpadeTexture5.png"   },
-};
+const char* Q2_TEXTURE_PATH = "Game/Texture/Q2Mark";
 
 Question2FloorHint::Question2FloorHint( QuestionManagerConstPtr question_manager, CollideManagerPtr collide_manager, FLOOR floor ) :
 _question_manager( question_manager ),
@@ -103,10 +98,18 @@ void Question2FloorHint::dockingSphere( OBJECT_TAG tag1, OBJECT_TAG tag2 ) {
 }
 
 void Question2FloorHint::generateSphere( OBJECT_TAG tag, const Vector& pos ) {
-	int texture_idx_row = _question_manager->getHintQuestion2Mark( _floor );
-	int texture_idx_col = tag - OBJECT_TAG_Q2SPHERE_1;
+	int mark_idx = _question_manager->getHintQuestion2Mark( _floor );
+	int div_idx  = tag - OBJECT_TAG_Q2SPHERE_1;
+
+	std::string path = Q2_TEXTURE_PATH;
+	path += std::to_string( mark_idx );
+	path += "_";
+	path += std::to_string( div_idx );
+	path += ".png";
+
+
 	DrawerPtr drawer = Drawer::getTask( );
-	ImagePtr image = drawer->getImage( TEXTURE[ texture_idx_row ][ texture_idx_col ] );
+	ImagePtr image = drawer->getImage( path.c_str( ) );
 
 	_spheres[ tag ] = Question2SpherePtr( new Question2Sphere( pos, image, _sphere_color_idx, [ & ]( OBJECT_TAG tag ) { addDockingSphere( tag ); }, tag ) );
 }

@@ -46,7 +46,6 @@ _func_button_push( func_button_push ) {
 			_content = ConsoleQuestion5Ptr( new ConsoleQuestion5( [ & ] { callbackAnswer( ); }, question_manager ) );
 			break;
 	}
-
 }
 
 Page::~Page( ) {
