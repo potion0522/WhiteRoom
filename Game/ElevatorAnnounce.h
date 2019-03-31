@@ -3,6 +3,13 @@
 #include "ElevatorAnnounceObserver.h"
 #include <vector>
 
+/*************************************************
+
+エレベーターの到着、移動のアナウンスを通知するクラス
+UnityでいうUniRxの構造を参考にしている
+
+*************************************************/
+
 class ElevatorAnnounce : public ElevatorAnnounceObservable, public ElevatorAnnounceObserver {
 public:
 	ElevatorAnnounce( );

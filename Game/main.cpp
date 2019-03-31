@@ -9,6 +9,14 @@
 #include "Controller.h"
 #include "define.h"
 
+/************************************************
+
+初期設定、クラスの登録を行う
+ゲームのシーン管理はControllerで行い、
+メインループはFramework->Managerで行われる
+
+************************************************/
+
 int main( ) {
 	// Setting
 	Manager* manager = Manager::getInstance( );

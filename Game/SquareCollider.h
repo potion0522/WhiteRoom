@@ -3,6 +3,11 @@
 
 #include "smart_ptr.h"
 #include "Mathematics.h"
+/*******************************************************
+
+”Â—p‚Ì“–‚½‚è”»’èƒNƒ‰ƒX
+
+********************************************************/
 
 class SquareCollider : public Collider {
 public:

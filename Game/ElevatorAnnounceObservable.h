@@ -2,6 +2,12 @@
 #include <functional>
 #include "define.h"
 
+/**************************************************
+
+エレベーターの通知を受け取るためのインターフェース
+
+***************************************************/
+
 class ElevatorAnnounceObservable {
 public:
 	virtual void subscribeAnnounceArrive( std::function< void( FLOOR ) > func ) = 0;
