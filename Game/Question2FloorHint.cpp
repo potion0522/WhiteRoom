@@ -21,7 +21,7 @@ _floor( floor ) {
 	for ( int i = 0; i < SPHERE_NUM; i++ ) {
 		Vector pos = Vector( );
 		pos.x = -FLOOR_WIDTH / 2 + SPHERE_OBJECT_RADIUS + random->getRand( 0, GENERATE_RANGE );
-		pos.z = i * GENERATE_RANGE / SPHERE_NUM;
+		pos.z = -FLOOR_WIDTH / 2 + SPHERE_OBJECT_RADIUS + random->getRand( 0, GENERATE_RANGE );
 		pos.y = FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * _floor * -1 + SPHERE_OBJECT_RADIUS;
 		rand_pos.push_back( pos );
 	}
