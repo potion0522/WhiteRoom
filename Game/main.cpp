@@ -22,7 +22,7 @@ int main( ) {
 	Manager* manager = Manager::getInstance( );
 	manager->setScreenSize( SCREEN_WIDTH, SCREEN_HEIGHT );
 	#ifdef DEBUG
-		manager->setWindowSize( 1280, 720 );
+		manager->setWindowSize( 1920, 1080 );
 	#endif
 	manager->setUseZBaffur( true );
 	manager->setWriteZBaffur( true );

@@ -7,7 +7,7 @@
 #include "Question3FloorHint.h"
 #include "Question5FloorHint.h"
 #include "ConsoleSlideHint.h"
-#include "Sphere.h"
+#include "DummySphere.h"
 
 #include "Random.h"
 
@@ -23,18 +23,11 @@ Floor( collide_manager, observable, FLOOR_2 ) {
 		const int COLOR_IDX = question_manager->getHintQuestion2Color( MY_FLOOR );
 		const int MAX_SPHERE = 4;
 		const int MIN_SPHERE = 1;
-		// ¶¬”ÍˆÍ
-		const int GENERATE_RANGE = ( int )( FLOOR_WIDTH - SPHERE_OBJECT_RADIUS * 2 );
 
 		RandomPtr random = Random::getTask( );
 		int num = random->getRand( MIN_SPHERE, MAX_SPHERE );
 		for ( int i = 0; i < num; i++ ) {
-			Vector pos = Vector( );
-			pos.x = -FLOOR_WIDTH / 2 + SPHERE_OBJECT_RADIUS + random->getRand( 0, GENERATE_RANGE );
-			pos.z = -FLOOR_WIDTH / 2 + SPHERE_OBJECT_RADIUS + random->getRand( 0, GENERATE_RANGE );
-			pos.y = FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * MY_FLOOR * -1 + SPHERE_OBJECT_RADIUS;
-			_dummy_spheres.push_back( SpherePtr( new Sphere( pos, SPHERE_OBJECT_RADIUS, COLOR_IDX ) ) );
-			collide_manager->addDynamicCollider( _dummy_spheres[ i ] );
+			_dummy_spheres.push_back( DummySpherePtr( new DummySphere( collide_manager, MY_FLOOR, COLOR_IDX ) ) );
 		}
 	}
 
@@ -60,7 +53,7 @@ Floor2::~Floor2( ) {
 
 void Floor2::update( ) {
 	_question2_hint->update( );
-	for ( SpherePtr sphere : _dummy_spheres ) {
+	for ( DummySpherePtr sphere : _dummy_spheres ) {
 		sphere->update( );
 	}
 }
@@ -75,7 +68,7 @@ void Floor2::draw( ) const {
 
 	// question2
 	_question2_hint->draw( );
-	for ( SpherePtr sphere : _dummy_spheres ) {
+	for ( DummySpherePtr sphere : _dummy_spheres ) {
 		sphere->draw( );
 	}
 
