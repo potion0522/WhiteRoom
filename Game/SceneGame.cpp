@@ -124,9 +124,6 @@ void SceneGame::draw( ) const {
 			_fade_img->draw( );
 		} break;
 	}
-
-	drawer->waitForSync( ); // 30fps‚É‚·‚é
-	drawer->flip( );
 }
 
 void SceneGame::updateWait( ) {

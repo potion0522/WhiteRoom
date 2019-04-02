@@ -129,6 +129,7 @@
     <ClCompile Include="DummySphere.cpp">
       <Filter>Game\Object\Sphere</Filter>
     </ClCompile>
+    <ClCompile Include="Debug.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -333,5 +334,6 @@
     <ClInclude Include="DummySphere.h">
       <Filter>Game\Object\Sphere</Filter>
     </ClInclude>
+    <ClInclude Include="Debug.h" />
   </ItemGroup>
 </Project>

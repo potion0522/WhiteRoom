@@ -37,6 +37,8 @@ public:
 
 private:
 	void loadScene( );
+	void process( );
+	void draw( ) const;
 
 private:
 	SCENE _next_scene;

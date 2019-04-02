@@ -1,4 +1,5 @@
 #include "QuestionManager.h"
+#include "Debug.h"
 
 #include "Random.h"
 
@@ -200,6 +201,16 @@ void QuestionManager::generateQuestion1( ) {
 	for ( int i = 0; i < 3; i++ ) {
 		_question1.nums[ i ] = select_nums[ i ];
 	}
+
+	// debug
+	Debug* debug = Debug::getInstance( );
+	std::string message = "Question1 : ";
+	message += std::to_string( _question1.nums[ 0 ] );
+	message += ",";
+	message += std::to_string( _question1.nums[ 1 ] );
+	message += ",";
+	message += std::to_string( _question1.nums[ 2 ] );
+	debug->addSaveMessage( message.c_str( ) );
 }
 
 void QuestionManager::generateQuestion2( ) {
@@ -231,6 +242,16 @@ void QuestionManager::generateQuestion2( ) {
 	_question2.floor2 = nums[ 0 ];
 	_question2.floor3 = nums[ 1 ];
 	_question2.floor4 = nums[ 2 ];
+
+	// debug
+	Debug* debug = Debug::getInstance( );
+	std::string message = "Question2 : ";
+	message += std::to_string( _question2.floor2.second );
+	message += ",";
+	message += std::to_string( _question2.floor3.second );
+	message += ",";
+	message += std::to_string( _question2.floor4.second );
+	debug->addSaveMessage( message.c_str( ) );
 }
 
 void QuestionManager::generateQuestion3( ) {
@@ -259,12 +280,30 @@ void QuestionManager::generateQuestion3( ) {
 	_question3.floor2_num = nums[ 1 ];
 	_question3.floor4_num = nums[ 2 ];
 	_question3.arrow_dir = ( random->getRand( 0, 1 ) == 0 ? -1 : 1 );
+	
+	// debug
+	Debug* debug = Debug::getInstance( );
+	std::string message = "Question3 : ";
+	message += std::to_string( _question3.floor1_num );
+	message += ",";
+	message += std::to_string( _question3.floor2_num );
+	message += ",";
+	message += std::to_string( _question3.floor4_num );
+	debug->addSaveMessage( message.c_str( ) );
 }
 
 void QuestionManager::generateQuestion4( ) {
 	RandomPtr random = Random::getTask( );
 	_question4.month = ( unsigned char )random->getRand( 1, 12 );
 	_question4.day   = ( unsigned char )random->getRand( 1, DAY_IN_MONTH[ _question4.month - 1 ] );
+
+	// debug
+	Debug* debug = Debug::getInstance( );
+	std::string message = "Question4 : ";
+	message += std::to_string( _question4.month );
+	message += ",";
+	message += std::to_string( _question4.day );
+	debug->addSaveMessage( message.c_str( ) );
 }
 
 void QuestionManager::generateQuestion5( ) {
@@ -290,4 +329,20 @@ void QuestionManager::generateQuestion5( ) {
 		_question5.nums[ QUESTION_5_MAX_NUM - ( int )nums.size( ) ] = ite->second;
 		nums.erase( ite );
 	}
+	
+	// debug
+	std::array< unsigned char, 3 > answer = {
+		_question5.nums[ _question1.nums[ 0 ] ],	
+		_question5.nums[ _question1.nums[ 1 ] ],	
+		_question5.nums[ _question1.nums[ 2 ] ],	
+	};
+
+	Debug* debug = Debug::getInstance( );
+	std::string message = "Question5 : ";
+	message += std::to_string( answer[ 0 ] );
+	message += ",";
+	message += std::to_string( answer[ 1 ] );
+	message += ",";
+	message += std::to_string( answer[ 2 ] );
+	debug->addSaveMessage( message.c_str( ) );
 }

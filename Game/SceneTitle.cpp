@@ -100,10 +100,6 @@ void SceneTitle::draw( ) const {
 	if ( _phase == PHASE_WHITEOUT ) {
 		_white_out->draw( );
 	}
-
-	DrawerPtr drawer = Drawer::getTask( );
-	drawer->waitForSync( );
-	drawer->flip( );
 }
 
 void SceneTitle::actOnTitle( ) {
