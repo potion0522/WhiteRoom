@@ -126,9 +126,9 @@ void Sphere::onColliderEnter( ColliderConstPtr collider ) {
 			Vector other_to_this_vec = ( _pos - collider->getPos( ) );
 			other_to_this_vec.y = 0; // y は考慮しない
 
-			Vector ref = other_to_this_vec + _speed;
+			Vector ref = other_to_this_vec.normalize( ) * OBJECT_REFRECT_SPEED + _speed;
 
-			setSpeed( ref.normalize( ) * OBJECT_REFRECT_SPEED );
+			setSpeed( ref );
 		} break;
 
 		case Collider::TYPE_SQUARE: // 壁は範囲が決まっているため個々に行わない
@@ -153,7 +153,6 @@ void Sphere::setSpeed( const Vector& speed ) {
 void Sphere::refrection( ) {
 	const int HALF_WIDTH = FLOOR_WIDTH / 2;
 	const double ADJUST_RANGE = HALF_WIDTH - _radius;
-	Vector refrection_vector = Vector( );
 	Vector refrection_norm = Vector( );
 
 	// z+
@@ -174,7 +173,7 @@ void Sphere::refrection( ) {
 	}
 	
 	if ( refrection_norm != Vector( ) ) {
-		refrection_vector = refrection_norm;
+		Vector refrection_vector = refrection_norm;
 		Vector speed = refrection_norm * SPHERE_INSIDE_PUSH_POWER;
 
 		// 動いているなら反射ベクトルを適用
