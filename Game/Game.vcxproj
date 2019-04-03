@@ -186,6 +186,7 @@
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="PageContent.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Q2DockingHint.cpp" />
     <ClCompile Include="Question1FloorHint.cpp" />
     <ClCompile Include="Question2FloorHint.cpp" />
     <ClCompile Include="Question2Sphere.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="Page.h" />
     <ClInclude Include="PageContent.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Q2DockingHint.h" />
     <ClInclude Include="Question1FloorHint.h" />
     <ClInclude Include="Question2FloorHint.h" />
     <ClInclude Include="Question2Sphere.h" />

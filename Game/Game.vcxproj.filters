@@ -130,6 +130,9 @@
       <Filter>Game\Object\Sphere</Filter>
     </ClCompile>
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="Q2DockingHint.cpp">
+      <Filter>Game\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -335,5 +338,8 @@
       <Filter>Game\Object\Sphere</Filter>
     </ClInclude>
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="Q2DockingHint.h">
+      <Filter>Game\Object</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -158,7 +158,7 @@ void SoundManager::set3DSoundPosition( SE se, const Vector& pos ) {
 	// ÅŒã‚Ìhandle‚Ì‚Ý“K—p
 	Speaker3DPtr speaker = _speakers3D[ se ].back( );
 	if ( speaker ) {
-		speaker->setPosition( pos );
+		speaker->setPosition( pos * MIRI_TO_METER_UNIT );
 	}
 }
 

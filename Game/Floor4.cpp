@@ -6,6 +6,7 @@
 #include "Question3FloorHint.h"
 #include "Question5FloorHint.h"
 #include "DummySphere.h"
+#include "Q2DockingHint.h"
 
 #include "Random.h"
 
@@ -32,6 +33,15 @@ Floor( collide_manager, observable, FLOOR_4 ) {
 
 	// Question5
 	_question5_hint = Question5FloorHintPtr( new Question5FloorHint( question_manager, MY_FLOOR ) );
+
+	// 球体のドッキングヒント
+	Vector docking_hint_pos;
+	docking_hint_pos.x = 0;
+	docking_hint_pos.y = FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT * MY_FLOOR * -1 + FLOOR_HEIGHT / 2;
+	docking_hint_pos.z = -FLOOR_WIDTH / 2 + 20; // 20は壁とのスペース(適当)
+
+	Matrix docking_hint_rot = Matrix::makeTransformRotation( Vector( 0, 1 ), PI );
+	_q2_docking_hint = Q2DockingHintPtr( new Q2DockingHint( docking_hint_pos, docking_hint_rot ) );
 }
 
 Floor4::~Floor4( ) {
@@ -59,4 +69,6 @@ void Floor4::draw( ) const {
 
 	// question5
 	_question5_hint->draw( );
+
+	_q2_docking_hint->draw( );
 }

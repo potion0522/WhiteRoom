@@ -1,21 +1,21 @@
-#include "ConsoleSlideHint.h"
+#include "Q2DockingHint.h"
 #include "define.h"
 
 #include "Model.h"
 #include "Drawer.h"
 
-const char* SLIDE_HINT_TEXTURE = "Game/Texture/SlideHint.png";
+const char* Q2_DOCKING_HINT_TEXTURE = "Game/Texture/Q2DockingHint.png";
 
-ConsoleSlideHint::ConsoleSlideHint( const Vector& pos, const Matrix& rot ) :
+Q2DockingHint::Q2DockingHint( const Vector& pos, const Matrix& rot ) :
 _pos( pos ),
 _rot( rot ) {
 	_model = ModelPtr( new Model );
-	_model->setTexture( Drawer::getTask( )->getImage( SLIDE_HINT_TEXTURE ) );
+	_model->setTexture( Drawer::getTask( )->getImage( Q2_DOCKING_HINT_TEXTURE ) );
 	_model->alloc( 2 );
 
-	// 16 : 9
-	const double WIDTH  = 1000;
-	const double HEIGHT = 9.0 / 16.0 * WIDTH;
+	// 4 : 1
+	const double WIDTH  = FLOOR_WIDTH / 2;
+	const double HEIGHT = 1 / 4.0 * WIDTH;
 	const Vector NORM = Vector( 0, 1 );
 
 	Vector vert_pos[ 4 ] = {
@@ -40,9 +40,9 @@ _rot( rot ) {
 	_model->setVertex( 5, vert[ 2 ] );
 }
 
-ConsoleSlideHint::~ConsoleSlideHint( ) {
+Q2DockingHint::~Q2DockingHint( ) {
 }
 
-void ConsoleSlideHint::draw( ) const {
+void Q2DockingHint::draw( ) const {
 	_model->draw( _pos * MIRI_TO_METER_UNIT, _rot );
 }

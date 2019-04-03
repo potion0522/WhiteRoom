@@ -14,7 +14,7 @@ PTR( Model );
 
 class ConsoleSlideHint {
 public:
-	ConsoleSlideHint( const Vector& pos, Matrix& rot );
+	ConsoleSlideHint( const Vector& pos, const Matrix& rot );
 	virtual ~ConsoleSlideHint( );
 
 public:
