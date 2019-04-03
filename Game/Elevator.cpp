@@ -151,7 +151,7 @@ void Elevator::actOnMoving( ) {
 	_pos.y = ( _past_floor * FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT + move ) * -1;
 
 	// サウンドを動かす
-	SoundManager::getInstance( )->set3DSoundPosition( SoundManager::SE_ELEVATOR_MOVE, _pos * MIRI_TO_METER_UNIT );
+	SoundManager::getInstance( )->set3DSoundPosition( SoundManager::SE_ELEVATOR_MOVE, _pos );
 
 	// 乗っているオブジェクトのyを変更
 	for ( int i = 0; i < _ride_obj.size( ); i++ ) {
@@ -164,7 +164,7 @@ void Elevator::actOnMoving( ) {
 		_state = ELEVATOR_STATE_OPENING;
 		_starting_time = getNowCount( );
 		
-		SoundManager::getInstance( )->play( SoundManager::SE_ELEVATOR_ARRIVE, _pos * MIRI_TO_METER_UNIT, MAX_SOUND_RANGE * MIRI_TO_METER_UNIT );
+		SoundManager::getInstance( )->play( SoundManager::SE_ELEVATOR_ARRIVE, _pos, MAX_SOUND_RANGE );
 	}
 }
 
@@ -203,7 +203,7 @@ void Elevator::actOnClosing( ) {
 		_starting_time = getNowCount( );
 
 		// 音
-		SoundManager::getInstance( )->play( SoundManager::SE_ELEVATOR_MOVE, _pos * MIRI_TO_METER_UNIT, MAX_SOUND_RANGE * MIRI_TO_METER_UNIT );
+		SoundManager::getInstance( )->play( SoundManager::SE_ELEVATOR_MOVE, _pos, MAX_SOUND_RANGE );
 	}
 }
 

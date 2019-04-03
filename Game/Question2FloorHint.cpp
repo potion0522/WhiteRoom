@@ -2,6 +2,7 @@
 #include "QuestionManager.h"
 #include "Question2Sphere.h"
 #include "CollideManager.h"
+#include "SoundManager.h"
 
 #include "Random.h"
 #include "Drawer.h"
@@ -76,6 +77,7 @@ void Question2FloorHint::dockingSphere( OBJECT_TAG tag1, OBJECT_TAG tag2 ) {
 		// íœ
 		_spheres.erase( OBJECT_TAG_Q2SPHERE_1 );
 		_spheres.erase( OBJECT_TAG_Q2SPHERE_2 );
+		SoundManager::getInstance( )->play( SoundManager::SE_SPHERE_DOCKING, pos, FLOOR_WIDTH / 2.0f );
 		return;
 	}
 
@@ -93,6 +95,7 @@ void Question2FloorHint::dockingSphere( OBJECT_TAG tag1, OBJECT_TAG tag2 ) {
 		// íœ
 		_spheres.erase( OBJECT_TAG_Q2SPHERE_3 );
 		_spheres.erase( OBJECT_TAG_Q2SPHERE_4 );
+		SoundManager::getInstance( )->play( SoundManager::SE_SPHERE_DOCKING, pos, FLOOR_WIDTH / 2.0f );
 		return;
 	}
 }

@@ -1,4 +1,6 @@
 #include "SoundManager.h"
+#include "define.h"
+
 #include "Sound.h"
 #include "Speaker2D.h"
 #include "Speaker3D.h"
@@ -16,6 +18,7 @@ const char* SE_ELEVATOR_MOVE    = "SE/ElevatorMove.mp3";
 const char* SE_ELEVATOR_ARRIVE  = "SE/ElevatorArrive.mp3";
 const char* SE_GAMESTART        = "SE/GameStart.mp3";
 const char* SE_GAMECLEAR        = "SE/GameClear.mp3";
+const char* SE_SPHERE_DOCKING   = "SE/SphereDocking.mp3";
 
 const char* BGM_TITLE = "BGM/Title.mp3";
 const char* BGM_GAME  = "BGM/Game.mp3";
@@ -32,6 +35,7 @@ const char* SE_FILE[ SoundManager::MAX_SE ] = {
 	SE_ELEVATOR_ARRIVE ,
 	SE_GAMESTART       ,
 	SE_GAMECLEAR       ,
+	SE_SPHERE_DOCKING
 };
 
 const char* BGM_FILE[ SoundManager::MAX_BGM ] = {
@@ -96,8 +100,8 @@ void SoundManager::play( SE se, const Vector& pos, float range ) {
 	std::string file = SE_FILE[ se ];
 	SoundPtr sound = Sound::getTask( );
 	Speaker3DPtr speaker = sound->loadSound3D( file.c_str( ) );
-	speaker->setPosition( pos );
-	speaker->setRange( range );
+	speaker->setPosition( pos * MIRI_TO_METER_UNIT );
+	speaker->setRange( ( float )( range * MIRI_TO_METER_UNIT ) );
 	speaker->setVolume( getVolume( se ) );
 	speaker->play( );
 
@@ -207,6 +211,10 @@ float SoundManager::getVolume( SE se ) const {
 	 
 	case SE_GAMECLEAR :
 		volume = 0.8f;
+		break;
+
+	case SE_SPHERE_DOCKING:
+		volume = 2.0f;
 		break;
 	}
 
