@@ -190,7 +190,7 @@ float SoundManager::getVolume( SE se ) const {
 		break;
 	 
 	case SE_WALK :
-		volume = 1.0f;
+		volume = 0.8f;
 		break;
 	 
 	case SE_ELEVATOR_MOVE :
@@ -206,7 +206,7 @@ float SoundManager::getVolume( SE se ) const {
 		break;
 	 
 	case SE_GAMECLEAR :
-		volume = 1.0f;
+		volume = 0.8f;
 		break;
 	}
 

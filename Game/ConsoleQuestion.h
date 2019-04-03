@@ -38,7 +38,7 @@ protected:
 	void playUnClearSE( );
 
 protected:
-	static const int ANSWER_WAIT_TIME = 2000; // ƒ~ƒŠ
+	static const int ANSWER_WAIT_TIME = 750; // ƒ~ƒŠ
 
 protected:
 	QuestionManagerConstPtr  _question_manager;
