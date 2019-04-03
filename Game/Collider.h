@@ -14,12 +14,19 @@ PTR( Collider );
 
 class Collider {
 public:
-	Collider( const Vector& pos, OBJECT_TAG tag = OBJECT_TAG_NONE );
+	enum TYPE {
+		TYPE_SPHERE,
+		TYPE_SQUARE,
+	};
+
+public:
+	Collider( const Vector& pos, TYPE type, OBJECT_TAG tag = OBJECT_TAG_NONE );
 	virtual ~Collider( );
 
 public:
 	const Vector& getPos( ) const;
 	OBJECT_TAG getTag( ) const;
+	TYPE getType( ) const;
 	bool isEnabled( ) const;
 	void setEnabled( bool enabled );
 
@@ -29,6 +36,7 @@ public:
 private:
 	const Vector& _pos;
 	OBJECT_TAG _tag;
+	TYPE _type;
 	bool _enabled;
 };
 

@@ -55,12 +55,6 @@ SceneGame::~SceneGame( ) {
 }
 
 void SceneGame::update( ) {
-	// ‘Sphase‹¤’Êupdate
-	_collide_manager->update( );
-	_elevator->update( );
-	_player->update( );
-	FLOOR player_floor = _player->getFloor( );
-	_floors[ player_floor ]->update( );
 
 	// phase–ˆupdate
 	switch ( _phase ) {
@@ -90,6 +84,12 @@ void SceneGame::update( ) {
 	}
 	_phase_count++;
 
+	// ‘Sphase‹¤’Êupdate
+	_elevator->update( );
+	_player->update( );
+	FLOOR player_floor = _player->getFloor( );
+	_floors[ player_floor ]->update( );
+	_collide_manager->update( );
 }
 
 void SceneGame::draw( ) const {

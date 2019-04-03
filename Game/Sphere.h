@@ -32,8 +32,10 @@ private:
 
 private:
 	static const int DIV_NUM = 24;
+	const Vector INIT_POS;
 
 protected:
+	int _exist_inside_last_time;
 	ModelPtr _model;
 	Vector _pos;
 	Vector _past_pos;

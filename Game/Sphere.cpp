@@ -4,18 +4,24 @@
 #include "Mathematics.h"
 #include "Model.h"
 #include "Drawer.h"
+#include "Manager.h"
+#include "Random.h"
 
 PTR( SphereCollider );
 
 const double MAX_SPEED = 400.0;
 const double IDLE_SPEED = 50.0; // 止まっていると判定する速度
+const double SPHERE_INSIDE_PUSH_POWER = 50.0;
 const double OBJECT_REFRECT_SPEED = 200.0; // オブジェクト同士の衝突時の速度
 const double BRAKE = 0.85;
+const int SPHERE_POS_INIT_TIME = 10000;
 
 Sphere::Sphere( Vector pos, double radius, unsigned char color_idx, OBJECT_TAG tag ) :
 SphereCollider( _pos, radius, tag ),
+INIT_POS( pos ),
 _pos( pos ),
-_radius( radius ) {
+_radius( radius ),
+_exist_inside_last_time( 0 ) {
 	// 球を縦横にDIV_NUM(半分)分割して回転を使用して頂点を求める
 
 	_model = ModelPtr( new Model );
@@ -113,89 +119,73 @@ void Sphere::draw( ) const {
 }
 
 void Sphere::onColliderEnter( ColliderConstPtr collider ) {
-	OBJECT_TAG tag = collider->getTag( );
 
-	// 特定のオブジェクト以外とぶつかった時
-	if ( tag != OBJECT_TAG_ELEVATOR &&
-		 tag != OBJECT_TAG_ELEVATOR_DOOR &&
-		 tag != OBJECT_TAG_ELEVATOR_SIDE_WALL &&
-		 tag != OBJECT_TAG_WALL &&
-		 tag != OBJECT_TAG_NONE
-		) {
-		Vector dir = ( _pos - collider->getPos( ) ).normalize( );
-		dir.y = 0; // yは考慮しない
+	Collider::TYPE type = collider->getType( );
+	switch ( type ) {
+		case Collider::TYPE_SPHERE : {
+			Vector other_to_this_vec = ( _pos - collider->getPos( ) );
+			other_to_this_vec.y = 0; // y は考慮しない
 
-		Vector refrection_vector = getRefrectionVector( dir );
-		
-		double now_speed = _speed.getLength2( );
-		// オブジェクトが静止しているか、動いているかで処理を分ける
-		if ( now_speed > IDLE_SPEED * IDLE_SPEED ) {
-			Vector vec = ( refrection_vector + _speed.normalize( ) ).normalize( );
-			setSpeed( vec * _speed.getLength( ) * BRAKE );
-		} else {
-			setSpeed( dir * OBJECT_REFRECT_SPEED );
-		}
+			Vector ref = other_to_this_vec + _speed;
+
+			setSpeed( ref.normalize( ) * OBJECT_REFRECT_SPEED );
+		} break;
+
+		case Collider::TYPE_SQUARE: // 壁は範囲が決まっているため個々に行わない
+			break;
 	}
 }
 
 void Sphere::adjustInFloor( ) {
-	// 止まるまでは何もしない
-	if ( _speed.getLength2( ) > IDLE_SPEED * IDLE_SPEED ) {
-		return;
-	}
+	int now = Manager::getInstance( )->getNowCount( );
 
-	const int HALF_WIDTH = FLOOR_WIDTH / 2;
-	// z+
-	if ( _pos.z > ( HALF_WIDTH - _radius ) *  1 ) {
-		_pos.z = ( HALF_WIDTH - _radius ) * 1;
-	}
-
-	// z-
-	if ( _pos.z < ( HALF_WIDTH - _radius ) * -1 ) {
-		_pos.z = ( HALF_WIDTH - _radius ) * -1;
-	}
-	
-	// x+
-	if ( _pos.x > ( HALF_WIDTH - _radius ) *  1 ) {
-		_pos.x = ( HALF_WIDTH - _radius ) * 1;
-	}
-	
-	// x-
-	if ( _pos.x < ( HALF_WIDTH - _radius ) * -1 ) {
-		_pos.x = ( HALF_WIDTH - _radius ) * -1;
+	// 一定以上の時間外側にいたら位置をリセット(緊急措置)
+	if ( now - _exist_inside_last_time > SPHERE_POS_INIT_TIME ) {
+		_pos = INIT_POS;
+		setSpeed( Vector( ) );
 	}
 }
 
 void Sphere::setSpeed( const Vector& speed ) {
-	_speed += speed;
+	_speed = speed;
 }
 
 void Sphere::refrection( ) {
 	const int HALF_WIDTH = FLOOR_WIDTH / 2;
+	const double ADJUST_RANGE = HALF_WIDTH - _radius;
 	Vector refrection_vector = Vector( );
+	Vector refrection_norm = Vector( );
+
 	// z+
-	if ( _pos.z > ( HALF_WIDTH - _radius ) *  1 ) {
-		refrection_vector = getRefrectionVector( Vector( 0, 0, -1 ) );
+	if ( _pos.z >= ADJUST_RANGE *  1 ) {
+		refrection_norm = Vector( 0, 0, -1 );
 	}
-
 	// z-
-	if ( _pos.z < ( HALF_WIDTH - _radius ) * -1 ) {
-		refrection_vector = getRefrectionVector( Vector( 0, 0, 1 ) );
+	if ( _pos.z <= ADJUST_RANGE * -1 ) {
+		refrection_norm = Vector( 0, 0, 1 );
 	}
-	
 	// x+
-	if ( _pos.x > ( HALF_WIDTH - _radius ) *  1 ) {
-		refrection_vector = getRefrectionVector( Vector( 1, 0, 0 ) );
+	if ( _pos.x >= ADJUST_RANGE *  1 ) {
+		refrection_norm = Vector( -1, 0, 0 );
 	}
-	
 	// x-
-	if ( _pos.x < ( HALF_WIDTH - _radius ) * -1 ) {
-		refrection_vector = getRefrectionVector( Vector( -1, 0, 0 ) );
+	if ( _pos.x <= ADJUST_RANGE * -1 ) {
+		refrection_norm = Vector(  1, 0, 0 );
 	}
-
 	
-	if ( refrection_vector != Vector( ) ) {
-		_speed = refrection_vector.normalize( ) * _speed.getLength( );
+	if ( refrection_norm != Vector( ) ) {
+		refrection_vector = refrection_norm;
+		Vector speed = refrection_norm * SPHERE_INSIDE_PUSH_POWER;
+
+		// 動いているなら反射ベクトルを適用
+		if ( _speed.getLength2( ) > IDLE_SPEED * IDLE_SPEED ) {
+			refrection_vector = getRefrectionVector( refrection_norm );
+			speed = _speed;
+		}
+
+		setSpeed( refrection_vector.normalize( ) * speed.getLength( ) );
+	} else {
+		_exist_inside_last_time = Manager::getInstance( )->getNowCount( );
 	}
 }
 
@@ -206,7 +196,7 @@ void Sphere::move( ) {
 	}
 	_past_pos = _pos;
 	_pos += _speed;
-	_speed *= BRAKE;
+	setSpeed( _speed * BRAKE );
 }
 
 Vector Sphere::getRefrectionVector( const Vector& wall_norm ) {

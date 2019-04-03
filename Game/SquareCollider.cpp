@@ -1,7 +1,7 @@
 #include "SquareCollider.h"
 
 SquareCollider::SquareCollider( const Vector& pos, Vector norm, double width, double height, OBJECT_TAG tag ) :
-Collider( pos, tag ),
+Collider( pos, Collider::TYPE_SQUARE, tag ),
 _norm( norm ),
 _width( width ),
 _height( height ) {
