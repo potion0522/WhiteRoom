@@ -8,7 +8,7 @@
 
 const char* HINT_BG_FILEPATH = "Game/UI/UIBG.png";
 const char* HINT_FILEPATH    = "Resources/Hint/Q";
-const int NEW_HINT_SHOW_TIME = 60000 * 3; // 3ï™
+const int NEW_HINT_SHOW_TIME = 5000;//60000 * 3; // 3ï™
 
 Hint::Hint( QuestionManagerConstPtr question_manager ) :
 _question_manager( question_manager ),
@@ -22,22 +22,8 @@ Hint::~Hint( ) {
 }
 
 void Hint::update( ) {
-	Manager* manager = Manager::getInstance( );
-	const int NOW = manager->getNowCount( );
-	const int ONE_SEC = 1000;
-	const int QUESTION_HINT_OPEN_TIME = _question_manager->getHintOpenTime( );
-
-	int show_time = ( NEW_HINT_SHOW_TIME - ( NOW - QUESTION_HINT_OPEN_TIME ) ) / ONE_SEC;
-	if ( show_time >= 0 ) {
-		_show_time = show_time;
-	}
-
-	int row = ( NOW - QUESTION_HINT_OPEN_TIME ) / NEW_HINT_SHOW_TIME;
-	row += 1; // idxî‘çÜÇ≈ÇÕÇ»Ç≠sizeÇÃÇΩÇﬂ
-
-	if ( row < _hint_data.data.size( ) ) {
-		_show_row = row;
-	}
+	updateRow( );
+	updateTime( );
 }
 
 void Hint::draw( ) const {
@@ -89,4 +75,37 @@ void Hint::open( ) {
 	std::string path = HINT_FILEPATH;
 	path += std::to_string( question_num ) + ".csv";
 	_hint_data = CsvData( path.c_str( ) );
+
+	
+	updateRow( );
+	updateTime( );
+}
+
+void Hint::updateRow( ) {
+	Manager* manager = Manager::getInstance( );
+	const int NOW = manager->getNowCount( );
+	const int QUESTION_HINT_OPEN_TIME = _question_manager->getHintOpenTime( );
+
+	// row
+	int row = ( NOW - QUESTION_HINT_OPEN_TIME ) / NEW_HINT_SHOW_TIME;
+	if ( row < _hint_data.data.size( ) ) {
+		_show_row = row + 1;
+	} else {
+		_show_row = ( int )_hint_data.data.size( );
+	}
+}
+
+void Hint::updateTime( ) {
+	Manager* manager = Manager::getInstance( );
+	const int NOW = manager->getNowCount( );
+	const int ONE_SEC = 1000;
+	const int QUESTION_HINT_OPEN_TIME = _question_manager->getHintOpenTime( );
+
+	// time
+	int show_time = ( NEW_HINT_SHOW_TIME - ( NOW - ( QUESTION_HINT_OPEN_TIME + ( _show_row - 1 ) * NEW_HINT_SHOW_TIME ) ) ) / ONE_SEC;
+	if ( show_time >= 0 && _show_row < _hint_data.data.size( ) ) {
+		_show_time = show_time;
+	} else {
+		_show_time = 0;
+	}
 }
