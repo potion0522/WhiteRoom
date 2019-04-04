@@ -37,7 +37,8 @@ void Hint::draw( ) const {
 	_bg->draw( );
 
 	DrawerPtr drawer = Drawer::getTask( );
-	if ( _hint_data.data.size( ) == 0 ) {
+	bool exist_hint = ( _hint_data.data.size( ) != 0 );
+	if ( exist_hint == false ) {
 		drawer->drawFormatStringCenter( SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, HINT_COLOR, HINT_FONT_SIZE, "å„ÇÕíEèoÇ∑ÇÈÇæÇØÇæ!!" );
 	} else {
 		const int ROW = ( int )_hint_data.data.size( );

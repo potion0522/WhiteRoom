@@ -3,7 +3,6 @@
 
 #include "define.h"
 #include <array>
-#include <vector>
 
 /********************************************************
 
@@ -19,6 +18,7 @@ public:
 	// 0.club 1.heart 2.diamond 3.spade 4.ÅÙ*3  5.ÅÙ*2  6.arrow*3  7.arrrow
 	static const int QUESTION_2_MAX_MARK_NUM = 8;
 	static const int QUESTION_5_MAX_NUM = 9; // 1 - 9
+	static const int MAX_QUESTION_NUM = 5;
 
 private:
 	struct Question {
@@ -100,6 +100,7 @@ public:
 	const std::array< unsigned char, 9 >& getHintQuestion5( ) const;
 	int getHintOpenTime( ) const;
 	int getHintQuestionNum( ) const;
+	int getQuestionAnswerRate( ) const;
 
 
 private:
@@ -116,7 +117,7 @@ private:
 	Question3 _question3;
 	Question4 _question4;
 	Question5 _question5;
-	std::vector< Question > _clear_state;
+	std::array< Question, MAX_QUESTION_NUM > _clear_state;
 	unsigned char _now_hint_question_num;
 	int _hint_open_time;
 };

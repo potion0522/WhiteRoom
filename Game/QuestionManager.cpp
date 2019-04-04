@@ -16,11 +16,11 @@ _hint_open_time( 0 ) {
 	generateQuestion4( );
 	generateQuestion5( );
 
-	_clear_state.push_back( _question1 );
-	_clear_state.push_back( _question2 );
-	_clear_state.push_back( _question3 );
-	_clear_state.push_back( _question4 );
-	_clear_state.push_back( _question5 );
+	_clear_state[ 0 ] = _question1;
+	_clear_state[ 1 ] = _question2;
+	_clear_state[ 2 ] = _question3;
+	_clear_state[ 3 ] = _question4;
+	_clear_state[ 4 ] = _question5;
 
 	updateHintQuestion( );
 }
@@ -126,8 +126,7 @@ bool QuestionManager::answerQuestion5( unsigned char num1, unsigned char num2, u
 void QuestionManager::clearQuestion( int question_num ) {
 	int idx = question_num - 1;
 
-	int size = ( int )_clear_state.size( );
-	if ( idx < 0 && size <= idx ) {
+	if ( idx < 0 && MAX_QUESTION_NUM <= idx ) {
 		return;
 	}
 
@@ -206,6 +205,16 @@ int QuestionManager::getHintOpenTime( ) const {
 
 int QuestionManager::getHintQuestionNum( ) const {
 	return _now_hint_question_num;
+}
+
+int QuestionManager::getQuestionAnswerRate( ) const {
+	int clear_num = 0;
+	for ( const Question& question : _clear_state ) {
+		if ( question.clear ) {
+			clear_num++;
+		}
+	}
+	return ( int )( clear_num / ( double )MAX_QUESTION_NUM * 100.0 );
 }
 
 void QuestionManager::generateQuestion1( ) {
@@ -382,7 +391,7 @@ void QuestionManager::updateHintQuestion( ) {
 	Question hint_question;
 
 	// ƒNƒŠƒA‚µ‚Ä‚È‚­‚Ä—Dæ“x‚ª‚‚¢‚à‚Ì‚ð’T‚·
-	for ( int i = 0; i < _clear_state.size( ); i++ ) {
+	for ( int i = 0; i < MAX_QUESTION_NUM; i++ ) {
 		if ( _clear_state[ i ].clear ) {
 			continue;
 		}

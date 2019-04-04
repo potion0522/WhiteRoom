@@ -20,7 +20,7 @@ public:
 		DrawerPtr drawer = Drawer::getTask( );
 		// 保存したメッセージ
 		for ( int i = 0; i < _save_message.size( ); i++ ) {
-			drawer->drawString( SAVE_MESSAGE_X, i * 20.0f, _save_message[ i ].c_str( ), 0xffff00 );
+			drawer->drawString( SAVE_MESSAGE_X, i * 20.0f, _save_message[ i ].c_str( ), 0xff0000 );
 		}
 
 		// 毎フレーム更新するメッセージ
