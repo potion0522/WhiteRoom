@@ -8,7 +8,7 @@
 
 const char* HINT_BG_FILEPATH = "Game/UI/UIBG.png";
 const char* HINT_FILEPATH    = "Resources/Hint/Q";
-const int NEW_HINT_SHOW_TIME = 5000;//60000 * 3; // 3•ª
+const int NEW_HINT_SHOW_TIME = 60000 * 3; // 3•ª
 
 Hint::Hint( QuestionManagerConstPtr question_manager ) :
 _question_manager( question_manager ),
