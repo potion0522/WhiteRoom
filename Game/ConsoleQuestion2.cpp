@@ -36,7 +36,7 @@ ConsoleQuestion( callback, question_manager, 2 ) {
 
 		if ( insert ) {
 			_mark_state[ init ].first = color_idx;
-			_mark_state[ init ].second = 0x00;
+			_mark_state[ init ].second = ( unsigned char )random->getRand( 0, QuestionManager::QUESTION_2_MAX_MARK_NUM - 1 );
 			init++;
 		}
 	}
