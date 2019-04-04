@@ -19,6 +19,7 @@ public:
 	void open( );
 
 private:
+	int _show_row;
 	QuestionManagerConstPtr _question_manager;
 	ImagePtr _bg;
 	CsvData _hint_data;
