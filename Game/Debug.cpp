@@ -10,22 +10,23 @@ Debug* Debug::_instance;
 #include <vector>
 
 class Impl {
-private:
-	const float SAVE_MESSAGE_X = 20;
-	const float NON_SAVE_MESSAGE_X = SCREEN_WIDTH - SCREEN_WIDTH / 3;
-
 public:
-
 	void update( ) {
+		const int FONT_SIZE = 30;
+		const int SPACE = 20;
+		const int FONT_COLOR = 0xff0000; // 赤
 		DrawerPtr drawer = Drawer::getTask( );
+
 		// 保存したメッセージ
 		for ( int i = 0; i < _save_message.size( ); i++ ) {
-			drawer->drawString( SAVE_MESSAGE_X, i * 20.0f, _save_message[ i ].c_str( ), 0xff0000 );
+			float x = SPACE;
+			drawer->drawFormatString( SPACE, i * ( float )FONT_SIZE, FONT_COLOR, FONT_SIZE, _save_message[ i ].c_str( ) );
 		}
 
 		// 毎フレーム更新するメッセージ
 		for ( int i = 0; i < _message.size( ); i++ ) {
-			drawer->drawString( NON_SAVE_MESSAGE_X, i * 20.0f, _message[ i ].c_str( ), 0xff0000 );
+			float x = ( float )( SCREEN_WIDTH - drawer->getStringWidth( _message[ i ].c_str( ), FONT_SIZE ) - SPACE );
+			drawer->drawFormatString( x, i * ( float )FONT_SIZE, FONT_COLOR, FONT_SIZE, _message[ i ].c_str( ) );
 		}
 		_message.clear( );
 	}

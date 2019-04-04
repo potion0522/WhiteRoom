@@ -86,6 +86,8 @@ void UI::drawOnClose( ) const {
 
 	DrawerPtr drawer = Drawer::getTask( );
 	drawer->setAlpha( _ui_text_alpha );
+
+
 	// 操作ヒント
 	const float KEY_HINT_X = FONT_SIZE / 2.0f;
 	drawer->drawFormatString( KEY_HINT_X, FONT_SIZE / 2.0f, COLOR, FONT_SIZE, "%s : コンソール", CONSOLE_ACTIVE_KEY );
@@ -96,6 +98,8 @@ void UI::drawOnClose( ) const {
 	str += std::to_string( _question_manager->getQuestionAnswerRate( ) ) + "%";
 	const float ESCAPE_RATE_X = SCREEN_WIDTH - ( float )drawer->getStringWidth( str.c_str( ), FONT_SIZE ) - FONT_SIZE * 2; // 2文字分右に余白
 	drawer->drawFormatString( ESCAPE_RATE_X, FONT_SIZE / 2.0f + FONT_SIZE, COLOR, FONT_SIZE, "%s", str.c_str( ) );
+
+
 	drawer->setAlpha( MAX_ALPHA );
 }
 
@@ -114,13 +118,14 @@ void UI::drawOnOpen( ) const {
 void UI::updateIdleTime( ) {
 	KeyboardPtr keyboard = Keyboard::getTask( );
 	// 静止している時間入力
+	int now = Manager::getInstance( )->getNowCount( );
 	if ( keyboard->getString( ).empty( ) ) {
-		int now = Manager::getInstance( )->getNowCount( );
 		int delta_time = now - _past_time;
 		_idle_time += delta_time;
 		_past_time = now;
 	} else {
 		_idle_time = 0;
+		_past_time = now;
 	}
 
 	const int MAX_IDLE_TIME = SHOW_UI_TEXT_START_TIME + SHOW_UI_TEXT_ANIM_TIME;
