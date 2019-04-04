@@ -165,7 +165,6 @@ void Player::actOnAllControll( ) {
 	if ( !_ui_active ) {
 		updateDir( );
 		walk( );
-		updateEye( );
 	}
 
 	// 計算後の座標更新
@@ -176,6 +175,11 @@ void Player::actOnAllControll( ) {
 
 	// Listenerの更新
 	updateEar( );
+
+	// カメラの更新は最後
+	if ( !_ui_active ) {
+		updateEye( );
+	}
 }
 
 void Player::actOnGameClearControll( ) {
