@@ -9,7 +9,7 @@
 
 #include "Drawer.h"
 
-Page::Page( Console::PAGE_NUM page_num, std::function< void( FLOOR ) > func_button_push, QuestionManagerConstPtr question_manager ) :
+Page::Page( Console::PAGE_NUM page_num, std::function< void( FLOOR ) > func_button_push, QuestionManagerPtr question_manager ) :
 _page_num( page_num ),
 _x( 0 ),
 _y( 0 ),

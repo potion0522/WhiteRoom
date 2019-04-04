@@ -1,11 +1,13 @@
 #include "ConsoleQuestion.h"
 #include "SoundManager.h"
+#include "QuestionManager.h"
 
 #include "Manager.h"
 
-ConsoleQuestion::ConsoleQuestion( std::function< void( ) > callback, QuestionManagerConstPtr question_manager ) :
+ConsoleQuestion::ConsoleQuestion( std::function< void( ) > callback, QuestionManagerPtr question_manager, int my_question_num ) :
 PageContent( callback ),
 _question_manager( question_manager ),
+MY_QUESTION_NUM( my_question_num ),
 _state( STATE_NONE ),
 _start_time( 0 ) {
 }
@@ -51,4 +53,10 @@ void ConsoleQuestion::playClearSE( ) {
 
 void ConsoleQuestion::playUnClearSE( ) {
 	SoundManager::getInstance( )->play( SoundManager::SE_QUESTION_UNCLEAR );
+}
+
+void ConsoleQuestion::clear( ) {
+	_question_manager->clearQuestion( MY_QUESTION_NUM );
+	playClearSE( );
+	_callback( );
 }

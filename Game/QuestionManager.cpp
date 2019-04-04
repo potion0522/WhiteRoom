@@ -1,17 +1,28 @@
 #include "QuestionManager.h"
 #include "Debug.h"
 
+#include "Manager.h"
 #include "Random.h"
 
 #include <unordered_map>
 #include <vector>
 
-QuestionManager::QuestionManager( ) {
+QuestionManager::QuestionManager( ) :
+_now_hint_question_num( 0x00 ),
+_hint_open_time( 0 ) {
 	generateQuestion1( );
 	generateQuestion2( );
 	generateQuestion3( );
 	generateQuestion4( );
 	generateQuestion5( );
+
+	_clear_state.push_back( _question1 );
+	_clear_state.push_back( _question2 );
+	_clear_state.push_back( _question3 );
+	_clear_state.push_back( _question4 );
+	_clear_state.push_back( _question5 );
+
+	updateHintQuestion( );
 }
 
 QuestionManager::~QuestionManager( ) {
@@ -112,6 +123,18 @@ bool QuestionManager::answerQuestion5( unsigned char num1, unsigned char num2, u
 	return false;
 }
 
+void QuestionManager::clearQuestion( int question_num ) {
+	int idx = question_num - 1;
+
+	int size = ( int )_clear_state.size( );
+	if ( idx < 0 && size <= idx ) {
+		return;
+	}
+
+	_clear_state[ idx ].clear = true;
+	updateHintQuestion( );
+}
+
 const std::array< unsigned char, 3 >& QuestionManager::getHintQuestion1( ) const {
 	return _question1.nums;
 }
@@ -175,6 +198,14 @@ const unsigned char QuestionManager::getHintQuestion4Day( ) const {
 
 const std::array< unsigned char, 9 >& QuestionManager::getHintQuestion5( ) const {
 	return _question5.nums;
+}
+
+int QuestionManager::getHintOpenTime( ) const {
+	return _hint_open_time;
+}
+
+int QuestionManager::getHintQuestionNum( ) const {
+	return _now_hint_question_num;
 }
 
 void QuestionManager::generateQuestion1( ) {
@@ -345,4 +376,30 @@ void QuestionManager::generateQuestion5( ) {
 	message += ",";
 	message += std::to_string( answer[ 2 ] );
 	debug->addSaveMessage( message.c_str( ) );
+}
+
+void QuestionManager::updateHintQuestion( ) {
+	Question hint_question;
+
+	// クリアしてなくて優先度が高いものを探す
+	for ( int i = 0; i < _clear_state.size( ); i++ ) {
+		if ( _clear_state[ i ].clear ) {
+			continue;
+		}
+		if ( _clear_state[ i ].priority < hint_question.priority ) {
+			hint_question = _clear_state[ i ];
+		}
+	}
+
+	// ヒントを出す問題が更新されたかどうかを確認
+	if ( hint_question.question_num != _now_hint_question_num ) {
+		_hint_open_time = Manager::getInstance( )->getNowCount( );
+		_now_hint_question_num = hint_question.question_num;
+
+		// debug
+		Debug* debug = Debug::getInstance( );
+		std::string message = "HintNum : ";
+		message += std::to_string( _now_hint_question_num );
+		debug->addSaveMessage( message.c_str( ) );
+	}
 }

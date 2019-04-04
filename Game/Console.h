@@ -38,7 +38,7 @@ public:
 	};
 
 public:
-	Console( ElevatorButtonPtr, QuestionManagerConstPtr );
+	Console( ElevatorButtonPtr, QuestionManagerPtr );
 	virtual ~Console( );
 
 public:

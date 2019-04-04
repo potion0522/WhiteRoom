@@ -7,7 +7,8 @@
 const char* HINT_BG_FILEPATH = "Game/UI/UIBG.png";
 
 Hint::Hint( QuestionManagerConstPtr question_manager ) :
-_question_manager( question_manager ) {
+_question_manager( question_manager ),
+_hint_data( ) {
 	_bg = Drawer::getTask( )->getImage( HINT_BG_FILEPATH );
 }
 

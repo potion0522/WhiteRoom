@@ -1,6 +1,7 @@
 #pragma once
 #include "UICanvas.h"
 #include "smart_ptr.h"
+#include "LoadCSV.h"
 
 PTR( Hint );
 PTR( QuestionManager );
@@ -20,5 +21,6 @@ public:
 private:
 	QuestionManagerConstPtr _question_manager;
 	ImagePtr _bg;
+	CsvData _hint_data;
 };
 

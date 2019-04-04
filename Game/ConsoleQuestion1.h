@@ -13,7 +13,7 @@ PTR( Image );
 
 class ConsoleQuestion1 : public ConsoleQuestion {
 public:
-	ConsoleQuestion1( std::function< void( ) > callback, QuestionManagerConstPtr question_manager );
+	ConsoleQuestion1( std::function< void( ) > callback, QuestionManagerPtr question_manager );
 	virtual ~ConsoleQuestion1( );
 
 public:

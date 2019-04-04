@@ -11,7 +11,7 @@
 const char* CONSOLE_BG_FILEPATH = "Game/UI/UIBG.png";
 const double SLIDE_DETECT_LENGTH = SCREEN_HEIGHT * 0.10; // âÊñ çÇÇ≥ÇÃ10%à»è„Ç≈ÉXÉâÉCÉh
 
-Console::Console( ElevatorButtonPtr elevator_button, QuestionManagerConstPtr question_manager ) :
+Console::Console( ElevatorButtonPtr elevator_button, QuestionManagerPtr question_manager ) :
 _elevator_button( elevator_button ), 
 _state( CONSOLE_STATE_IDLE ),
 _page_num( _INIT_PAGE_NUM ),

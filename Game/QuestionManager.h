@@ -3,6 +3,7 @@
 
 #include "define.h"
 #include <array>
+#include <vector>
 
 /********************************************************
 
@@ -20,25 +21,57 @@ public:
 	static const int QUESTION_5_MAX_NUM = 9; // 1 - 9
 
 private:
-	struct Question1 {
+	struct Question {
+		bool clear;
+		unsigned char priority; // í·Ç¢Ç‡ÇÃÇŸÇ«óDêÊÇ™çÇÇ¢
+		unsigned char question_num;
+
+		Question( ) :
+		clear( false ),
+		priority( 99 ),
+		question_num( 0 ) {
+		}
+
+		Question( unsigned char in_priority, unsigned char in_question_num ) :
+		clear( false ),
+		priority( in_priority ),
+		question_num( in_question_num ) {
+		}
+	};
+	struct Question1 : public Question {
+		Question1( ) :
+		Question( 1, 1 ) {
+		}
 		std::array< unsigned char, 3 > nums;
 	};
-	struct Question2 {
+	struct Question2 : public Question {
+		Question2( ) :
+		Question( 3, 2 ) {
+		}
 		std::pair< unsigned char, unsigned char > floor2;
 		std::pair< unsigned char, unsigned char > floor3;
 		std::pair< unsigned char, unsigned char > floor4;
 	};
-	struct Question3 {
+	struct Question3 : public Question {
+		Question3( ) :
+		Question( 4, 3 ) {
+		}
 		unsigned char floor1_num;
 		unsigned char floor2_num;
 		unsigned char floor4_num;
 		char arrow_dir;
 	};
-	struct Question4 {
+	struct Question4 : public Question {
+		Question4( ) :
+		Question( 2, 4 ) {
+		}
 		unsigned char month;
 		unsigned char day;
 	};
-	struct Question5 {
+	struct Question5 : public Question {
+		Question5( ) :
+		Question( 5, 5 ) {
+		}
 		std::array< unsigned char, QUESTION_5_MAX_NUM > nums;
 	};
 
@@ -54,6 +87,8 @@ public:
 	bool answerQuestion4( unsigned char month, unsigned char day ) const;
 	bool answerQuestion5( unsigned char num1, unsigned char num2, unsigned char num3 ) const;
 
+	void clearQuestion( int question_num );
+
 	// ÉqÉìÉg
 	const std::array< unsigned char, 3 >& getHintQuestion1( ) const;
 	const unsigned char getHintQuestion2Mark( FLOOR floor ) const;
@@ -63,6 +98,8 @@ public:
 	const unsigned char getHintQuestion4Month( ) const;
 	const unsigned char getHintQuestion4Day( ) const;
 	const std::array< unsigned char, 9 >& getHintQuestion5( ) const;
+	int getHintOpenTime( ) const;
+	int getHintQuestionNum( ) const;
 
 
 private:
@@ -71,6 +108,7 @@ private:
 	void generateQuestion3( );
 	void generateQuestion4( );
 	void generateQuestion5( );
+	void updateHintQuestion( );
 
 private:
 	Question1 _question1;
@@ -78,5 +116,8 @@ private:
 	Question3 _question3;
 	Question4 _question4;
 	Question5 _question5;
+	std::vector< Question > _clear_state;
+	unsigned char _now_hint_question_num;
+	int _hint_open_time;
 };
 

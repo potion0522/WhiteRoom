@@ -27,8 +27,8 @@ const int ARROW_Y = MONTH_Y;
 const int DAY_SQUARE_START_X = ( SCREEN_WIDTH  - DAY_COL * ( DAY_SQUARE_SIZE - DAY_FRAME_SIZE ) ) / 2 + DAY_SQUARE_SIZE / 2;
 const int DAY_SQUARE_START_Y = ( MONTH_Y + ( SCREEN_HEIGHT - MONTH_Y ) / DAY_ROW ) + DAY_SQUARE_SIZE;
 
-ConsoleQuestion4::ConsoleQuestion4( std::function< void( ) > callback, QuestionManagerConstPtr question_manager ) :
-ConsoleQuestion( callback, question_manager ),
+ConsoleQuestion4::ConsoleQuestion4( std::function< void( ) > callback, QuestionManagerPtr question_manager ) :
+ConsoleQuestion( callback, question_manager, 4 ),
 _click_target( CLICK_TARGET_MONTH ),
 _selecting_num( ERROR ),
 _select_month( 0x00 ),
@@ -199,8 +199,7 @@ void ConsoleQuestion4::actOnAnswer( ) {
 	_select_day = ERROR;
 
 	if ( answer ) {
-		playClearSE( );
-		_callback( );
+		clear( );
 	} else {
 		playUnClearSE( );
 	}

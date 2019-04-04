@@ -20,7 +20,7 @@ protected:
 	};
 
 public:
-	ConsoleQuestion( std::function< void( ) > callback, QuestionManagerConstPtr question_manager );
+	ConsoleQuestion( std::function< void( ) > callback, QuestionManagerPtr question_manager, int my_question_num );
 	virtual ~ConsoleQuestion( );
 
 public:
@@ -34,14 +34,16 @@ protected:
 	virtual void actOnPushUp( ) = 0;
 	virtual void actOnAnswer( ) = 0;
 	int getNowCount( ) const;
-	void playClearSE( );
 	void playUnClearSE( );
+	void playClearSE( );
+	void clear( );
 
 protected:
 	static const int ANSWER_WAIT_TIME = 750; // ƒ~ƒŠ
+	const int MY_QUESTION_NUM;
 
 protected:
-	QuestionManagerConstPtr  _question_manager;
+	QuestionManagerPtr  _question_manager;
 	STATE _state;
 	int _start_time;
 };

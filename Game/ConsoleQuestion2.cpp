@@ -12,8 +12,8 @@ const char* IMAGE_FILE = "Game/UI/Console/Marks.png";
 const int Q2_MARK_SIZE = 256;
 const float Q2_CIRCLE_RADIUS = Q2_MARK_SIZE * 0.8f;
 
-ConsoleQuestion2::ConsoleQuestion2( std::function< void( ) > callback, QuestionManagerConstPtr question_manager ) :
-ConsoleQuestion( callback, question_manager ) {
+ConsoleQuestion2::ConsoleQuestion2( std::function< void( ) > callback, QuestionManagerPtr question_manager ) :
+ConsoleQuestion( callback, question_manager, 2 ) {
 	DrawerPtr drawer = Drawer::getTask( );
 	_mark_image = drawer->getImage( IMAGE_FILE );
 	_mark_image->setCentral( true );
@@ -162,8 +162,7 @@ void ConsoleQuestion2::actOnAnswer( ) {
 	if ( result ) {
 		// ƒNƒŠƒAŒãˆê’èŽžŠÔ‘Ò‹@
 		if ( getNowCount( ) - _start_time > ANSWER_WAIT_TIME ) {
-			playClearSE( );
-			_callback( );
+			clear( );
 		}
 	} else {
 		_state = STATE_NONE;

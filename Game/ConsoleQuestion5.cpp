@@ -22,8 +22,8 @@ const int ANSWER_FRAME_START_X = SCREEN_WIDTH / 2 - ANSWER_NUM / 2 * ANSWER_FRAM
 const int ANSWER_FRAME_Y = SCREEN_HEIGHT / 4 * 3;
 
 
-ConsoleQuestion5::ConsoleQuestion5( std::function< void( ) > callback, QuestionManagerConstPtr question_manager ) :
-ConsoleQuestion( callback, question_manager ),
+ConsoleQuestion5::ConsoleQuestion5( std::function< void( ) > callback, QuestionManagerPtr question_manager ) :
+ConsoleQuestion( callback, question_manager, 5 ),
 _selecting_num( ERROR ) {
 	DrawerPtr drawer = Drawer::getTask( );
 	_nums_image  = drawer->getImage( Q4_NUMBER_IMAGE );
@@ -131,8 +131,7 @@ void ConsoleQuestion5::actOnAnswer( ) {
 	bool answer = _question_manager->answerQuestion5( _select_nums[ 0 ], _select_nums[ 1 ], _select_nums[ 2 ] );
 
 	if ( answer ) {
-		playClearSE( );
-		_callback( );
+		clear( );
 	} else {
 		_state = STATE_NONE;
 		playUnClearSE( );

@@ -20,8 +20,8 @@ const int ANSWER_FRAME_Y = SCREEN_HEIGHT / 4 * 3;
 const int NUMS_START_X = ( SCREEN_WIDTH / 2 + ( SCREEN_WIDTH / 2 - NUMS_SIZE * NUMS_COL ) / 2 ) + NUMS_SIZE / 2;
 const int NUMS_START_Y = ( ( SCREEN_HEIGHT / 2 - NUMS_SIZE * NUMS_ROW ) / 2 )                   + NUMS_SIZE / 2;
 
-ConsoleQuestion3::ConsoleQuestion3( std::function< void( ) > callback, QuestionManagerConstPtr question_manager ) :
-ConsoleQuestion( callback, question_manager ),
+ConsoleQuestion3::ConsoleQuestion3( std::function< void( ) > callback, QuestionManagerPtr question_manager ) :
+ConsoleQuestion( callback, question_manager, 3 ),
 _selecting_num( 0x00 ) {
 	bool arrow_up = ( question_manager->getHintQuestion3Arrow( ) > 0 ? true : false );
 	std::string hint_image_path = HINT_IMAGE;
@@ -124,8 +124,7 @@ void ConsoleQuestion3::actOnAnswer( ) {
 	bool answer = _question_manager->answerQuestion3( _select_nums[ 0 ], _select_nums[ 1 ], _select_nums[ 2 ] );
 
 	if ( answer ) {
-		playClearSE( );
-		_callback( );
+		clear( );
 	} else {
 		_state = STATE_NONE;
 		playUnClearSE( );

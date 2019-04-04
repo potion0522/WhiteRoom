@@ -10,8 +10,8 @@
 
 const char* QUESTION1_CONSOLE_HINT_FILEPATH = "Game/UI/Console/Question1.png";
 
-ConsoleQuestion1::ConsoleQuestion1( std::function< void( ) > callback, QuestionManagerConstPtr question_manager ) :
-ConsoleQuestion( callback, question_manager ),
+ConsoleQuestion1::ConsoleQuestion1( std::function< void( ) > callback, QuestionManagerPtr question_manager ) :
+ConsoleQuestion( callback, question_manager, 1 ),
 _square_state( ),
 _selecting_idx( ERROR ) {
 	_square = Drawer::getTask( )->getImage( QUESTION1_CONSOLE_HINT_FILEPATH );
@@ -112,8 +112,7 @@ void ConsoleQuestion1::actOnAnswer( ) {
 	if ( answer ) {
 		// 一定時間後にコールバック
 		if ( getNowCount( ) - _start_time > ANSWER_WAIT_TIME ) {
-			playClearSE( );
-			_callback( );
+			clear( );
 		}
 	} else {
 		_state = STATE_NONE;

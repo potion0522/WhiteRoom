@@ -20,7 +20,7 @@ private:
 	};
 
 public:
-	ConsoleQuestion4( std::function< void( ) > callback, QuestionManagerConstPtr question_manager );
+	ConsoleQuestion4( std::function< void( ) > callback, QuestionManagerPtr question_manager );
 	virtual ~ConsoleQuestion4( );
 
 public:
