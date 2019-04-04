@@ -1,4 +1,5 @@
 #pragma once
+#include "UICanvas.h"
 #include "smart_ptr.h"
 #include "Mathematics.h"
 #include "define.h"
@@ -14,11 +15,9 @@
 PTR( Image );
 PTR( ElevatorButton );
 PTR( Page );
-PTR( ConsoleObserver );
-PTR( ConsoleActiveObservable );
 PTR( QuestionManager );
 
-class Console {
+class Console : public UICanvas {
 public:
 	enum PAGE_NUM {
 		PAGE_NUM_1, // F1
@@ -31,9 +30,6 @@ public:
 	};
 
 	enum CONSOLE_STATE {
-		CONSOLE_STATE_NONE,
-		CONSOLE_STATE_OPENING,
-		CONSOLE_STATE_CLOSING,
 		CONSOLE_STATE_IDLE,
 		CONSOLE_STATE_SLIDE_UP,
 		CONSOLE_STATE_SLIDE_DOWN,
@@ -42,22 +38,20 @@ public:
 	};
 
 public:
-	Console( ElevatorButtonPtr elevator_button, QuestionManagerConstPtr question_manager );
+	Console( ElevatorButtonPtr, QuestionManagerConstPtr );
 	virtual ~Console( );
 
 public:
 	void update( );
 	void draw( ) const;
-	ConsoleActiveObservablePtr getActiveObservable( ) const;
+	void close( );
+	void open( );
 
 private:
 	bool isChangeActivate( ) const;
 	void changeState( CONSOLE_STATE state );
 	void slidePage( int add_x, int add_y );
-	void actOnNone( );
 	void actOnIdle( );
-	void actOnOpening( );
-	void actOnClosing( );
 	void actOnSlideUp( );
 	void actOnSlideDown( );
 	void actOnSlideLeft( );
@@ -75,6 +69,5 @@ private:
 	ImagePtr _bg;
 	ElevatorButtonPtr _elevator_button;
 	std::array< PagePtr, MAX_PAGE_NUM > _pages;
-	ConsoleObserverPtr _observer;
 };
 

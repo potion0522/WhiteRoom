@@ -1,7 +1,6 @@
 #include "Console.h"
 #include "ElevatorButton.h"
 #include "Page.h"
-#include "ConsoleObserver.h"
 #include "SoundManager.h"
 
 #include "Image.h"
@@ -9,20 +8,17 @@
 #include "Drawer.h"
 #include "Mouse.h"
 
-const char* CONSOLE_BG_FILEPATH = "Game/Console/ConsoleBG.png";
+const char* CONSOLE_BG_FILEPATH = "Game/UI/UIBG.png";
 const double SLIDE_DETECT_LENGTH = SCREEN_HEIGHT * 0.10; // 画面高さの10%以上でスライド
 
 Console::Console( ElevatorButtonPtr elevator_button, QuestionManagerConstPtr question_manager ) :
 _elevator_button( elevator_button ), 
-_state( CONSOLE_STATE_NONE ),
+_state( CONSOLE_STATE_IDLE ),
 _page_num( _INIT_PAGE_NUM ),
 _slide_start_pos( ),
 _slide_end_pos( ) {
 	MousePtr mouse = Mouse::getTask( );
 	mouse->setMouseDraw( false );
-
-	// Observer
-	_observer = ConsoleObserverPtr( new ConsoleObserver );
 
 	// 背景
 	DrawerPtr drawer = Drawer::getTask( );
@@ -43,15 +39,6 @@ Console::~Console( ) {
 
 void Console::update( ) {
 	switch ( _state ) {
-		case CONSOLE_STATE_NONE:
-			actOnNone( );
-			break;
-		case CONSOLE_STATE_OPENING:
-			actOnOpening( );
-			break;
-		case CONSOLE_STATE_CLOSING:
-			actOnClosing( );
-			break;
 		case CONSOLE_STATE_IDLE:
 			actOnIdle( );
 			break;
@@ -71,9 +58,6 @@ void Console::update( ) {
 }
 
 void Console::draw( ) const {
-	if ( _state == CONSOLE_STATE_NONE ) {
-		return;
-	}
 	_bg->draw( );
 
 	for ( int i = 0; i < MAX_PAGE_NUM; i++ ) {
@@ -81,8 +65,13 @@ void Console::draw( ) const {
 	}
 }
 
-ConsoleActiveObservablePtr Console::getActiveObservable( ) const {
-	return _observer;
+
+void Console::close( ) {
+	_pages[ _page_num ]->refreshExceptForAnswer( );
+}
+
+void Console::open( ) {
+	changeState( CONSOLE_STATE_IDLE );
 }
 
 
@@ -100,29 +89,8 @@ void Console::slidePage( int add_x, int add_y ) {
 	}
 }
 
-void Console::actOnNone( ) {
-	if ( isChangeActivate( ) ) {
-		changeState( CONSOLE_STATE_OPENING );
-		_observer->onActive( true );
-		MousePtr mouse = Mouse::getTask( );
-		mouse->setMouseDraw( true );
-		SoundManager::getInstance( )->play( SoundManager::SE_CONSOLE_OPEN );
-	}
-}
-
 void Console::actOnIdle( ) {
 	_pages[ _page_num ]->update( );
-
-	// コンソールを閉じる
-	if ( isChangeActivate( ) ) {
-		changeState( CONSOLE_STATE_CLOSING );
-		MousePtr mouse = Mouse::getTask( );
-		mouse->setMouseDraw( false );
-		// 解答、または答え合わせ状態以外ならリフレッシュ
-		_pages[ _page_num ]->refreshExceptForAnswer( );
-		SoundManager::getInstance( )->play( SoundManager::SE_CONSOLE_CLOSE );
-		return;
-	}
 
 	// スライドを検知
 	MousePtr mouse = Mouse::getTask( );
@@ -168,15 +136,6 @@ void Console::actOnIdle( ) {
 			SoundManager::getInstance( )->play( SoundManager::SE_CONSOLE_SLIDE );
 		}
 	}
-}
-
-void Console::actOnOpening( ) {
-	changeState( CONSOLE_STATE_IDLE );
-}
-
-void Console::actOnClosing( ) {
-	changeState( CONSOLE_STATE_NONE );
-	_observer->onActive( false );
 }
 
 void Console::actOnSlideUp( ) {

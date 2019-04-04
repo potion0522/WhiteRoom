@@ -7,7 +7,7 @@
 #include "Random.h"
 
 // 1.club 2.heart 3.diamont 4.spade
-const char* IMAGE_FILE = "Game/Console/Marks.png";
+const char* IMAGE_FILE = "Game/UI/Console/Marks.png";
 
 const int Q2_MARK_SIZE = 256;
 const float Q2_CIRCLE_RADIUS = Q2_MARK_SIZE * 0.8f;

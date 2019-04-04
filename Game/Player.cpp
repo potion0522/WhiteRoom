@@ -2,7 +2,7 @@
 #include "define.h"
 #include "ElevatorBox.h"
 #include "SquareCollider.h"
-#include "ConsoleActiveObservable.h"
+#include "UIActiveObservableComponent.h"
 #include "SoundManager.h"
 
 #include "Camera.h"
@@ -22,9 +22,9 @@ const double WALK_SOUND_DISTANCE = 1500.0; // この距離歩いたら音を鳴らす
 PTR( SphereCollider );
 PTR( SquareCollider );
 
-Player::Player( ElevatorBoxPtr elevator_box, ConsoleActiveObservablePtr console_observable ) :
+Player::Player( ElevatorBoxPtr elevator_box, UIActiveObservableComponentPtr ui_observable ) :
 SphereCollider( _head_pos, PLAYER_COLLIDER_RADIUS, OBJECT_TAG_PLAYER ),
-_console_active( false ),
+_ui_active( false ),
 _ground_pos( 0, PLAYER_INIT_FLOOR * -FLOOR_TO_FLOOR_SPACE_AND_FLOOR_HEIGHT, 0 ),
 _head_pos( 0, _ground_pos.y + PLAYER_HEIGHT, 0 ),
 _sound_distance( 0 ),
@@ -32,11 +32,11 @@ _dir( 0, 0, 1 ),
 _floor( PLAYER_INIT_FLOOR ),
 _elevator_box( elevator_box ),
 _update_type( UPDATE_TYPE_ALL ) {
-	// コンソールのアクティブ通知を受け取る
-	console_observable->subscribeOnActive( [ & ]( bool active ) { 
-		_console_active = active;
+	// コンソール or ヒントのアクティブ通知を受け取る
+	ui_observable->subscribeOnActive( [ & ]( bool active ) { 
+		_ui_active = active;
 		// コンソールを解除したらマウスを真ん中に合わせる
-		if ( !_console_active ) {
+		if ( !_ui_active ) {
 			Mouse::getTask( )->setMousePoint( SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 );
 		}
 	} );
@@ -154,7 +154,7 @@ void Player::walk( ) {
 
 void Player::actOnEyeOnly( ) {
 	// 視線更新(コンソール非表示時)
-	if ( !_console_active ) {
+	if ( !_ui_active ) {
 		updateDir( );
 	}
 	updateEye( );
@@ -162,7 +162,7 @@ void Player::actOnEyeOnly( ) {
 
 void Player::actOnAllControll( ) {
 	// 視線更新(コンソール非表示時)
-	if ( !_console_active ) {
+	if ( !_ui_active ) {
 		updateDir( );
 		walk( );
 		updateEye( );

@@ -5,9 +5,9 @@
 #include "Drawer.h"
 #include "Image.h"
 
-const char* ORDER_ARROW_IMAGE = "Game/Console/Order.png";
-const char* Q4_NUMBER_IMAGE   = "Game/Console/Number.png";
-const char* Q4_FRAME_IMAGE    = "Game/Console/Frame.png";
+const char* ORDER_ARROW_IMAGE = "Game/UI/Console/Order.png";
+const char* Q4_NUMBER_IMAGE   = "Game/UI/Console/Number.png";
+const char* Q4_FRAME_IMAGE    = "Game/UI/Console/Frame.png";
 
 const int NUMBERS_FONT_SIZE = 128;
 const int NUMBERS_X = SCREEN_WIDTH  / 2 - QuestionManager::QUESTION_5_MAX_NUM / 2 * NUMBERS_FONT_SIZE;

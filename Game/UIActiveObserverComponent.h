@@ -7,7 +7,7 @@
 
 */
 
-class ConsoleActiveObserver {
+class UIActiveObserverComponent {
 public:
 	virtual void onActive( bool active ) = 0;
 };

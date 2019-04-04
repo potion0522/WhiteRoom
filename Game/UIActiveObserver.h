@@ -1,6 +1,6 @@
 #pragma once
-#include "ConsoleActiveObservable.h"
-#include "ConsoleActiveObserver.h"
+#include "UIActiveObserverComponent.h"
+#include "UIActiveObservableComponent.h"
 #include <vector>
 
 /*
@@ -10,11 +10,11 @@
 
 */
 
-class ConsoleObserver : 
-	public ConsoleActiveObservable, public ConsoleActiveObserver {
+class UIActiveObserver : 
+	public UIActiveObserverComponent, public UIActiveObservableComponent {
 public:
-	ConsoleObserver( );
-	virtual ~ConsoleObserver( );
+	UIActiveObserver( );
+	virtual ~UIActiveObserver( );
 
 public:
 	void subscribeOnActive( std::function< void( bool ) > func );

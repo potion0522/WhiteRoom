@@ -13,7 +13,7 @@ Playerクラス
 
 PTR( Player );
 PTR( ElevatorBox );
-PTR( ConsoleActiveObservable );
+PTR( UIActiveObservableComponent );
 
 class Player : public SphereCollider {
 public:
@@ -24,7 +24,7 @@ public:
 	};
 
 public:
-	Player( ElevatorBoxPtr elevator_box, ConsoleActiveObservablePtr console_observable );
+	Player( ElevatorBoxPtr, UIActiveObservableComponentPtr );
 	virtual ~Player( );
 
 public:
@@ -51,7 +51,7 @@ private:
 
 private:
 	UPDATE_TYPE _update_type;
-	bool _console_active;
+	bool _ui_active;
 	Vector _ground_pos; // 計算用(足元)
 	Vector _head_pos;  // カメラ用
 	Vector _past_pos;  // 前回座標(足元)

@@ -5,9 +5,9 @@
 #include "Drawer.h"
 #include "Image.h"
 
-const char* NUMS_IMAGE  = "Game/Console/Number.png";
-const char* HINT_IMAGE  = "Game/Console/Question3Hint";
-const char* FRAME_IMAGE = "Game/Console/Frame.png";
+const char* NUMS_IMAGE  = "Game/UI/Console/Number.png";
+const char* HINT_IMAGE  = "Game/UI/Console/Question3Hint";
+const char* FRAME_IMAGE = "Game/UI/Console/Frame.png";
 
 const int FRAME_SIZE = 256;
 const int NUMS_SIZE  = 128;

@@ -7,8 +7,8 @@
 
 #include <string>
 
-const char* DEFAULT_BUTTON_FILEPATH = "Game/Console/Button";
-const char* PUSH_BUTTON_FILEPATH    = "Game/Console/ButtonPush";
+const char* DEFAULT_BUTTON_FILEPATH = "Game/UI/Console/Button";
+const char* PUSH_BUTTON_FILEPATH    = "Game/UI/Console/ButtonPush";
 
 const char* BUTTON_TAG = "FloorChange";
 

@@ -6,10 +6,10 @@
 #include "Drawer.h"
 #include "Image.h"
 
-const char* DAY_FRAME_IMAGE = "Game/Console/DayFrame.png";
-const char* MONTH_NUM_IMAGE = "Game/Console/Number.png";
-const char* CHANGE_MONTH_ARROW_IMAGE = "Game/Console/Question4Arrow.png";
-const char* MONDAY_IMAGE = "Game/Console/Mon.png";
+const char* DAY_FRAME_IMAGE = "Game/UI/Console/DayFrame.png";
+const char* MONTH_NUM_IMAGE = "Game/UI/Console/Number.png";
+const char* CHANGE_MONTH_ARROW_IMAGE = "Game/UI/Console/Question4Arrow.png";
+const char* MONDAY_IMAGE = "Game/UI/Console/Mon.png";
 
 const int MONTH_NUM_SIZE = 128;
 const int DAY_SQUARE_SIZE = 128;

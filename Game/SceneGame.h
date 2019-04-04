@@ -14,7 +14,7 @@
 PTR( SceneGame );
 PTR( Floor );
 PTR( Elevator );
-PTR( Console );
+PTR( UI );
 PTR( CollideManager );
 PTR( Player );
 PTR( QuestionManager );
@@ -62,7 +62,7 @@ private:
 	CollideManagerPtr _collide_manager;
 	std::array< FloorPtr, MAX_FLOOR > _floors;
 	ElevatorPtr _elevator;
-	ConsolePtr _console;
+	UIPtr _ui;
 	PlayerPtr _player;
 	QuestionManagerPtr _question_manager;
 };

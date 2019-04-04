@@ -10,16 +10,16 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Page.cpp">
-      <Filter>Game\Console</Filter>
+      <Filter>Game\UI\Console</Filter>
     </ClCompile>
     <ClCompile Include="Console.cpp">
-      <Filter>Game\Console</Filter>
+      <Filter>Game\UI\Console</Filter>
     </ClCompile>
     <ClCompile Include="PageContent.cpp">
-      <Filter>Game\Console\PageContent</Filter>
+      <Filter>Game\UI\Console\PageContent</Filter>
     </ClCompile>
     <ClCompile Include="ConsoleButton.cpp">
-      <Filter>Game\Console\PageContent\Button</Filter>
+      <Filter>Game\UI\Console\PageContent\Button</Filter>
     </ClCompile>
     <ClCompile Include="SphereCollider.cpp">
       <Filter>Game\Collider</Filter>
@@ -51,9 +51,6 @@
     <ClCompile Include="ElevatorBox.cpp">
       <Filter>Game\Elevator</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleObserver.cpp">
-      <Filter>Game\Console\Observer</Filter>
-    </ClCompile>
     <ClCompile Include="QuestionManager.cpp">
       <Filter>Game\Question</Filter>
     </ClCompile>
@@ -70,10 +67,10 @@
       <Filter>Game\Floor\BaseFloor</Filter>
     </ClCompile>
     <ClCompile Include="ConsoleQuestion.cpp">
-      <Filter>Game\Console\PageContent\Question</Filter>
+      <Filter>Game\UI\Console\PageContent\Question</Filter>
     </ClCompile>
     <ClCompile Include="ConsoleQuestion1.cpp">
-      <Filter>Game\Console\PageContent\Question</Filter>
+      <Filter>Game\UI\Console\PageContent\Question</Filter>
     </ClCompile>
     <ClCompile Include="Floor2.cpp">
       <Filter>Game\Floor</Filter>
@@ -94,19 +91,19 @@
       <Filter>Game\Floor</Filter>
     </ClCompile>
     <ClCompile Include="ConsoleQuestion2.cpp">
-      <Filter>Game\Console\PageContent\Question</Filter>
+      <Filter>Game\UI\Console\PageContent\Question</Filter>
     </ClCompile>
     <ClCompile Include="Question3FloorHint.cpp">
       <Filter>Game\Floor\Hint</Filter>
     </ClCompile>
     <ClCompile Include="ConsoleQuestion3.cpp">
-      <Filter>Game\Console\PageContent\Question</Filter>
+      <Filter>Game\UI\Console\PageContent\Question</Filter>
     </ClCompile>
     <ClCompile Include="ConsoleQuestion4.cpp">
-      <Filter>Game\Console\PageContent\Question</Filter>
+      <Filter>Game\UI\Console\PageContent\Question</Filter>
     </ClCompile>
     <ClCompile Include="ConsoleQuestion5.cpp">
-      <Filter>Game\Console\PageContent\Question</Filter>
+      <Filter>Game\UI\Console\PageContent\Question</Filter>
     </ClCompile>
     <ClCompile Include="Question4FloorHint.cpp">
       <Filter>Game\Floor\Hint</Filter>
@@ -133,6 +130,15 @@
     <ClCompile Include="Q2DockingHint.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Hint.cpp">
+      <Filter>Game\UI\Hint</Filter>
+    </ClCompile>
+    <ClCompile Include="UIActiveObserver.cpp">
+      <Filter>Game\UI\Observer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Title">
@@ -140,18 +146,6 @@
     </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{0f0e56a9-7ac4-4fb8-9fbb-3ced98547bb0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Console">
-      <UniqueIdentifier>{ba72a5a1-4431-4eb2-ab59-82dcc480a4c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Console\PageContent">
-      <UniqueIdentifier>{923c3043-dec4-4318-b543-ced74e14c580}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Console\PageContent\Question">
-      <UniqueIdentifier>{6d7b09a4-4b29-4588-9c54-3e0e49e70bef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Console\PageContent\Button">
-      <UniqueIdentifier>{115424a5-0953-4ef3-a163-d262a72802af}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\Collider">
       <UniqueIdentifier>{f2b11608-e6ff-48d1-945b-3920e324baac}</UniqueIdentifier>
@@ -161,9 +155,6 @@
     </Filter>
     <Filter Include="Game\Player">
       <UniqueIdentifier>{e12a181e-1776-470e-8e27-c349ae8253f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Console\Observer">
-      <UniqueIdentifier>{31f1f65e-d8b6-4640-a8b9-b8f6497d3721}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\Question">
       <UniqueIdentifier>{ec3d1df7-0c9c-4479-97cd-a5c9ded5d876}</UniqueIdentifier>
@@ -192,6 +183,27 @@
     <Filter Include="Sound">
       <UniqueIdentifier>{426da9a5-216f-4714-abf3-2dbeb83488d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\UI">
+      <UniqueIdentifier>{84fc43f8-49b7-4daa-9d65-6c8bfa84ce88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\UI\Console">
+      <UniqueIdentifier>{ba72a5a1-4431-4eb2-ab59-82dcc480a4c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\UI\Console\PageContent">
+      <UniqueIdentifier>{923c3043-dec4-4318-b543-ced74e14c580}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\UI\Console\PageContent\Question">
+      <UniqueIdentifier>{6d7b09a4-4b29-4588-9c54-3e0e49e70bef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\UI\Console\PageContent\Button">
+      <UniqueIdentifier>{115424a5-0953-4ef3-a163-d262a72802af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\UI\Hint">
+      <UniqueIdentifier>{49cd5376-ddf2-4104-a6ac-88c212f16080}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\UI\Observer">
+      <UniqueIdentifier>{31f1f65e-d8b6-4640-a8b9-b8f6497d3721}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -206,16 +218,16 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Page.h">
-      <Filter>Game\Console</Filter>
+      <Filter>Game\UI\Console</Filter>
     </ClInclude>
     <ClInclude Include="Console.h">
-      <Filter>Game\Console</Filter>
+      <Filter>Game\UI\Console</Filter>
     </ClInclude>
     <ClInclude Include="PageContent.h">
-      <Filter>Game\Console\PageContent</Filter>
+      <Filter>Game\UI\Console\PageContent</Filter>
     </ClInclude>
     <ClInclude Include="ConsoleButton.h">
-      <Filter>Game\Console\PageContent\Button</Filter>
+      <Filter>Game\UI\Console\PageContent\Button</Filter>
     </ClInclude>
     <ClInclude Include="SphereCollider.h">
       <Filter>Game\Collider</Filter>
@@ -253,15 +265,6 @@
     <ClInclude Include="ElevatorBox.h">
       <Filter>Game\Elevator</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleActiveObservable.h">
-      <Filter>Game\Console\Observer</Filter>
-    </ClInclude>
-    <ClInclude Include="ConsoleActiveObserver.h">
-      <Filter>Game\Console\Observer</Filter>
-    </ClInclude>
-    <ClInclude Include="ConsoleObserver.h">
-      <Filter>Game\Console\Observer</Filter>
-    </ClInclude>
     <ClInclude Include="QuestionManager.h">
       <Filter>Game\Question</Filter>
     </ClInclude>
@@ -278,10 +281,10 @@
       <Filter>Game\Floor\BaseFloor</Filter>
     </ClInclude>
     <ClInclude Include="ConsoleQuestion.h">
-      <Filter>Game\Console\PageContent\Question</Filter>
+      <Filter>Game\UI\Console\PageContent\Question</Filter>
     </ClInclude>
     <ClInclude Include="ConsoleQuestion1.h">
-      <Filter>Game\Console\PageContent\Question</Filter>
+      <Filter>Game\UI\Console\PageContent\Question</Filter>
     </ClInclude>
     <ClInclude Include="Floor2.h">
       <Filter>Game\Floor</Filter>
@@ -302,19 +305,19 @@
       <Filter>Game\Floor</Filter>
     </ClInclude>
     <ClInclude Include="ConsoleQuestion2.h">
-      <Filter>Game\Console\PageContent\Question</Filter>
+      <Filter>Game\UI\Console\PageContent\Question</Filter>
     </ClInclude>
     <ClInclude Include="Question3FloorHint.h">
       <Filter>Game\Floor\Hint</Filter>
     </ClInclude>
     <ClInclude Include="ConsoleQuestion3.h">
-      <Filter>Game\Console\PageContent\Question</Filter>
+      <Filter>Game\UI\Console\PageContent\Question</Filter>
     </ClInclude>
     <ClInclude Include="ConsoleQuestion4.h">
-      <Filter>Game\Console\PageContent\Question</Filter>
+      <Filter>Game\UI\Console\PageContent\Question</Filter>
     </ClInclude>
     <ClInclude Include="ConsoleQuestion5.h">
-      <Filter>Game\Console\PageContent\Question</Filter>
+      <Filter>Game\UI\Console\PageContent\Question</Filter>
     </ClInclude>
     <ClInclude Include="Question4FloorHint.h">
       <Filter>Game\Floor\Hint</Filter>
@@ -340,6 +343,24 @@
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Q2DockingHint.h">
       <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="UICanvas.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Hint.h">
+      <Filter>Game\UI\Hint</Filter>
+    </ClInclude>
+    <ClInclude Include="UIActiveObserver.h">
+      <Filter>Game\UI\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="UIActiveObservableComponent.h">
+      <Filter>Game\UI\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="UIActiveObserverComponent.h">
+      <Filter>Game\UI\Observer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

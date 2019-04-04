@@ -159,7 +159,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ConsoleButton.cpp" />
     <ClCompile Include="Console.cpp" />
-    <ClCompile Include="ConsoleObserver.cpp" />
+    <ClCompile Include="UIActiveObserver.cpp" />
     <ClCompile Include="ConsoleQuestion.cpp" />
     <ClCompile Include="ConsoleQuestion1.cpp" />
     <ClCompile Include="ConsoleQuestion2.cpp" />
@@ -181,6 +181,7 @@
     <ClCompile Include="Floor4.cpp" />
     <ClCompile Include="Floor5.cpp" />
     <ClCompile Include="FloorGF.cpp" />
+    <ClCompile Include="Hint.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Page.cpp" />
@@ -200,6 +201,7 @@
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="SquareCollider.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -210,11 +212,11 @@
   <ItemGroup>
     <ClInclude Include="CollideManager.h" />
     <ClInclude Include="Collider.h" />
-    <ClInclude Include="ConsoleActiveObservable.h" />
-    <ClInclude Include="ConsoleActiveObserver.h" />
+    <ClInclude Include="UIActiveObservableComponent.h" />
+    <ClInclude Include="UIActiveObserverComponent.h" />
     <ClInclude Include="ConsoleButton.h" />
     <ClInclude Include="Console.h" />
-    <ClInclude Include="ConsoleObserver.h" />
+    <ClInclude Include="UIActiveObserver.h" />
     <ClInclude Include="ConsoleQuestion.h" />
     <ClInclude Include="ConsoleQuestion1.h" />
     <ClInclude Include="ConsoleQuestion2.h" />
@@ -240,6 +242,7 @@
     <ClInclude Include="Floor4.h" />
     <ClInclude Include="Floor5.h" />
     <ClInclude Include="FloorGF.h" />
+    <ClInclude Include="Hint.h" />
     <ClInclude Include="Page.h" />
     <ClInclude Include="PageContent.h" />
     <ClInclude Include="Player.h" />
@@ -258,6 +261,8 @@
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="SquareCollider.h" />
+    <ClInclude Include="UI.h" />
+    <ClInclude Include="UICanvas.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,7 +1,7 @@
 #include "SceneGame.h"
 #include "Controller.h"
 #include "Elevator.h"
-#include "Console.h"
+#include "UI.h"
 #include "CollideManager.h"
 #include "Player.h"
 #include "QuestionManager.h"
@@ -42,8 +42,8 @@ _phase_count( PHASE_INIT ) {
 		_floors[ FLOOR_3  ]     = FloorPtr( new Floor3 ( _collide_manager, _elevator->getAnnounceObservable( ), _question_manager ) );
 		_floors[ FLOOR_4  ]     = FloorPtr( new Floor4 ( _collide_manager, _elevator->getAnnounceObservable( ), _question_manager ) );
 		_floors[ FLOOR_5  ]     = FloorPtr( new Floor5 ( _collide_manager, _elevator->getAnnounceObservable( ), _question_manager ) );
-		_console                = ConsolePtr( new Console( _elevator->getElevatorButton( ), _question_manager ) );
-		_player                 = PlayerPtr( new Player( _elevator->getElevatorBox( ), _console->getActiveObservable( ) ) );
+		_ui                     = UIPtr( new UI( _elevator->getElevatorButton( ), _question_manager ) );
+		_player                 = PlayerPtr( new Player( _elevator->getElevatorBox( ), _ui->getActiveObservable( ) ) );
 
 		// “–‚½‚è”»’è
 		_collide_manager->addDynamicCollider( _player );
@@ -107,7 +107,7 @@ void SceneGame::draw( ) const {
 		} break;
 
 		case PHASE_PLAY: {
-			_console->draw( );
+			_ui->draw( );
 		} break;
 
 		case PHASE_GAMECLEAR: {
@@ -143,7 +143,7 @@ void SceneGame::updatePlay( ) {
 		SoundManager::getInstance( )->play( SoundManager::BGM_GAME );
 		_player->setUpdateType( Player::UPDATE_TYPE_ALL );
 	}
-	_console->update( );
+	_ui->update( );
 
 	// clear
 	if ( _player->getFloor( ) == FLOOR_GF ) {

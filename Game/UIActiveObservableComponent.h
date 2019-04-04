@@ -7,7 +7,7 @@
 
 */
 
-class ConsoleActiveObservable {
+class UIActiveObservableComponent {
 public:
 	virtual void subscribeOnActive( std::function< void( bool ) > ) = 0;
 };
