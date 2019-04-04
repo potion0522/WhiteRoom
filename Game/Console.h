@@ -65,7 +65,6 @@ private:
 	CONSOLE_STATE _state;
 	PAGE_NUM _page_num;
 	Vector _slide_start_pos; // スライドの始点
-	Vector _slide_end_pos;	 // スライドの終点
 	ImagePtr _bg;
 	ElevatorButtonPtr _elevator_button;
 	std::array< PagePtr, MAX_PAGE_NUM > _pages;

@@ -15,8 +15,7 @@ Console::Console( ElevatorButtonPtr elevator_button, QuestionManagerPtr question
 _elevator_button( elevator_button ), 
 _state( CONSOLE_STATE_IDLE ),
 _page_num( _INIT_PAGE_NUM ),
-_slide_start_pos( ),
-_slide_end_pos( ) {
+_slide_start_pos( ) {
 	MousePtr mouse = Mouse::getTask( );
 	mouse->setMouseDraw( false );
 
@@ -67,7 +66,7 @@ void Console::draw( ) const {
 
 
 void Console::close( ) {
-	_pages[ _page_num ]->refreshExceptForAnswer( );
+	_pages[ _page_num ]->refreshStateExceptForAnswer( );
 }
 
 void Console::open( ) {
@@ -81,6 +80,7 @@ bool Console::isChangeActivate( ) const {
 
 void Console::changeState( CONSOLE_STATE state ) {
 	_state = state;
+	_pages[ _page_num ]->refreshStateExceptForAnswer( );
 }
 
 void Console::slidePage( int add_x, int add_y ) {
@@ -90,51 +90,54 @@ void Console::slidePage( int add_x, int add_y ) {
 }
 
 void Console::actOnIdle( ) {
-	_pages[ _page_num ]->update( );
-
-	// スライドを検知
 	MousePtr mouse = Mouse::getTask( );
-
-	// クリックし初め
 	if ( mouse->isClickDownLeft( ) ) {
 		_slide_start_pos = mouse->getPoint( );
 	}
 
-	// クリックし終わり
+	bool slide = false;
+	Vector slide_vec;
+	// スライドを検知する
 	if ( mouse->isClickUpLeft( ) ) {
-		_slide_end_pos = mouse->getPoint( );
+		Vector slide_end = mouse->getPoint( );
 
-
-		// スライド距離
-		Vector slide = _slide_end_pos - _slide_start_pos;
-		if ( slide.getLength2( ) < SLIDE_DETECT_LENGTH * SLIDE_DETECT_LENGTH ) {
-			return;
+		slide_vec = slide_end - _slide_start_pos;
+		if ( slide_vec.getLength2( ) > SLIDE_DETECT_LENGTH * SLIDE_DETECT_LENGTH ) {
+			slide = true;
 		}
+	}
 
-		// スライド方向
-		bool horizontal = fabs( slide.x ) > fabs( slide.y );
+
+
+
+	// スライド処理 or ページ処理
+	if ( slide ) {
+		// 方向
+		bool horizontal = fabs( slide_vec.x ) > fabs( slide_vec.y );
 
 		// 左から右にスライド
-		if ( horizontal && slide.x > 0 && _page_num == PAGE_NUM_6 ) {
+		if ( horizontal && slide_vec.x > 0 && _page_num == PAGE_NUM_6 ) {
 			changeState( CONSOLE_STATE_SLIDE_RIGHT );
 			SoundManager::getInstance( )->play( SoundManager::SE_CONSOLE_SLIDE );
 		} 
 		// 右から左にスライド
-		if ( horizontal && slide.x < 0 && _page_num == PAGE_NUM_4 ) {
+		if ( horizontal && slide_vec.x < 0 && _page_num == PAGE_NUM_4 ) {
 			changeState( CONSOLE_STATE_SLIDE_LEFT );
 			SoundManager::getInstance( )->play( SoundManager::SE_CONSOLE_SLIDE );
 		} 
 
 		// 上から下にスライド
-		if ( !horizontal && slide.y > 0 && _page_num != PAGE_NUM_6 && _page_num != PAGE_NUM_1 ) {
+		if ( !horizontal && slide_vec.y > 0 && _page_num != PAGE_NUM_6 && _page_num != PAGE_NUM_1 ) {
 			changeState( CONSOLE_STATE_SLIDE_DOWN );
 			SoundManager::getInstance( )->play( SoundManager::SE_CONSOLE_SLIDE );
 		} 
 		// 下から上にスライド
-		if ( !horizontal && slide.y < 0 && _page_num != PAGE_NUM_6 && _page_num != PAGE_NUM_5 ) {
+		if ( !horizontal && slide_vec.y < 0 && _page_num != PAGE_NUM_6 && _page_num != PAGE_NUM_5 ) {
 			changeState( CONSOLE_STATE_SLIDE_UP );
 			SoundManager::getInstance( )->play( SoundManager::SE_CONSOLE_SLIDE );
 		}
+	} else {
+		_pages[ _page_num ]->update( );
 	}
 }
 

@@ -66,7 +66,7 @@ void Page::slide( int add_x, int add_y ) {
 	_view_y = _y + _slide_y;
 }
 
-void Page::refreshExceptForAnswer( ) {
+void Page::refreshStateExceptForAnswer( ) {
 	_content->refresh( );
 }
 
